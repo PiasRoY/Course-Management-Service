@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Course Management Service/Course Management Service.csproj" />
+  <Project Path="Course Management Service/CourseManagement.API.csproj" />
+  <Project Path="CourseManagement.Business/CourseManagement.Business.csproj" Id="890c9c16-e1b0-4553-8d03-b8f2717ad164" />
+  <Project Path="CourseManagement.Domain/CourseManagement.Domain.csproj" Id="1ad1619d-3a18-4501-8585-221395857476" />
+  <Project Path="CourseManagement.Infrastructure/CourseManagement.Infrastructure.csproj" Id="2d142239-1cd8-482d-8295-b37f181332b2" />
 </Solution>
