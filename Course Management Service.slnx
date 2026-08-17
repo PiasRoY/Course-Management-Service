@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="Course Management Service/CourseManagement.API.csproj" />
   <Project Path="CourseManagement.Business/CourseManagement.Business.csproj" Id="890c9c16-e1b0-4553-8d03-b8f2717ad164" />
   <Project Path="CourseManagement.Domain/CourseManagement.Domain.csproj" Id="1ad1619d-3a18-4501-8585-221395857476" />
