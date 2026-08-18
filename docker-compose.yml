@@ -14,6 +14,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=5001
       - ASPNETCORE_HTTPS_PORTS=5002
+      - ConnectionStrings__PostgresConnection=Host=postgres;Database=CourseManagement;Username=course_management_user;Password=course_management_password; 
 
     networks:
       - course-management-network
