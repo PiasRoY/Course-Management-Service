@@ -4,8 +4,13 @@ namespace CourseManagement.Domain.Entities;
 
 public class Enrollment : BaseAuditEntity
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid CourseId { get; set; }
-    public Guid EnrolledBy { get; set; }
+    public Guid EnrollmentId { get; set; }
+    public Guid StudentId { get; set; }
+    public Guid ClassId { get; set; }
+    public Guid EnrolledById { get; set; }
+    public DateTime EnrolledAt { get; set; }
+
+    required public User Student { get; set; }
+    required public User EnrolledBy { get; set; }
+    required public Class Class { get; set; }
 }

@@ -4,8 +4,10 @@ namespace CourseManagement.Domain.Entities;
 
 public class Course : BaseAuditEntity
 {
-    public Guid Id { get; set; }
-    required public string Name { get; set; }
-    required public string Description { get; set; }
-    public ICollection<CourseClass> CourseClasses { get; set; } = [];
+    public Guid CourseId { get; set; }
+    required public string Code { get; set; }
+    required public string Title { get; set; }
+    required public int Credits { get; set; } = 3;
+
+    public ICollection<Class> Classes { get; set; } = [];
 }

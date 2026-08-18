@@ -5,7 +5,7 @@ namespace CourseManagement.Domain.Entities;
 
 public class User : BaseAuditEntity
 {
-    required public string Id { get; set; }
+    required public string UserId { get; set; }
     required public string EmailAddress { get; set; }
     required public string Password { get; set; }
     required public string FirstName { get; set; }
