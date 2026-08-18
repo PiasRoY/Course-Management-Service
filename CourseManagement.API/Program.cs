@@ -1,6 +1,8 @@
+using Course_Management_Service.Extensions;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services.AddOpenApi();
+builder.Services.AddSerilogLogging(configuration);
 builder.Services.AddEFServices(configuration);
 builder.Services.AddControllers();
 
@@ -25,6 +28,8 @@ await using (var scope = app.Services.CreateAsyncScope())
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await db.Database.MigrateAsync();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
