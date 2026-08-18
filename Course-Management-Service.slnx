@@ -2,9 +2,12 @@
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
-  <Project Path="Course Management Service/CourseManagement.API.csproj" />
+  <Project Path="CourseManagement.API/CourseManagement.API.csproj" />
   <Project Path="CourseManagement.Business/CourseManagement.Business.csproj" Id="890c9c16-e1b0-4553-8d03-b8f2717ad164" />
   <Project Path="CourseManagement.Domain/CourseManagement.Domain.csproj" Id="1ad1619d-3a18-4501-8585-221395857476" />
   <Project Path="CourseManagement.Infrastructure/CourseManagement.Infrastructure.csproj" Id="2d142239-1cd8-482d-8295-b37f181332b2" />
   <Project Path="CourseManagement.UnitTests/CourseManagement.UnitTests.csproj" Id="5c63de71-e996-4556-9382-3dd1177f4c65" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>

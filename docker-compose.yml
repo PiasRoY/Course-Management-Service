@@ -1,0 +1,48 @@
+name: Course-Management-App
+
+services:
+  coursemanagement.api:
+    image: ${DOCKER_REGISTRY-}coursemanagementapi
+    build:
+      context: .
+      dockerfile: CourseManagement.API/Dockerfile
+    container_name: course-management-api
+    ports:
+      - "5001:5001"
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=5001
+      - ASPNETCORE_HTTPS_PORTS=5002
+
+    networks:
+      - course-management-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:18
+    container_name: cm-postgres
+    environment:
+      - POSTGRES_DB=CourseManagement
+      - POSTGRES_USER=course_management_user
+      - POSTGRES_PASSWORD=course_management_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/18/data
+    networks:
+      - course-management-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U course_management_user -d CourseManagement"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  course-management-network:
