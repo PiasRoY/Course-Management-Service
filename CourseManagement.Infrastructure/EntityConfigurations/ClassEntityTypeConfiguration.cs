@@ -38,26 +38,10 @@ public class ClassEntityTypeConfiguration : IEntityTypeConfiguration<Class>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasMany(cl => cl.Courses)
-            .WithMany(c => c.Classes)
-            .UsingEntity(
-                "CoursesClasses",
-                j => {
-                    j
-                    .HasOne(typeof(Course))
-                    .WithMany()
-                    .HasForeignKey("CourseId")
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                    j
-                    .HasOne(typeof(Class))
-                    .WithMany()
-                    .HasForeignKey("ClassId")
-                    .OnDelete(DeleteBehavior.Restrict);
-                }
-            );
+            .HasIndex(cl => cl.InstructorId);
 
         builder
-            .HasIndex(cl => cl.InstructorId);
+            .HasIndex(cl => cl.Name)
+            .IsUnique();
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CourseManagement.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class IntialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace CourseManagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Code = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    Name = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Credits = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
@@ -34,6 +34,23 @@ namespace CourseManagement.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRoles",
+                schema: "course.managment",
+                columns: table => new
+                {
+                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoleName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => x.RoleId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 schema: "course.managment",
                 columns: table => new
@@ -43,7 +60,6 @@ namespace CourseManagement.Infrastructure.Migrations
                     PasswordHash = table.Column<string>(type: "text", maxLength: 2147483647, nullable: false),
                     FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -83,28 +99,54 @@ namespace CourseManagement.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User_UserRole",
+                schema: "course.managment",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User_UserRole", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_User_UserRole_UserRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalSchema: "course.managment",
+                        principalTable: "UserRoles",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_User_UserRole_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "course.managment",
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CoursesClasses",
                 schema: "course.managment",
                 columns: table => new
                 {
-                    ClassesClassId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CoursesCourseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ClassId = table.Column<Guid>(type: "uuid", nullable: true),
-                    CourseId = table.Column<Guid>(type: "uuid", nullable: true)
+                    CourseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClassId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoursesClasses", x => new { x.ClassesClassId, x.CoursesCourseId });
+                    table.PrimaryKey("PK_CoursesClasses", x => new { x.CourseId, x.ClassId });
                     table.ForeignKey(
                         name: "FK_CoursesClasses_Classes_ClassId",
                         column: x => x.ClassId,
-                        principalSchema: "course.managment",
-                        principalTable: "Classes",
-                        principalColumn: "ClassId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CoursesClasses_Classes_ClassesClassId",
-                        column: x => x.ClassesClassId,
                         principalSchema: "course.managment",
                         principalTable: "Classes",
                         principalColumn: "ClassId",
@@ -112,13 +154,6 @@ namespace CourseManagement.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_CoursesClasses_Courses_CourseId",
                         column: x => x.CourseId,
-                        principalSchema: "course.managment",
-                        principalTable: "Courses",
-                        principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CoursesClasses_Courses_CoursesCourseId",
-                        column: x => x.CoursesCourseId,
                         principalSchema: "course.managment",
                         principalTable: "Courses",
                         principalColumn: "CourseId",
@@ -173,22 +208,24 @@ namespace CourseManagement.Infrastructure.Migrations
                 column: "InstructorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Classes_Name",
+                schema: "course.managment",
+                table: "Classes",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_Name",
+                schema: "course.managment",
+                table: "Courses",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CoursesClasses_ClassId",
                 schema: "course.managment",
                 table: "CoursesClasses",
                 column: "ClassId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoursesClasses_CourseId",
-                schema: "course.managment",
-                table: "CoursesClasses",
-                column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoursesClasses_CoursesCourseId",
-                schema: "course.managment",
-                table: "CoursesClasses",
-                column: "CoursesCourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_ClassId",
@@ -207,6 +244,12 @@ namespace CourseManagement.Infrastructure.Migrations
                 schema: "course.managment",
                 table: "Enrollments",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_UserRole_RoleId",
+                schema: "course.managment",
+                table: "User_UserRole",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_EmailAddress",
@@ -228,11 +271,19 @@ namespace CourseManagement.Infrastructure.Migrations
                 schema: "course.managment");
 
             migrationBuilder.DropTable(
+                name: "User_UserRole",
+                schema: "course.managment");
+
+            migrationBuilder.DropTable(
                 name: "Courses",
                 schema: "course.managment");
 
             migrationBuilder.DropTable(
                 name: "Classes",
+                schema: "course.managment");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles",
                 schema: "course.managment");
 
             migrationBuilder.DropTable(

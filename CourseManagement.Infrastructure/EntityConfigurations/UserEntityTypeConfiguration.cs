@@ -34,11 +34,6 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder
-            .Property(u => u.Role)
-            .IsRequired()
-            .HasConversion<string>();
-
-        builder
             .HasIndex(u => u.EmailAddress)
             .IsUnique();
     }

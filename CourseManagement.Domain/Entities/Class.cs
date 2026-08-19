@@ -14,6 +14,6 @@ public class Class : BaseAuditEntity
     public Guid InstructorId { get; set; }
 
     public User Instructor { get; set; } = null!;
-    public ICollection<Course> Courses { get; set; } = [];
+    public ICollection<CourseClass> CourseClasses { get; set; } = [];
     public ICollection<Enrollment> Enrollments { get; set; } = [];
 }

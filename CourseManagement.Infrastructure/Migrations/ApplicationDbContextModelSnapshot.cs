@@ -65,6 +65,9 @@ namespace CourseManagement.Infrastructure.Migrations
 
                     b.HasIndex("InstructorId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Classes", "course.managment");
                 });
 
@@ -74,11 +77,6 @@ namespace CourseManagement.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -87,6 +85,11 @@ namespace CourseManagement.Infrastructure.Migrations
 
                     b.Property<int>("Credits")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -101,7 +104,37 @@ namespace CourseManagement.Infrastructure.Migrations
 
                     b.HasKey("CourseId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Courses", "course.managment");
+                });
+
+            modelBuilder.Entity("CourseManagement.Domain.Entities.CourseClass", b =>
+                {
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CourseId", "ClassId");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("CoursesClasses", "course.managment");
                 });
 
             modelBuilder.Entity("CourseManagement.Domain.Entities.Enrollment", b =>
@@ -177,10 +210,6 @@ namespace CourseManagement.Infrastructure.Migrations
                         .HasMaxLength(2147483647)
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -195,29 +224,59 @@ namespace CourseManagement.Infrastructure.Migrations
                     b.ToTable("Users", "course.managment");
                 });
 
-            modelBuilder.Entity("CoursesClasses", b =>
+            modelBuilder.Entity("CourseManagement.Domain.Entities.UserRole", b =>
                 {
-                    b.Property<Guid>("ClassesClassId")
+                    b.Property<Guid>("RoleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CoursesCourseId")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ClassId")
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CourseId")
+                    b.HasKey("RoleId");
+
+                    b.ToTable("UserRoles", "course.managment");
+                });
+
+            modelBuilder.Entity("CourseManagement.Domain.Entities.User_UserRole", b =>
+                {
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("ClassesClassId", "CoursesCourseId");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("ClassId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasIndex("CourseId");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("CoursesCourseId");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.ToTable("CoursesClasses", "course.managment");
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("User_UserRole", "course.managment");
                 });
 
             modelBuilder.Entity("CourseManagement.Domain.Entities.Class", b =>
@@ -229,6 +288,25 @@ namespace CourseManagement.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("CourseManagement.Domain.Entities.CourseClass", b =>
+                {
+                    b.HasOne("CourseManagement.Domain.Entities.Class", "Class")
+                        .WithMany("CourseClasses")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CourseManagement.Domain.Entities.Course", "Course")
+                        .WithMany("CourseClasses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("CourseManagement.Domain.Entities.Enrollment", b =>
@@ -258,34 +336,40 @@ namespace CourseManagement.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("CoursesClasses", b =>
+            modelBuilder.Entity("CourseManagement.Domain.Entities.User_UserRole", b =>
                 {
-                    b.HasOne("CourseManagement.Domain.Entities.Class", null)
+                    b.HasOne("CourseManagement.Domain.Entities.UserRole", "UserRole")
                         .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("CourseManagement.Domain.Entities.Class", null)
-                        .WithMany()
-                        .HasForeignKey("ClassesClassId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CourseManagement.Domain.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("CourseManagement.Domain.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesCourseId")
+                    b.HasOne("CourseManagement.Domain.Entities.User", "User")
+                        .WithMany("UserUserRoles")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserRole");
                 });
 
             modelBuilder.Entity("CourseManagement.Domain.Entities.Class", b =>
                 {
+                    b.Navigation("CourseClasses");
+
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("CourseManagement.Domain.Entities.Course", b =>
+                {
+                    b.Navigation("CourseClasses");
+                });
+
+            modelBuilder.Entity("CourseManagement.Domain.Entities.User", b =>
+                {
+                    b.Navigation("UserUserRoles");
                 });
 #pragma warning restore 612, 618
         }
