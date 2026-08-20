@@ -1,22 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CourseManagement.Business.Constants;
+using CourseManagement.Domain.Entities;
+using CourseManagement.Infrastructure.ApplicationData;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Course_Management_Service.Controllers;
 
 [ApiController]
-[Route("api/v1/account")]
+[Route("api/v1/[controller]")]
+[Authorize(Roles = UserRoles.AdminOrStaff)]
 public class AccountController : ControllerBase
 {
-    private readonly ILogger<AccountController> logger;
-
-    public AccountController(ILogger<AccountController> logger)
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public IActionResult Register()
     {
-        this.logger = logger;
+        return Ok(new { message = "User has been registered successfully." });
     }
 
-    [HttpGet]
-    public string Users()
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public IActionResult Login()
     {
-        this.logger.LogInformation($"{nameof(Users)} method called.");
-        return "Hello World!";
+        return Ok(new { message = "User has logged in successfully." });
+    }
+
+    [HttpPost("refresh_token")]
+    [AllowAnonymous]
+    public IActionResult RefreshToken()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Authorize(Roles = UserRoles.Admin)]
+    [HttpPost("change-password")]
+    public IActionResult ChangePassword()
+    {
+        throw new NotImplementedException();
     }
 }
