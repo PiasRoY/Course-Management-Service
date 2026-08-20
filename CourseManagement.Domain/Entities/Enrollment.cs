@@ -10,7 +10,7 @@ public class Enrollment : BaseAuditEntity
     public Guid EnrolledById { get; set; }
     public DateTime EnrolledAt { get; set; } = DateTime.UtcNow;
 
-    required public User Student { get; set; }
+    required public Student Student { get; set; }
     required public User EnrolledBy { get; set; }
     required public Class Class { get; set; }
 }
