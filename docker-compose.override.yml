@@ -2,6 +2,8 @@ services:
   coursemanagement.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTPS_PORTS=5901
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "5901:5901"
+      - "8080:8080"
+      - "8081:8081"

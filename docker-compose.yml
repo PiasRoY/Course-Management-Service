@@ -8,10 +8,12 @@ services:
       dockerfile: CourseManagement.API/Dockerfile
     container_name: course-management-api
     ports:
-      - "5901:5901"
+      - "8080:8080"
+      - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_HTTPS_PORTS=5901
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__PostgresConnection=Host=postgres;Database=CourseManagement;Username=course_management_user;Password=course_management_password; 
 
     networks:
