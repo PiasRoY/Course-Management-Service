@@ -1,39 +1,23 @@
 using CourseManagement.API;
 using CourseManagement.API.Extensions;
-using CourseManagement.Business.Factories;
-using CourseManagement.Business.Options;
 using CourseManagement.Infrastructure.ApplicationData;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Scalar.AspNetCore;
 using Serilog;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var configuration = builder.Configuration;
 
-builder.Services.AddOpenApi();
-builder.Services.AddSerilogLogging(configuration);
-builder.Services.AddEFServices(configuration);
-builder.Services.AddControllers();
-builder.Services.AddCustomServices();
+builder.Services
+    .AddCustomAuth(configuration)
+    .AddEFServices(configuration)
+    .AddCustomServices();
 
-builder.Services.Configure<AuthOptions>(configuration.GetSection(nameof(AuthOptions)));
-
-var authSection = configuration.GetSection(nameof(AuthOptions));
-var authOptions = authSection.Get<AuthOptions>()
-            ?? throw new InvalidOperationException("JWT configuration section is missing or invalid.");
-
-var secretKey = Encoding.UTF8.GetBytes(authOptions.Secret);
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = TokenValidationParametersFactory.Create(authOptions);
-    });
-
-builder.Services.AddAuthorization();
+builder.Services
+    .AddOpenApi()
+    .AddSerilogLogging(configuration)
+    .AddControllers();
 
 var app = builder.Build();
 
@@ -59,3 +43,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
