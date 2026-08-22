@@ -4,7 +4,6 @@ using CourseManagement.Business.Factories;
 using CourseManagement.Business.Options;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Serilog;
 using System.Text;

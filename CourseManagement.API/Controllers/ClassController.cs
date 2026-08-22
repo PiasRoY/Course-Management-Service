@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Course_Management_Service.Controllers;
+namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
