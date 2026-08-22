@@ -4,13 +4,14 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Course_Management_Service</RootNamespace>
+    <RootNamespace>CourseManagement.API</RootNamespace>
     <UserSecretsId>2c5f0487-5e08-4486-ad0e-d840b608be07</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.19" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.19">
       <PrivateAssets>all</PrivateAssets>
