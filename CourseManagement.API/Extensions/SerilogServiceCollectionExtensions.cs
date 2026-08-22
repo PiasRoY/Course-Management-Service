@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace Course_Management_Service.Extensions;
+namespace CourseManagement.API.Extensions;
 
 public static class SerilogServiceCollectionExtensions
 {
