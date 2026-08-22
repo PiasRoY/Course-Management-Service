@@ -4,9 +4,13 @@ namespace CourseManagement.API.Extensions;
 
 public static class OptionsExtensions
 {
-    public static IServiceCollection AddOptions(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection AddCustomOptions(this IServiceCollection services)
     {
-        services.Configure<AuthOptions>(configuration.GetSection(nameof(AuthOptions)));
+        services
+            .AddOptions<AuthOptions>()
+            .BindConfiguration(nameof(AuthOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         return services;
     }
