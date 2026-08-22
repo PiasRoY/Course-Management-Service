@@ -19,6 +19,7 @@ builder.Services
 builder.Services
     .AddOpenApi()
     .AddSerilogLogging(configuration)
+    .AddHttpContextAccessor()
     .AddControllers();
 
 var app = builder.Build();
