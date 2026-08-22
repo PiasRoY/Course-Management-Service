@@ -11,4 +11,5 @@ public interface ITokenService
     string GenerateRefreshToken();
     Task<ClaimsPrincipal> ExtractClaimsPrincipalFromTokenAsync(string jwtToken);
     Task<DateTime> SaveRefreshTokenInfoAsync(string refreshToken, Guid userId, string? previousRefreshToken = null);
+    Task RevokeAllRefreshTokensByUser(Guid userId);
 }

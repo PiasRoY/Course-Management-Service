@@ -117,6 +117,18 @@ public class TokenService : ITokenService
         return tokenInfo.ExpiresAt;
     }
 
+    public async Task RevokeAllRefreshTokensByUser(Guid userId)
+    {
+        var tokens = await this.dbContext.TokenInfos.Where(t => t.UserId == userId).ToListAsync();
+
+        foreach (var token in tokens)
+        {
+            token.RevokedAt = DateTime.UtcNow;
+        }
+
+        await this.dbContext.SaveChangesAsync();
+    }
+
     private async Task ReplaceOldRefreshToken(string previousRefreshToken, TokenInfo tokenInfo)
     {
         var tokenHash = this.HashConversion(previousRefreshToken);

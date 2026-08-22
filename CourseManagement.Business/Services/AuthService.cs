@@ -72,8 +72,7 @@ public class AuthService : IAuthService
     {
         var user = await this.dbContext
             .Users.AsNoTracking()
-            .Where(u => u.EmailAddress == authenticateUserRequest.Email)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email);
 
         if (user == null)
         {
@@ -94,8 +93,7 @@ public class AuthService : IAuthService
     {
         var user = await this.dbContext
             .Users
-            .Where(u => u.EmailAddress == changePasswordRequest.Email)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(u => u.EmailAddress == changePasswordRequest.Email);
 
         if (user == null)
         {
@@ -119,6 +117,47 @@ public class AuthService : IAuthService
         var claimsPrincipal = await tokenService.ExtractClaimsPrincipalFromTokenAsync(tokenRequest.ExpiredAccessToken);
 
         return await this.tokenService.GenerateTokensAsync(claimsPrincipal.Claims, tokenRequest.CurrentRefreshToken);
+    }
+
+    public async Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId)
+    {
+        if (!Guid.TryParse(userId, out var id))
+        {
+            throw new InvalidOperationException("UserId is null.");
+        }
+
+        return await this.dbContext.Users
+            .Where(u => u.UserId == id)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(u => u.FirstName, updateUserRequest.FirstName)
+                .SetProperty(u => u.LastName, updateUserRequest.LastName)
+                .SetProperty(u => u.UpdatedBy, id)
+                .SetProperty(u => u.UpdatedAt, DateTime.UtcNow)
+            );
+    }
+
+    public async Task<int> DeleteAsync(DeleteUserRequest deleteUserRequest)
+    {
+        return await this.dbContext.Users
+            .Where(
+                u => deleteUserRequest.UserId != null ?
+                u.UserId == deleteUserRequest.UserId :
+                u.EmailAddress == deleteUserRequest.Email)
+            .ExecuteDeleteAsync();
+    }
+
+    public async Task RevokeRefreshTokensByUser(Guid userId)
+    {
+        var user = await this.dbContext
+            .Users.AsNoTracking()
+            .AnyAsync(u => u.UserId == userId);
+
+        if (!user)
+        {
+            throw new InvalidOperationException("User not found.");
+        }
+
+        await this.tokenService.RevokeAllRefreshTokensByUser(userId);
     }
 
     private async Task<List<Claim>> CreateClaimsFromUserAsync(User user)
