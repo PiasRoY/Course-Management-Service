@@ -10,8 +10,5 @@ public class User : BaseAuditEntity
     required public string PasswordHash { get; set; }
     required public string FirstName { get; set; }
     required public string LastName { get; set; }
-    required public ICollection<User_UserRole> UserUserRoles { get; set; }
-
-    [NotMapped]
-    public IEnumerable<UserRole> Roles => UserUserRoles.Select(uur => uur.UserRole);
+    required public ICollection<UserUserRole> UserUserRoles { get; set; }
 }

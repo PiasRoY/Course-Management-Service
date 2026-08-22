@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CourseManagement.Infrastructure.EntityConfigurations;
 
-public class User_UserRoleEntityTypeConfiguration : IEntityTypeConfiguration<User_UserRole>
+public class User_UserRoleEntityTypeConfiguration : IEntityTypeConfiguration<UserUserRole>
 {
-    public void Configure(EntityTypeBuilder<User_UserRole> builder)
+    public void Configure(EntityTypeBuilder<UserUserRole> builder)
     {
-        builder.ToTable("User_UserRole");
+        builder.ToTable("User_UserRoles");
 
         builder.HasKey(uur => new { uur.UserId, uur.RoleId });
 

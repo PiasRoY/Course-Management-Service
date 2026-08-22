@@ -2,7 +2,7 @@
 
 namespace CourseManagement.Domain.Entities;
 
-public class User_UserRole : BaseAuditEntity
+public class UserUserRole : BaseAuditEntity
 {
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;

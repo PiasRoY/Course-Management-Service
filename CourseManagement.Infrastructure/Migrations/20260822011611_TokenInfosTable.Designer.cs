@@ -3,6 +3,7 @@ using System;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CourseManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260822011611_TokenInfosTable")]
+    partial class TokenInfosTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,7 +280,7 @@ namespace CourseManagement.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TokenInfos", "course.managment");
+                    b.ToTable("TokenInfosTable", "course.managment");
                 });
 
             modelBuilder.Entity("CourseManagement.Domain.Entities.User", b =>
@@ -378,7 +381,7 @@ namespace CourseManagement.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User_UserRoles", "course.managment");
+                    b.ToTable("User_UserRole", "course.managment");
                 });
 
             modelBuilder.Entity("CourseManagement.Domain.Entities.Class", b =>

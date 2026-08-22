@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.19" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.19.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.19.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CourseManagement.Domain\CourseManagement.Domain.csproj" />
+    <ProjectReference Include="..\CourseManagement.Infrastructure\CourseManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

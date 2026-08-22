@@ -15,6 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Course> Courses { get; set; }
     public DbSet<Class> Classes { get; set; }
     public DbSet<Enrollment> Enrollments { get; set; }
+    public DbSet<TokenInfo> TokenInfos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
