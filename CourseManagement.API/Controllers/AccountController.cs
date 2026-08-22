@@ -8,7 +8,6 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize]
 public class AccountController : ControllerBase
 {
     private readonly IAuthService authService;

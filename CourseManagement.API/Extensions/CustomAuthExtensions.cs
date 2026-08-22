@@ -1,6 +1,7 @@
 ﻿using CourseManagement.Business.Factories;
 using CourseManagement.Business.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using System.Text;
 
 namespace CourseManagement.API.Extensions;
@@ -19,7 +20,13 @@ public static class CustomAuthExtensions
                 options.TokenValidationParameters = TokenValidationParametersFactory.Create(authOptions);
             });
 
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build();
+        });
 
         return services;
     }
