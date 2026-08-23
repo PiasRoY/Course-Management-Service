@@ -28,7 +28,7 @@ public class GlobalExceptionHandler : IExceptionHandler
             UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Not Authorized."),
             SecurityTokenException => (StatusCodes.Status401Unauthorized, "Token not authorized."),
             ArgumentException => (StatusCodes.Status400BadRequest, "Bad Request."),
-            UserNotFoundException => (StatusCodes.Status404NotFound, "User was not found."),
+            NotFoundException => (StatusCodes.Status404NotFound, "Not found."),
             InvalidOperationException => (StatusCodes.Status409Conflict, "An invalid operation occured."),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occured.")
         };
