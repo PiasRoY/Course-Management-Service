@@ -29,13 +29,14 @@ public class AuthService : IAuthService
         this.tokenService = tokenService;
     }
 
-    public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, IEnumerable<string>? roles = null)
+    public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken,
+        IEnumerable<string>? roles = null)
     {
         roles ??= [UserRoles.Student];
 
         var userExist = await this.dbContext
             .Users.AsNoTracking()
-            .AnyAsync(u => u.EmailAddress == createUserRequest.EmailAddress);
+            .AnyAsync(u => u.EmailAddress == createUserRequest.EmailAddress, cancellationToken);
 
         if (userExist)
         {
@@ -48,7 +49,7 @@ public class AuthService : IAuthService
             .UserRoles
             .Where(ur => roles.Contains(ur.RoleName))
             .Select(ur => new UserUserRole { UserRole = ur })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         var user = new User
         {
@@ -60,19 +61,20 @@ public class AuthService : IAuthService
             UserUserRoles = useruserroles
         };
 
-        await this.dbContext.Users.AddAsync(user);
-        await this.dbContext.SaveChangesAsync();
+        await this.dbContext.Users.AddAsync(user, cancellationToken);
+        await this.dbContext.SaveChangesAsync(cancellationToken);
 
         this.logger.LogInformation("Created a new user with email: {Email}", createUserRequest.EmailAddress);
 
         return UserMapping.MapsToUserDto(user);
     }
 
-    public async Task<TokenDto> AuthenticateUserAsync(AuthenticateUserRequest authenticateUserRequest)
+    public async Task<TokenDto> AuthenticateUserAsync(AuthenticateUserRequest authenticateUserRequest,
+        CancellationToken cancellationToken)
     {
         var user = await this.dbContext
             .Users.AsNoTracking()
-            .FirstOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email);
+            .FirstOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email, cancellationToken);
 
         if (user == null)
         {
@@ -86,14 +88,17 @@ public class AuthService : IAuthService
 
         this.logger.LogInformation("Authenticated user : {Email}", authenticateUserRequest.Email);
 
-        return await this.tokenService.GenerateTokensAsync(await this.CreateClaimsFromUserAsync(user));
+        return await this.tokenService.GenerateTokensAsync(
+            await this.CreateClaimsFromUserAsync(user, cancellationToken),
+            cancellationToken);
     }
 
-    public async Task ChangePasswordAsync(ChangePasswordRequest changePasswordRequest)
+    public async Task ChangePasswordAsync(ChangePasswordRequest changePasswordRequest,
+        CancellationToken cancellationToken)
     {
         var user = await this.dbContext
             .Users
-            .FirstOrDefaultAsync(u => u.EmailAddress == changePasswordRequest.Email);
+            .FirstOrDefaultAsync(u => u.EmailAddress == changePasswordRequest.Email, cancellationToken);
 
         if (user == null)
         {
@@ -107,18 +112,19 @@ public class AuthService : IAuthService
 
         user.PasswordHash = this.passwordHasher.HashPassword(changePasswordRequest.NewPassword);
 
-        await this.dbContext.SaveChangesAsync();
+        await this.dbContext.SaveChangesAsync(cancellationToken);
 
         this.logger.LogInformation("Password has been changed for user {Email}", user.EmailAddress);
     }
 
-    public async Task<TokenDto> RefreshAsync(TokenRequest tokenRequest)
+    public async Task<TokenDto> RefreshAsync(TokenRequest tokenRequest, CancellationToken cancellationToken)
     {
-        var claimsPrincipal = await tokenService.ExtractClaimsPrincipalFromTokenAsync(tokenRequest.ExpiredAccessToken);
-        return await this.tokenService.GenerateTokensAsync(claimsPrincipal.Claims, tokenRequest.CurrentRefreshToken);
+        var claimsPrincipal = await tokenService.ExtractClaimsPrincipalFromTokenAsync(tokenRequest.ExpiredAccessToken, cancellationToken);
+        return await this.tokenService.GenerateTokensAsync(claimsPrincipal.Claims, cancellationToken, tokenRequest.CurrentRefreshToken);
     }
 
-    public async Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId)
+    public async Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId,
+        CancellationToken cancellationToken)
     {
         if (!Guid.TryParse(userId, out var id))
         {
@@ -135,31 +141,31 @@ public class AuthService : IAuthService
             );
     }
 
-    public async Task<int> DeleteAsync(DeleteUserRequest deleteUserRequest)
+    public async Task<int> DeleteAsync(DeleteUserRequest deleteUserRequest, CancellationToken cancellationToken)
     {
         return await this.dbContext.Users
             .Where(
                 u => deleteUserRequest.UserId != null ?
                 u.UserId == deleteUserRequest.UserId :
                 u.EmailAddress == deleteUserRequest.Email)
-            .ExecuteDeleteAsync();
+            .ExecuteDeleteAsync(cancellationToken);
     }
 
-    public async Task RevokeRefreshTokensByUser(Guid userId)
+    public async Task RevokeRefreshTokensByUser(Guid userId, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
             .Users.AsNoTracking()
-            .AnyAsync(u => u.UserId == userId);
+            .AnyAsync(u => u.UserId == userId, cancellationToken);
 
         if (!user)
         {
             throw new InvalidOperationException("User not found.");
         }
 
-        await this.tokenService.RevokeAllRefreshTokensByUser(userId);
+        await this.tokenService.RevokeAllRefreshTokensByUserAsync(userId, cancellationToken);
     }
 
-    private async Task<List<Claim>> CreateClaimsFromUserAsync(User user)
+    private async Task<List<Claim>> CreateClaimsFromUserAsync(User user, CancellationToken cancellationToken)
     {
         var claims = new List<Claim>
         {
@@ -171,7 +177,7 @@ public class AuthService : IAuthService
             .Users.AsNoTracking()
             .Where(u => u.UserId == user.UserId)
             .SelectMany(u => u.UserUserRoles.Select(uur => uur.UserRole))
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
 
         foreach (var role in roles)

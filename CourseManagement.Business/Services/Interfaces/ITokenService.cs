@@ -6,10 +6,10 @@ namespace CourseManagement.Business.Services.Interfaces;
 
 public interface ITokenService
 {
-    Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, string? previousRefreshToken = null);
+    Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, CancellationToken cancellationToken, string? previousRefreshToken = null);
     string GenerateAccessToken(IEnumerable<Claim> claims);
     string GenerateRefreshToken();
-    Task<ClaimsPrincipal> ExtractClaimsPrincipalFromTokenAsync(string jwtToken);
-    Task<DateTime> SaveRefreshTokenInfoAsync(string refreshToken, Guid userId, string? previousRefreshToken = null);
-    Task RevokeAllRefreshTokensByUser(Guid userId);
+    Task<ClaimsPrincipal> ExtractClaimsPrincipalFromTokenAsync(string jwtToken, CancellationToken cancellationToken);
+    Task<DateTime> SaveRefreshTokenInfoAsync(string refreshToken, Guid userId, CancellationToken cancellationToken, string? previousRefreshToken = null);
+    Task RevokeAllRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken);
 }

@@ -27,7 +27,7 @@ public class TokenService : ITokenService
         this.authOptions = authOptions.Value;
     }
 
-    public async Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, string? previousRefreshToken = null)
+    public async Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, CancellationToken cancellationToken, string? previousRefreshToken = null)
     {
         var userIdStr = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         
@@ -36,9 +36,11 @@ public class TokenService : ITokenService
             throw new InvalidOperationException("Claim UserId is invalid.");
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
+        
         var accessToken = this.GenerateAccessToken(claims);
         var newRefreshToken = this.GenerateRefreshToken();
-        var expiredAt = await this.SaveRefreshTokenInfoAsync(newRefreshToken, userId, previousRefreshToken);
+        var expiredAt = await this.SaveRefreshTokenInfoAsync(newRefreshToken, userId, cancellationToken, previousRefreshToken);
 
         return new TokenDto
         {
@@ -80,13 +82,14 @@ public class TokenService : ITokenService
         return Convert.ToBase64String(randomNumberBytes);
     }
 
-    public async Task<ClaimsPrincipal> ExtractClaimsPrincipalFromTokenAsync(string jwtToken)
+    public async Task<ClaimsPrincipal> ExtractClaimsPrincipalFromTokenAsync(string jwtToken, CancellationToken  cancellationToken)
     {
         var tokenValidationParams = TokenValidationParametersFactory.Create(authOptions);
         var tokenHandler = new JsonWebTokenHandler();
 
         tokenValidationParams.ValidateLifetime = false;
 
+        cancellationToken.ThrowIfCancellationRequested();
         var result = await tokenHandler.ValidateTokenAsync(jwtToken, tokenValidationParams);
 
         if (!result.IsValid)
@@ -97,7 +100,7 @@ public class TokenService : ITokenService
         return new ClaimsPrincipal(result.ClaimsIdentity);
     }
 
-    public async Task<DateTime> SaveRefreshTokenInfoAsync(string refreshToken, Guid userId, string? previousRefreshToken = null)
+    public async Task<DateTime> SaveRefreshTokenInfoAsync(string refreshToken, Guid userId, CancellationToken cancellationToken, string? previousRefreshToken = null)
     {
         var tokenInfo = new TokenInfo
         {
@@ -109,33 +112,35 @@ public class TokenService : ITokenService
 
         if (!string.IsNullOrEmpty(previousRefreshToken))
         {
-            await ReplaceOldRefreshToken(previousRefreshToken, tokenInfo);
+            await ReplaceOldRefreshToken(previousRefreshToken, tokenInfo, cancellationToken);
         }
 
-        await this.dbContext.TokenInfos.AddAsync(tokenInfo);
-        await this.dbContext.SaveChangesAsync();
+        await this.dbContext.TokenInfos.AddAsync(tokenInfo, cancellationToken);
+        await this.dbContext.SaveChangesAsync(cancellationToken);
 
         return tokenInfo.ExpiresAt;
     }
 
-    public async Task RevokeAllRefreshTokensByUser(Guid userId)
+    public async Task RevokeAllRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var tokens = await this.dbContext.TokenInfos.Where(t => t.UserId == userId).ToListAsync();
+        var tokens = await this.dbContext.TokenInfos
+                                            .Where(t => t.UserId == userId)
+                                            .ToListAsync(cancellationToken);
 
         foreach (var token in tokens)
         {
             token.RevokedAt = DateTime.UtcNow;
         }
 
-        await this.dbContext.SaveChangesAsync();
+        await this.dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private async Task ReplaceOldRefreshToken(string previousRefreshToken, TokenInfo tokenInfo)
+    private async Task ReplaceOldRefreshToken(string previousRefreshToken, TokenInfo tokenInfo, CancellationToken cancellationToken)
     {
         var tokenHash = this.HashConversion(previousRefreshToken);
         var oldTokenInfo = await this.dbContext
             .TokenInfos
-            .FirstOrDefaultAsync(t => t.TokenHash == tokenHash && t.UserId == tokenInfo.UserId);
+            .FirstOrDefaultAsync(t => t.TokenHash == tokenHash && t.UserId == tokenInfo.UserId, cancellationToken);
 
         if (oldTokenInfo == null)
         {

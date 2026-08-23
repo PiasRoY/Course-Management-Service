@@ -24,7 +24,7 @@ public class AccountController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<UserDto>> Register(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
     {
-        var userDto = await this.authService.CreateUserAsync(createUserRequest);
+        var userDto = await this.authService.CreateUserAsync(createUserRequest, cancellationToken);
         return Ok(userDto);
     }
 
@@ -32,7 +32,7 @@ public class AccountController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult> Login(AuthenticateUserRequest authUserRequest, CancellationToken cancellationToken)
     {
-        var tokenDto = await this.authService.AuthenticateUserAsync(authUserRequest);
+        var tokenDto = await this.authService.AuthenticateUserAsync(authUserRequest, cancellationToken);
         
         SetRefreshToken(tokenDto.RefreshToken, tokenDto.RereshTokenExpiredAt);        
         
@@ -52,7 +52,7 @@ public class AccountController : ControllerBase
             CurrentRefreshToken = refreshToken
         };
 
-        var tokenDto = await this.authService.RefreshAsync(tokenRequest);
+        var tokenDto = await this.authService.RefreshAsync(tokenRequest, cancellationToken);
         
         SetRefreshToken(tokenDto.RefreshToken, tokenDto.RereshTokenExpiredAt);        
         
@@ -69,16 +69,16 @@ public class AccountController : ControllerBase
             return BadRequest(new { message = "Email does not match between the requested email and the token email." });
         }
 
-        await this.authService.ChangePasswordAsync(changePasswordRequest);
+        await this.authService.ChangePasswordAsync(changePasswordRequest, cancellationToken);
         return Ok(new { message = "Password changed successfully." } );
     }
 
     [HttpPatch("update-user")]
-    public async Task<ActionResult> UpdateUserAsync(UpdateUserRequest updateUserRequest)
+    public async Task<ActionResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, CancellationToken cancellationToken)
     {
         var userId = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-        var affectedRows = await this.authService.UpdateUserAsync(updateUserRequest, userId);
+        var affectedRows = await this.authService.UpdateUserAsync(updateUserRequest, userId, cancellationToken);
 
         if (affectedRows == 0)
         {
@@ -93,14 +93,14 @@ public class AccountController : ControllerBase
 
     [HttpDelete("delete-user")]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<ActionResult> DeleteUserAsync(DeleteUserRequest deleteUserRequest)
+    public async Task<ActionResult> DeleteUserAsync(DeleteUserRequest deleteUserRequest, CancellationToken cancellationToken)
     {
         if (deleteUserRequest.UserId is null & string.IsNullOrEmpty(deleteUserRequest.Email))
         {
             return BadRequest(new { message = "Either UserId or Email must be provided." });
         }
 
-        var affectedRows = await this.authService.DeleteAsync(deleteUserRequest);
+        var affectedRows = await this.authService.DeleteAsync(deleteUserRequest, cancellationToken);
 
         if (affectedRows == 0)
         {
@@ -114,9 +114,9 @@ public class AccountController : ControllerBase
 
     [HttpPost("revoke-refresh-tokens")]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<ActionResult> RevokeRefreshTokens([FromBody] Guid userId)
+    public async Task<ActionResult> RevokeRefreshTokens([FromBody] Guid userId, CancellationToken cancellationToken)
     {
-        await this.authService.RevokeRefreshTokensByUser(userId);
+        await this.authService.RevokeRefreshTokensByUser(userId, cancellationToken);
 
         return NoContent();
     }

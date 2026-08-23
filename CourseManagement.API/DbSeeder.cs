@@ -77,6 +77,6 @@ public class DbSeeder
             Password = "password12345678"
         };
 
-        await this.authService.CreateUserAsync(createUser, [UserRoles.Admin]);
+        await this.authService.CreateUserAsync(createUser, CancellationToken.None, [UserRoles.Admin]);
     }
 }
