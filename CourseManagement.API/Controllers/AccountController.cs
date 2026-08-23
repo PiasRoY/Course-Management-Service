@@ -116,7 +116,7 @@ public class AccountController : ControllerBase
     [Authorize(Roles = UserRoles.Admin)]
     public async Task<ActionResult> RevokeRefreshTokens([FromBody] Guid userId, CancellationToken cancellationToken)
     {
-        await this.authService.RevokeRefreshTokensByUser(userId, cancellationToken);
+        await this.authService.RevokeRefreshTokensByUserAsync(userId, cancellationToken);
 
         return NoContent();
     }

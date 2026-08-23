@@ -77,7 +77,7 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            throw new UserNotFoundException("User not found.");
+            throw new UserNotFoundException(authenticateUserRequest.Email);
         }
 
         if (!this.passwordHasher.VerifyPassword(authenticateUserRequest.Password, user.PasswordHash))
@@ -100,7 +100,7 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            throw new UserNotFoundException("User not found.");
+            throw new UserNotFoundException(changePasswordRequest.Email);
         }
 
         if (!this.passwordHasher.VerifyPassword(changePasswordRequest.OldPassword, user.PasswordHash))
@@ -148,7 +148,7 @@ public class AuthService : IAuthService
             .ExecuteDeleteAsync(cancellationToken);
     }
 
-    public async Task RevokeRefreshTokensByUser(Guid userId, CancellationToken cancellationToken)
+    public async Task RevokeRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
             .Users.AsNoTracking()
