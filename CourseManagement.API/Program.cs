@@ -1,9 +1,9 @@
 using CourseManagement.API;
 using CourseManagement.API.Extensions;
 using CourseManagement.API.Handlers;
+using CourseManagement.Business.Extensions;
 using CourseManagement.Infrastructure.ApplicationData;
 using Scalar.AspNetCore;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,9 @@ builder.Services
     .AddCustomServices()
     .AddCustomMiddlewares()
     .AddCustomOptions();
+
+builder.Services
+    .AddTransient<DbSeeder>();
 
 builder.Services
     .AddOpenApi()

@@ -2,13 +2,14 @@
 using CourseManagement.Business.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace CourseManagement.API.Extensions;
+namespace CourseManagement.Business.Extensions;
 
 public static class CustomAuthExtensions
 {
-    public static IServiceCollection AddCustomAuth(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection AddCustomAuth(this IServiceCollection services, IConfiguration configuration)
     {
         var authSection = configuration.GetSection(nameof(AuthOptions));
         var authOptions = authSection.Get<AuthOptions>()
