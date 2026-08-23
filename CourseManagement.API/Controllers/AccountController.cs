@@ -25,7 +25,7 @@ public class AccountController : ControllerBase
     public async Task<ActionResult<UserDto>> Register(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
     {
         var userDto = await this.authService.CreateUserAsync(createUserRequest, cancellationToken);
-        return Ok(userDto);
+        return CreatedAtAction(nameof(Register), userDto);
     }
 
     [HttpPost("login")]
@@ -70,7 +70,8 @@ public class AccountController : ControllerBase
         }
 
         await this.authService.ChangePasswordAsync(changePasswordRequest, cancellationToken);
-        return Ok(new { message = "Password changed successfully." } );
+
+        return NoContent();
     }
 
     [HttpPatch("update-user")]
@@ -82,13 +83,10 @@ public class AccountController : ControllerBase
 
         if (affectedRows == 0)
         {
-            return NotFound(new { message = "User not found. " });
+            return NotFound(new { message = "User not found." });
         }
 
-        return Ok(new
-        {
-            message = $"User has been updated successfully."
-        });
+        return NoContent();
     }
 
     [HttpDelete("delete-user")]
@@ -107,9 +105,7 @@ public class AccountController : ControllerBase
             return NotFound(new { message = "User Not Found." });
         }
 
-        return Ok(new { 
-            message = $"User ([{deleteUserRequest.UserId}]/[{deleteUserRequest.Email}]) has been deleted successfully."
-        });
+        return NoContent();
     }
 
     [HttpPost("revoke-refresh-tokens")]

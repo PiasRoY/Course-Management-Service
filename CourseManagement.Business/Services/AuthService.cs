@@ -128,24 +128,33 @@ public class AuthService : IAuthService
             throw new ArgumentException("UserId is not a valid GUID.", nameof(userId));
         }
 
-        return await this.dbContext.Users
+        var affectedRow = await this.dbContext.Users
             .Where(u => u.UserId == id)
             .ExecuteUpdateAsync(s => s
                 .SetProperty(u => u.FirstName, updateUserRequest.FirstName)
                 .SetProperty(u => u.LastName, updateUserRequest.LastName)
                 .SetProperty(u => u.UpdatedBy, id)
-                .SetProperty(u => u.UpdatedAt, DateTime.UtcNow)
+                .SetProperty(u => u.UpdatedAt, DateTime.UtcNow),
+                cancellationToken
             );
+
+        this.logger.LogInformation("User with id {Id} has been updated", userId);
+
+        return affectedRow;
     }
 
     public async Task<int> DeleteAsync(DeleteUserRequest deleteUserRequest, CancellationToken cancellationToken)
     {
-        return await this.dbContext.Users
+        var affectedRow = await this.dbContext.Users
             .Where(
                 u => deleteUserRequest.UserId != null ?
                 u.UserId == deleteUserRequest.UserId :
                 u.EmailAddress == deleteUserRequest.Email)
             .ExecuteDeleteAsync(cancellationToken);
+
+        this.logger.LogInformation("User with email {Email} OR id {Id} has been deleted.", deleteUserRequest.Email, deleteUserRequest.UserId);
+
+        return affectedRow;
     }
 
     public async Task RevokeRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken)
