@@ -38,8 +38,7 @@ public class AccountController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<TokenDto>> RefreshToken(TokenRequest tokenRequest, CancellationToken cancellationToken)
     {
-        var userId = this.HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-        var tokenDto = await this.authService.RefreshAsync(tokenRequest, userId);
+        var tokenDto = await this.authService.RefreshAsync(tokenRequest);
         return Ok(tokenDto);
     }
 

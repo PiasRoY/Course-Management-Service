@@ -85,6 +85,8 @@ public class TokenService : ITokenService
         var tokenValidationParams = TokenValidationParametersFactory.Create(authOptions);
         var tokenHandler = new JsonWebTokenHandler();
 
+        tokenValidationParams.ValidateLifetime = false;
+
         var result = await tokenHandler.ValidateTokenAsync(jwtToken, tokenValidationParams);
 
         if (!result.IsValid)

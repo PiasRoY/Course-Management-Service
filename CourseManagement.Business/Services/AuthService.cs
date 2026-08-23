@@ -112,20 +112,9 @@ public class AuthService : IAuthService
         this.logger.LogInformation("Password has been changed for user {Email}", user.EmailAddress);
     }
 
-    public async Task<TokenDto> RefreshAsync(TokenRequest tokenRequest, string userId)
+    public async Task<TokenDto> RefreshAsync(TokenRequest tokenRequest)
     {
-        if (userId == null)
-        {
-            throw new InvalidOperationException("UserId is null.");
-        }
-        
         var claimsPrincipal = await tokenService.ExtractClaimsPrincipalFromTokenAsync(tokenRequest.ExpiredAccessToken);
-
-        if (claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value != userId)
-        {
-            throw new InvalidOperationException("Access token is invalid.");
-        }
-
         return await this.tokenService.GenerateTokensAsync(claimsPrincipal.Claims, tokenRequest.CurrentRefreshToken);
     }
 
