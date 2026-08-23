@@ -10,9 +10,15 @@ namespace CourseManagement.API.Controllers;
 public class ClassController : ControllerBase
 {
     [HttpGet]
-    public IActionResult GetClasses()
+    public IActionResult GetAllClasses()
     {
-        return Ok(new { message = "List of classes" });
+        throw new NotImplementedException();
+    }
+
+    [HttpGet]
+    public IActionResult GetClassesByInstructorId()
+    {
+        return Ok(new { message = "List of classes by instructor id." });
     }
 
     [HttpGet("{id}")]
