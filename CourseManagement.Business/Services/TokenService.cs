@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -28,7 +27,7 @@ public class TokenService : ITokenService
         this.authOptions = authOptions.Value;
     }
 
-    public async Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, string? PreviousRefreshToken = null)
+    public async Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, string? previousRefreshToken = null)
     {
         var userIdStr = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         
@@ -39,7 +38,7 @@ public class TokenService : ITokenService
 
         var accessToken = this.GenerateAccessToken(claims);
         var newRefreshToken = this.GenerateRefreshToken();
-        var expiredAt = await this.SaveRefreshTokenInfoAsync(newRefreshToken, userId, PreviousRefreshToken);
+        var expiredAt = await this.SaveRefreshTokenInfoAsync(newRefreshToken, userId, previousRefreshToken);
 
         return new TokenDto
         {
@@ -134,7 +133,7 @@ public class TokenService : ITokenService
         var tokenHash = this.HashConversion(previousRefreshToken);
         var oldTokenInfo = await this.dbContext
             .TokenInfos
-            .FirstOrDefaultAsync(t => t.TokenHash == tokenHash);
+            .FirstOrDefaultAsync(t => t.TokenHash == tokenHash && t.UserId == tokenInfo.UserId);
 
         if (oldTokenInfo == null)
         {

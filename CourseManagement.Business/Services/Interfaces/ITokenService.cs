@@ -6,7 +6,7 @@ namespace CourseManagement.Business.Services.Interfaces;
 
 public interface ITokenService
 {
-    Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, string? PreviousRefreshToken = null);
+    Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, string? previousRefreshToken = null);
     string GenerateAccessToken(IEnumerable<Claim> claims);
     string GenerateRefreshToken();
     Task<ClaimsPrincipal> ExtractClaimsPrincipalFromTokenAsync(string jwtToken);
