@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Business.Constants;
+using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.UserDTOs;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
@@ -29,8 +30,7 @@ public class AuthService : IAuthService
         this.tokenService = tokenService;
     }
 
-    public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken,
-        IEnumerable<string>? roles = null)
+    public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken, IEnumerable<string>? roles = null)
     {
         roles ??= [UserRoles.Student];
 
@@ -69,8 +69,7 @@ public class AuthService : IAuthService
         return UserMapping.MapsToUserDto(user);
     }
 
-    public async Task<TokenDto> AuthenticateUserAsync(AuthenticateUserRequest authenticateUserRequest,
-        CancellationToken cancellationToken)
+    public async Task<TokenDto> AuthenticateUserAsync(AuthenticateUserRequest authenticateUserRequest, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
             .Users.AsNoTracking()
@@ -78,12 +77,12 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            throw new InvalidOperationException("User not found.");
+            throw new UserNotFoundException("User not found.");
         }
 
         if (!this.passwordHasher.VerifyPassword(authenticateUserRequest.Password, user.PasswordHash))
         {
-            throw new InvalidOperationException("Invalid password.");
+            throw new UnauthorizedAccessException("Invalid password.");
         }
 
         this.logger.LogInformation("Authenticated user : {Email}", authenticateUserRequest.Email);
@@ -93,8 +92,7 @@ public class AuthService : IAuthService
             cancellationToken);
     }
 
-    public async Task ChangePasswordAsync(ChangePasswordRequest changePasswordRequest,
-        CancellationToken cancellationToken)
+    public async Task ChangePasswordAsync(ChangePasswordRequest changePasswordRequest, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
             .Users
@@ -102,12 +100,12 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            throw new InvalidOperationException("User not found.");
+            throw new UserNotFoundException("User not found.");
         }
 
         if (!this.passwordHasher.VerifyPassword(changePasswordRequest.OldPassword, user.PasswordHash))
         {
-            throw new InvalidOperationException("Invalid old password.");
+            throw new UnauthorizedAccessException("Invalid old password.");
         }
 
         user.PasswordHash = this.passwordHasher.HashPassword(changePasswordRequest.NewPassword);
@@ -123,12 +121,11 @@ public class AuthService : IAuthService
         return await this.tokenService.GenerateTokensAsync(claimsPrincipal.Claims, cancellationToken, tokenRequest.CurrentRefreshToken);
     }
 
-    public async Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId,
-        CancellationToken cancellationToken)
+    public async Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId, CancellationToken cancellationToken)
     {
         if (!Guid.TryParse(userId, out var id))
         {
-            throw new InvalidOperationException("UserId is null.");
+            throw new ArgumentException("UserId is not a valid GUID.", nameof(userId));
         }
 
         return await this.dbContext.Users

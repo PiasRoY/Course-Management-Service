@@ -30,10 +30,10 @@ public class TokenService : ITokenService
     public async Task<TokenDto> GenerateTokensAsync(IEnumerable<Claim> claims, CancellationToken cancellationToken, string? previousRefreshToken = null)
     {
         var userIdStr = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        
+
         if(!Guid.TryParse(userIdStr, out var userId))
         {
-            throw new InvalidOperationException("Claim UserId is invalid.");
+            throw new SecurityTokenException("Claim UserId is invalid.");
         }
 
         cancellationToken.ThrowIfCancellationRequested();
@@ -144,17 +144,17 @@ public class TokenService : ITokenService
 
         if (oldTokenInfo == null)
         {
-            throw new InvalidOperationException("Invalid previous refresh token.");
+            throw new SecurityTokenException("Invalid previous refresh token.");
         }
 
         if (DateTime.UtcNow > oldTokenInfo.ExpiresAt)
         {
-            throw new InvalidOperationException("Refresh token has been expired.");
+            throw new SecurityTokenException("Refresh token has expired.");
         }
 
         if (oldTokenInfo.RevokedAt != null)
         {
-            throw new InvalidOperationException("Refresh token is invalid.");
+            throw new SecurityTokenException("Refresh token is invalid.");
         }
 
         oldTokenInfo.RevokedAt = DateTime.UtcNow;

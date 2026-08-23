@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using CourseManagement.Business.CustomExceptions;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Serilog.Context;
 using System.Security.Claims;
 
@@ -23,6 +25,11 @@ public class GlobalExceptionHandler : IExceptionHandler
 
         var (statusCode, title) = exception switch
         {
+            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Not Authorized."),
+            SecurityTokenException => (StatusCodes.Status401Unauthorized, "Token not authorized."),
+            ArgumentException => (StatusCodes.Status400BadRequest, "Bad Request."),
+            UserNotFoundException => (StatusCodes.Status404NotFound, "User was not found."),
+            InvalidOperationException => (StatusCodes.Status409Conflict, "An invalid operation occured."),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occured.")
         };
 
