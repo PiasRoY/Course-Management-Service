@@ -11,6 +11,8 @@ namespace CourseManagement.API.Controllers;
 [Route("api/v1/[controller]")]
 public class AccountController : ControllerBase
 {
+    private const string RefreshTokenCookieName = "RefreshToken";
+    
     private readonly IAuthService authService;
 
     public AccountController(IAuthService authService)
@@ -28,18 +30,33 @@ public class AccountController : ControllerBase
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<TokenDto>> Login(AuthenticateUserRequest authUserRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult> Login(AuthenticateUserRequest authUserRequest, CancellationToken cancellationToken)
     {
         var tokenDto = await this.authService.AuthenticateUserAsync(authUserRequest);
-        return Ok(tokenDto);
+        
+        SetRefreshToken(tokenDto.RefreshToken, tokenDto.RereshTokenExpiredAt);        
+        
+        return Ok(new { tokenDto.AccessToken });
     }
 
     [HttpPost("refresh-token")]
     [AllowAnonymous]
-    public async Task<ActionResult<TokenDto>> RefreshToken(TokenRequest tokenRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult> RefreshToken(CancellationToken cancellationToken)
     {
+        var accessToken = ExtractBearerTokenFromAuthHeader();
+        var refreshToken = GetRefreshToken();
+
+        var tokenRequest = new TokenRequest
+        {
+            ExpiredAccessToken = accessToken,
+            CurrentRefreshToken = refreshToken
+        };
+
         var tokenDto = await this.authService.RefreshAsync(tokenRequest);
-        return Ok(tokenDto);
+        
+        SetRefreshToken(tokenDto.RefreshToken, tokenDto.RereshTokenExpiredAt);        
+        
+        return Ok(new { tokenDto.AccessToken });
     }
 
     [HttpPost("change-password")]
@@ -102,5 +119,37 @@ public class AccountController : ControllerBase
         await this.authService.RevokeRefreshTokensByUser(userId);
 
         return NoContent();
+    }
+    
+    private string ExtractBearerTokenFromAuthHeader()
+    {
+        var authHeader = Request.Headers.Authorization.ToString();
+        if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+        {
+            throw new InvalidOperationException("Bearer token not provided.");
+        }
+        
+        return authHeader.Substring("Bearer ".Length).Trim();
+    }
+
+    private string GetRefreshToken()
+    {
+        Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken);
+
+        return string.IsNullOrEmpty(refreshToken) ? 
+            throw new InvalidOperationException("Refresh token not provided.") : 
+            refreshToken;
+    }
+
+    private void SetRefreshToken(string refreshToken, DateTime expiresAt)
+    {
+        Response.Cookies.Append(RefreshTokenCookieName, refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Expires = expiresAt,
+            Path = Url.Action(nameof(RefreshToken))
+        });
     }
 }
