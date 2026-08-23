@@ -20,6 +20,30 @@ public class ClassService : IClassService
         this.logger = logger;
     }
 
+    public async Task<ClassDto> GetClassByNameAsync(string className, CancellationToken cancellationToken)
+    {
+        var @class = await this.dbContext
+                                .Classes.AsNoTracking()
+                                .FirstOrDefaultAsync(cl => cl.Name == className, cancellationToken);
+
+        if (@class == null)
+        {
+            throw new ClassNotFoundException(className);
+        }
+
+        return ClassMapper.MapsToClassDto(@class);
+    }
+
+    public async Task<IEnumerable<ClassDto>> GetClassesByInstructorEmail(string email, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Classes.AsNoTracking()
+                         .Include(cl => cl.Instructor)
+                         .Where(cl => cl.Instructor.EmailAddress == email)
+                         .Select(cl => ClassMapper.MapsToClassDto(cl))
+                         .ToListAsync(cancellationToken);
+    }
+
     public async Task<ClassDto> CreateClassAsync(CreateClassRequest createClassRequest, CancellationToken cancellationToken)
     {
         var isClassExists = await this.dbContext

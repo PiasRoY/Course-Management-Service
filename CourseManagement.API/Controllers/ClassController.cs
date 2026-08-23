@@ -1,4 +1,6 @@
 ﻿using CourseManagement.Business.Constants;
+using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,39 +11,50 @@ namespace CourseManagement.API.Controllers;
 [Authorize(Roles = UserRoles.AdminOrStaff)]
 public class ClassController : ControllerBase
 {
+    private readonly IClassService classService;
+
+    public ClassController(IClassService classService)
+    {
+        this.classService = classService;
+    }
+
     [HttpGet]
     public IActionResult GetAllClasses()
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // TODO: Pagination.
     }
 
-    [HttpGet]
-    public IActionResult GetClassesByInstructorId()
+    [HttpGet("instructor-email/{email}")]
+    public async Task<ActionResult<IEnumerable<ClassDto>>> GetClassesByInstructorEmailAsync(string email, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "List of classes by instructor id." });
+        return Ok(await this.classService.GetClassesByInstructorEmail(email, cancellationToken));
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetClassById(int id)
+    [HttpGet("class-name/{className}")]
+    public async Task<ActionResult<ClassDto>> GetClassByNameAsync(string className, CancellationToken cancellationToken)
     {
-        return Ok(new { message = $"Details of class with ID: {id}" });
+        return Ok(await this.classService.GetClassByNameAsync(className, cancellationToken));
     }
 
     [HttpPost]
-    public IActionResult CreateClass()
+    public async Task<ActionResult<ClassDto>> CreateClass(CreateClassRequest createClassRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Class created successfully" });
+        return CreatedAtAction(
+            nameof(CreateClass),
+            await this.classService.CreateClassAsync(createClassRequest, cancellationToken));
     }
 
-    [HttpPatch("{id}")]
-    public IActionResult UpdateClass(int id)
+    [HttpPatch]
+    public async Task<ActionResult<ClassDto>> UpdateClassAsync(UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Class updated successfully" });
+        var classDto = await this.classService.UpdateClassByNameAsync(updateClassRequest, cancellationToken);
+        return Ok(classDto);
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteClass(int id)
+    [HttpDelete]
+    public async Task<IActionResult> DeleteClassAsync(DeleteClassRequest deleteClassRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Class deleted successfully" });
+        await this.classService.DeleteClassByNameAsync(deleteClassRequest, cancellationToken);
+        return NoContent();
     }
 }
