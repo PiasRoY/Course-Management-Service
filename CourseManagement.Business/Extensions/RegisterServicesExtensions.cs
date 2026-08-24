@@ -13,6 +13,7 @@ public static class RegisterServicesExtensions
         services.AddScoped<IAuthService, AuthService>();
 
         services.AddScoped<IClassService, ClassService>();
+        services.AddScoped<ICourseService, CourseService>();
 
         return services;
     }
