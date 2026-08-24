@@ -16,5 +16,9 @@ public class UserRoleEntityTypeConfiguration : IEntityTypeConfiguration<UserRole
             .Property(ur => ur.RoleName)
             .IsRequired()
             .HasMaxLength(100);
+
+        builder
+            .HasIndex(ur => ur.RoleName)
+            .IsUnique();
     }
 }

@@ -13,4 +13,5 @@ public interface IAuthService
     Task<int> DeleteAsync(DeleteUserRequest deleteUserRequest, CancellationToken cancellationToken);
     Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId, CancellationToken cancellationToken);
     Task RevokeRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken);
+    Task ChangeRolesAsync(ChangeRolesRequest changeRolesRequest, CancellationToken cancellationToken);
 }

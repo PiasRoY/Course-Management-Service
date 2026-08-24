@@ -1,6 +1,6 @@
-﻿using CourseManagement.Business.Constants;
-using CourseManagement.Business.CustomExceptions;
+﻿using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.UserDTOs;
+using CourseManagement.Business.Enums;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
@@ -32,7 +32,7 @@ public class AuthService : IAuthService
 
     public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken, IEnumerable<string>? roles = null)
     {
-        roles ??= [UserRoles.Student];
+        roles ??= [UserRoles.Student.ToString()];
 
         var userExist = await this.dbContext
             .Users.AsNoTracking()
@@ -169,6 +169,39 @@ public class AuthService : IAuthService
         }
 
         await this.tokenService.RevokeAllRefreshTokensByUserAsync(userId, cancellationToken);
+    }
+
+    public async Task ChangeRolesAsync(ChangeRolesRequest changeRolesRequest, CancellationToken cancellationToken)
+    {
+        var user = await this.dbContext
+                             .Users
+                             .Include(u => u.UserUserRoles)
+                             .FirstOrDefaultAsync(u => u.EmailAddress == changeRolesRequest.UserEmail, cancellationToken);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException(changeRolesRequest.UserEmail);
+        }
+
+        user.UserUserRoles.Clear();
+
+        var requestedRoles = changeRolesRequest.Roles.Select(r => r.ToString());
+
+        var userRoleRoles = await this.dbContext
+            .UserRoles
+            .Where(ur => requestedRoles.Contains(ur.RoleName))
+            .Select(ur => new UserUserRole
+            {
+                User = user,
+                UserRole = ur
+            })
+            .ToListAsync(cancellationToken);
+
+        user.UserUserRoles = userRoleRoles;
+
+        await this.dbContext.SaveChangesAsync(cancellationToken);
+
+        this.logger.LogInformation("Roles for {UserEmail} are changed to {Roles}", changeRolesRequest.UserEmail, changeRolesRequest.Roles);
     }
 
     private async Task<List<Claim>> CreateClaimsFromUserAsync(User user, CancellationToken cancellationToken)

@@ -1,5 +1,5 @@
-﻿using CourseManagement.Business.Constants;
-using CourseManagement.Business.DTOs.UserDTOs;
+﻿using CourseManagement.Business.DTOs.UserDTOs;
+using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
 using CourseManagement.Infrastructure.ApplicationData;
@@ -25,6 +25,7 @@ public class DbSeeder
         await this.dbContext.Database.MigrateAsync();
         await this.SeedRoles();
         await this.SeedAdminUsers();
+        await this.SeedInstructorUsers();
     }
 
     private async Task SeedRoles()
@@ -39,22 +40,22 @@ public class DbSeeder
             new()
             {
                 RoleId = Guid.NewGuid(),
-                RoleName = UserRoles.Admin
+                RoleName = UserRoles.Admin.ToString()
             },
             new()
             {
                 RoleId = Guid.NewGuid(),
-                RoleName = UserRoles.Staff
+                RoleName = UserRoles.Staff.ToString()
             },
             new()
             {
                 RoleId = Guid.NewGuid(),
-                RoleName = UserRoles.Instructor
+                RoleName = UserRoles.Instructor.ToString()
             },
             new()
             {
                 RoleId = Guid.NewGuid(),
-                RoleName = UserRoles.Student
+                RoleName = UserRoles.Student.ToString()
             }
         };
 
@@ -64,11 +65,6 @@ public class DbSeeder
 
     private async Task SeedAdminUsers()
     {
-        if (await this.dbContext.Users.AnyAsync())
-        {
-            return;
-        }
-
         var createUser = new CreateUserRequest
         {
             FirstName = "Pias",
@@ -77,6 +73,29 @@ public class DbSeeder
             Password = "password12345678"
         };
 
-        await this.authService.CreateUserAsync(createUser, CancellationToken.None, [UserRoles.Admin]);
+        if (await this.dbContext.Users.AnyAsync(u => u.EmailAddress == createUser.EmailAddress))
+        {
+            return;
+        }
+
+        await this.authService.CreateUserAsync(createUser, CancellationToken.None, [UserRoles.Admin.ToString()]);
+    }
+
+    private async Task SeedInstructorUsers()
+    {
+        var createUser = new CreateUserRequest
+        {
+            FirstName = "Pias",
+            LastName = "Roy",
+            EmailAddress = "pias@instructor.com",
+            Password = "password12345678"
+        };
+
+        if (await this.dbContext.Users.AnyAsync(u => u.EmailAddress == createUser.EmailAddress))
+        {
+            return;
+        }
+
+        await this.authService.CreateUserAsync(createUser, CancellationToken.None, [UserRoles.Instructor.ToString()]);
     }
 }

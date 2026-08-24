@@ -4,6 +4,7 @@ using CourseManagement.API.Handlers;
 using CourseManagement.Business.Extensions;
 using CourseManagement.Infrastructure.ApplicationData;
 using Scalar.AspNetCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,11 @@ builder.Services
     .AddOpenApi()
     .AddSerilogLogging(configuration)
     .AddHttpContextAccessor()
-    .AddControllers();
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 

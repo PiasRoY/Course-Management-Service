@@ -1,5 +1,5 @@
-﻿using CourseManagement.Business.Constants;
-using CourseManagement.Business.DTOs.UserDTOs;
+﻿using CourseManagement.Business.DTOs.UserDTOs;
+using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -90,7 +90,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpDelete("delete-user")]
-    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
     public async Task<ActionResult> DeleteUserAsync(DeleteUserRequest deleteUserRequest, CancellationToken cancellationToken)
     {
         if (deleteUserRequest.UserId is null & string.IsNullOrEmpty(deleteUserRequest.Email))
@@ -109,11 +109,19 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("revoke-refresh-tokens")]
-    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
     public async Task<ActionResult> RevokeRefreshTokens([FromBody] Guid userId, CancellationToken cancellationToken)
     {
         await this.authService.RevokeRefreshTokensByUserAsync(userId, cancellationToken);
 
+        return NoContent();
+    }
+
+    [HttpPost("change-roles")]
+    [Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
+    public async Task<IActionResult> ChangeRolesAsync(ChangeRolesRequest changeRolesRequest, CancellationToken cancellationToken)
+    {
+        await this.authService.ChangeRolesAsync(changeRolesRequest, cancellationToken);
         return NoContent();
     }
     
