@@ -1,5 +1,5 @@
-﻿using CourseManagement.Business.Constants;
-using CourseManagement.Business.DTOs.ClassDTOs;
+﻿using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Roles = UserRoles.AdminOrStaff)]
+[Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
 public class ClassController : ControllerBase
 {
     private readonly IClassService classService;
@@ -44,10 +44,10 @@ public class ClassController : ControllerBase
             await this.classService.CreateClassAsync(createClassRequest, cancellationToken));
     }
 
-    [HttpPatch]
-    public async Task<ActionResult<ClassDto>> UpdateClassAsync(UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
+    [HttpPatch("class-name/{className}")]
+    public async Task<ActionResult<ClassDto>> UpdateClassAsync(string className, UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
     {
-        var classDto = await this.classService.UpdateClassByNameAsync(updateClassRequest, cancellationToken);
+        var classDto = await this.classService.UpdateClassByNameAsync(className, updateClassRequest, cancellationToken);
         return Ok(classDto);
     }
 

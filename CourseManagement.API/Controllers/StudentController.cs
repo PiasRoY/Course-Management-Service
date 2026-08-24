@@ -1,4 +1,4 @@
-﻿using CourseManagement.Business.Constants;
+﻿using CourseManagement.Business.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +6,7 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Roles = UserRoles.AdminOrStaff)]
+[Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
 public class StudentController : ControllerBase
 {
     [HttpGet]

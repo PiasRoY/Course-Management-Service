@@ -6,7 +6,7 @@ namespace CourseManagement.Business.Mappers;
 
 public static class ClassMapper
 {
-    public static ClassDto MapsToClassDto(Class @class)
+    public static ClassDto MapsToClassDto(Class @class, User instructor)
     {
         return new ClassDto
         {
@@ -14,8 +14,8 @@ public static class ClassMapper
             Semester = @class.Semester,
             Calendar = @class.Calendar,
             SectionCode = @class.SectionCode,
-            InstructorName = $"{@class.Instructor.FirstName} {@class.Instructor.LastName}",
-            InstructorEmail = @class.Instructor.EmailAddress
+            InstructorName = $"{instructor.FirstName} {instructor.LastName}",
+            InstructorEmail = instructor.EmailAddress
         };
     }
 

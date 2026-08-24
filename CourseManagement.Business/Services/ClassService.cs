@@ -24,6 +24,7 @@ public class ClassService : IClassService
     {
         var @class = await this.dbContext
                                 .Classes.AsNoTracking()
+                                .Include(cl => cl.Instructor)
                                 .FirstOrDefaultAsync(cl => cl.Name == className, cancellationToken);
 
         if (@class == null)
@@ -31,16 +32,18 @@ public class ClassService : IClassService
             throw new ClassNotFoundException(className);
         }
 
-        return ClassMapper.MapsToClassDto(@class);
+        return ClassMapper.MapsToClassDto(@class, @class.Instructor);
     }
 
     public async Task<IEnumerable<ClassDto>> GetClassesByInstructorEmail(string email, CancellationToken cancellationToken)
     {
+        await this.GetInstructor(email, cancellationToken);
+
         return await this.dbContext
                          .Classes.AsNoTracking()
                          .Include(cl => cl.Instructor)
                          .Where(cl => cl.Instructor.EmailAddress == email)
-                         .Select(cl => ClassMapper.MapsToClassDto(cl))
+                         .Select(cl => ClassMapper.MapsToClassDto(cl, cl.Instructor))
                          .ToListAsync(cancellationToken);
     }
 
@@ -64,7 +67,7 @@ public class ClassService : IClassService
             Semester = createClassRequest.Semester,
             Year = createClassRequest.Year,
             SectionCode = createClassRequest.SectionCode,
-            Instructor = instructor
+            InstructorId = instructor.UserId
         };
 
         await this.dbContext.Classes.AddAsync(@class, cancellationToken);
@@ -72,25 +75,27 @@ public class ClassService : IClassService
 
         this.logger.LogInformation("Class named {Name} is created.", @class.Name);
 
-        return ClassMapper.MapsToClassDto(@class);
+        return ClassMapper.MapsToClassDto(@class, instructor);
     }
 
-    public async Task<ClassDto> UpdateClassByNameAsync(UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
+    public async Task<ClassDto> UpdateClassByNameAsync(string className, UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
     {
         var @class = await this.dbContext
                                 .Classes
-                                .FirstOrDefaultAsync(cl => cl.Name == updateClassRequest.Name, cancellationToken);
+                                .Include(cl => cl.Instructor)
+                                .FirstOrDefaultAsync(cl => cl.Name == className, cancellationToken);
 
         if (@class == null)
         {
-            throw new ClassNotFoundException(updateClassRequest.Name);
+            throw new ClassNotFoundException(className);
         }
 
         ClassMapper.MapsStaticPropertiesToClass(updateClassRequest, @class);
 
+        User instructor = null!;
         if (updateClassRequest.InstructorEmail != null)
         {
-            var instructor = await this.GetInstructor(updateClassRequest.InstructorEmail, cancellationToken);
+            instructor = await this.GetInstructor(updateClassRequest.InstructorEmail, cancellationToken);
             @class.InstructorId = instructor.UserId;
         }
 
@@ -98,7 +103,7 @@ public class ClassService : IClassService
 
         this.logger.LogInformation("Class named {Name} has been updated.", @class.Name);
 
-        return ClassMapper.MapsToClassDto(@class);
+        return ClassMapper.MapsToClassDto(@class, updateClassRequest.InstructorEmail != null ? instructor : @class.Instructor);
     }
 
     public async Task DeleteClassByNameAsync(DeleteClassRequest deleteClassRequest, CancellationToken cancellationToken)
