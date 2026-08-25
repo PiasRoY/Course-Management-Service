@@ -30,8 +30,14 @@ public class ClassController : ControllerBase
         return Ok(await this.classService.GetClassesByInstructorEmail(email, cancellationToken));
     }
 
+    [HttpGet("{classId}")]
+    public async Task<ActionResult<ClassDto>> GetClassByIdAsync(Guid classId, CancellationToken cancellationToken)
+    {
+        return Ok(await this.classService.GetClassByIdAsync(classId, cancellationToken));
+    }
+
     [HttpGet("class-name/{className}")]
-    public async Task<ActionResult<ClassDto>> GetClassByNameAsync(string className, CancellationToken cancellationToken)
+    public async Task<ActionResult<ClassDto>> GetClassByIdAsync(string className, CancellationToken cancellationToken)
     {
         return Ok(await this.classService.GetClassByNameAsync(className, cancellationToken));
     }
@@ -44,17 +50,17 @@ public class ClassController : ControllerBase
             await this.classService.CreateClassAsync(createClassRequest, cancellationToken));
     }
 
-    [HttpPatch("class-name/{className}")]
-    public async Task<ActionResult<ClassDto>> UpdateClassAsync(string className, UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
+    [HttpPatch("{classId}")]
+    public async Task<ActionResult<ClassDto>> UpdateClassAsync(Guid classId, UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
     {
-        var classDto = await this.classService.UpdateClassByNameAsync(className, updateClassRequest, cancellationToken);
+        var classDto = await this.classService.UpdateClassByIdAsync(classId, updateClassRequest, cancellationToken);
         return Ok(classDto);
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeleteClassAsync(DeleteClassRequest deleteClassRequest, CancellationToken cancellationToken)
     {
-        await this.classService.DeleteClassByNameAsync(deleteClassRequest, cancellationToken);
+        await this.classService.DeleteClassByIdAsync(deleteClassRequest, cancellationToken);
         return NoContent();
     }
 }

@@ -43,22 +43,18 @@ public class StudentService : IStudentService
 
         var user = await this.dbContext
                              .Users
+                             .Where(u => u.EmailAddress == createStudentRequest.EmailAddress)
+                             .Where(u => u.UserUserRoles.Any(uur => uur.UserRole.RoleName == UserRoles.Instructor.ToString()))
                              .Select(u => new
                              {
                                  u.UserId,
-                                 u.EmailAddress,
-                                 Role = u.UserUserRoles.Select(uur => uur.UserRole.RoleName)
+                                 u.EmailAddress
                              })
-                             .SingleOrDefaultAsync(u => u.EmailAddress == createStudentRequest.EmailAddress, cancellationToken);
+                             .SingleOrDefaultAsync(cancellationToken);
 
         if (user == null)
         {
             throw new UserNotFoundException(createStudentRequest.EmailAddress);
-        }
-
-        if (!user.Role.ToList().Contains(UserRoles.Student.ToString()))
-        {
-            throw new InvalidOperationException("User does not have student role access.");
         }
 
         var student = StudentMapper.MapsToStudent(createStudentRequest, user.UserId);

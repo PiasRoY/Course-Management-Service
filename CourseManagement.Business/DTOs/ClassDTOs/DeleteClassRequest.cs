@@ -4,7 +4,5 @@ namespace CourseManagement.Business.DTOs.ClassDTOs;
 
 public class DeleteClassRequest
 {
-    [Required(ErrorMessage = "Class name is required.")]
-    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email address is invalid.")]
-    public required string Name { get; set; }
+    public required Guid ClassId { get; set; }
 }

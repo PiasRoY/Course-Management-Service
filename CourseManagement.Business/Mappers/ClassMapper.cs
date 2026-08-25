@@ -1,7 +1,5 @@
 ﻿using CourseManagement.Business.DTOs.ClassDTOs;
 using CourseManagement.Domain.Entities;
-using CourseManagement.Domain.Enums;
-
 namespace CourseManagement.Business.Mappers;
 
 public static class ClassMapper
@@ -22,9 +20,14 @@ public static class ClassMapper
 
     public static void MapsStaticPropertiesToClass(UpdateClassRequest updateClassRequest, Class @class)
     {
+        if (!string.IsNullOrWhiteSpace(updateClassRequest.ClassName)) 
+        {
+            @class.Name = updateClassRequest.ClassName;
+        }
+
         if (updateClassRequest.Semester != null)
         {
-            @class.Semester = (Semester) updateClassRequest.Semester;
+            @class.Semester = updateClassRequest.Semester.Value;
         }
 
         if (updateClassRequest.Year != null)
@@ -32,7 +35,7 @@ public static class ClassMapper
             @class.Year = (int) updateClassRequest.Year;
         }
 
-        if (!string.IsNullOrEmpty(updateClassRequest.SectionCode))
+        if (!string.IsNullOrWhiteSpace(updateClassRequest.SectionCode))
         {
             @class.SectionCode = updateClassRequest.SectionCode;
         }
