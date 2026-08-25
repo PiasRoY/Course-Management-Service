@@ -6,7 +6,7 @@ namespace CourseManagement.Business.Services.Interfaces
     {
         Task<CourseDto> CreateCourseAsync(CreateCourseRequest createCourseRequest, CancellationToken cancellationToken);
         Task DeleteCourseByNameAsync(DeleteCourseRequest deleteCourseRequest, CancellationToken cancellationToken);
-        Task<CourseDto> GetCourseByNameAsync(string courseName, CancellationToken cancellationToken);
-        Task<CourseDto> UpdateCourseByNameAsync(string courseName, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken);
+        Task<CourseDto> GetCourseByIdAsync(Guid courseId, CancellationToken cancellationToken);
+        Task<CourseDto> UpdateCourseByIdAsync(Guid courseId, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken);
     }
 }

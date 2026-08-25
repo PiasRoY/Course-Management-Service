@@ -24,10 +24,10 @@ public class CourseController : ControllerBase
         throw new NotImplementedException(); // TODO: Pagination
     }
 
-    [HttpGet("{name}")]
-    public async Task<ActionResult<CourseDto>> GetCourseByNameAsync(string name, CancellationToken cancellationToken)
+    [HttpGet("{courseId}")]
+    public async Task<ActionResult<CourseDto>> GetCourseByIdAsync(Guid courseId, CancellationToken cancellationToken)
     {
-        return Ok(await this.courseService.GetCourseByNameAsync(name, cancellationToken));
+        return Ok(await this.courseService.GetCourseByIdAsync(courseId, cancellationToken));
     }
 
     [HttpPost]
@@ -38,10 +38,10 @@ public class CourseController : ControllerBase
                 await this.courseService.CreateCourseAsync(createCourseRequest, cancellationToken));
     }
 
-    [HttpPatch("course-name/{name}")]
-    public async Task<ActionResult<CourseDto>> UpdateCourse(string name, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken)
+    [HttpPatch("{courseId}")]
+    public async Task<ActionResult<CourseDto>> UpdateCourse(Guid courseId, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken)
     {
-        return Ok(await this.courseService.UpdateCourseByNameAsync(name, updateCourseRequest, cancellationToken));
+        return Ok(await this.courseService.UpdateCourseByIdAsync(courseId, updateCourseRequest, cancellationToken));
     }
 
     [HttpDelete]

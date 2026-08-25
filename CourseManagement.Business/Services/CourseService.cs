@@ -19,17 +19,17 @@ public class CourseService : ICourseService
         this.logger = logger;
     }
 
-    public async Task<CourseDto> GetCourseByNameAsync(string courseName, CancellationToken cancellationToken)
+    public async Task<CourseDto> GetCourseByIdAsync(Guid courseId, CancellationToken cancellationToken)
     {
         var course = await this.dbContext
                          .Courses.AsNoTracking()
                          .Include(c => c.CourseClasses)
                          .ThenInclude(cc => cc.Class)
-                         .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
+                         .SingleOrDefaultAsync(c => c.CourseId == courseId, cancellationToken);
 
         if (course == null)
         {
-            throw new CourseNotFoundException(courseName);
+            throw new CourseNotFoundException(courseId);
         }
 
         var classNames = course.CourseClasses.Select(cc => cc.Class.Name);
@@ -55,17 +55,17 @@ public class CourseService : ICourseService
         return CourseMapper.MapsToCourseDto(course, classInfos.Select(cl => cl.Name));
     }
 
-    public async Task<CourseDto> UpdateCourseByNameAsync(string courseName, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken)
+    public async Task<CourseDto> UpdateCourseByIdAsync(Guid courseId, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken)
     {
         var course = await this.dbContext
                                .Courses
                                .Include(c => c.CourseClasses)
                                .ThenInclude(cc => cc.Class)
-                               .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
+                               .SingleOrDefaultAsync(c => c.CourseId == courseId, cancellationToken);
 
         if (course == null)
         {
-            throw new CourseNotFoundException(courseName);
+            throw new CourseNotFoundException(courseId);
         }
 
         if (!string.IsNullOrEmpty(updateCourseRequest.Name) && await IsCourseNameExists(updateCourseRequest.Name, cancellationToken))
@@ -94,10 +94,10 @@ public class CourseService : ICourseService
     {
         await this.dbContext
                   .Courses
-                  .Where(c => c.Name == deleteCourseRequest.Name)
+                  .Where(c => c.CourseId == deleteCourseRequest.CourseId)
                   .ExecuteDeleteAsync(cancellationToken);
 
-        this.logger.LogInformation("Course named {deleteCourseRequest} has been deleted.", deleteCourseRequest.Name);
+        this.logger.LogInformation("Course named {deleteCourseRequest} has been deleted.", deleteCourseRequest.CourseId);
     }
 
     private async Task<bool> IsCourseNameExists(string courseName, CancellationToken cancellationToken)
