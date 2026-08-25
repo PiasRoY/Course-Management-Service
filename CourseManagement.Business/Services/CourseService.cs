@@ -37,6 +37,24 @@ public class CourseService : ICourseService
         return CourseMapper.MapsToCourseDto(course, classNames);
     }
 
+    public async Task<CourseDto> GetCourseByNameAsync(string courseName, CancellationToken cancellationToken)
+    {
+        var course = await this.dbContext
+                         .Courses.AsNoTracking()
+                         .Include(c => c.CourseClasses)
+                         .ThenInclude(cc => cc.Class)
+                         .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
+
+        if (course == null)
+        {
+            throw new CourseNotFoundException(courseName);
+        }
+
+        var classNames = course.CourseClasses.Select(cc => cc.Class.Name);
+
+        return CourseMapper.MapsToCourseDto(course, classNames);
+    }
+
     public async Task<CourseDto> CreateCourseAsync(CreateCourseRequest createCourseRequest, CancellationToken cancellationToken)
     {
         if (await IsCourseNameExists(createCourseRequest.Name, cancellationToken))
@@ -90,7 +108,7 @@ public class CourseService : ICourseService
         return CourseMapper.MapsToCourseDto(course, classInfos.Select(cl => cl.Name));
     }
 
-    public async Task DeleteCourseByNameAsync(DeleteCourseRequest deleteCourseRequest, CancellationToken cancellationToken)
+    public async Task DeleteCourseByIdAsync(DeleteCourseRequest deleteCourseRequest, CancellationToken cancellationToken)
     {
         await this.dbContext
                   .Courses

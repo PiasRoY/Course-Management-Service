@@ -30,6 +30,12 @@ public class CourseController : ControllerBase
         return Ok(await this.courseService.GetCourseByIdAsync(courseId, cancellationToken));
     }
 
+    [HttpGet("course-name/{courseName}")]
+    public async Task<ActionResult<CourseDto>> GetCourseByNameAsync(string courseName, CancellationToken cancellationToken)
+    {
+        return Ok(await this.courseService.GetCourseByNameAsync(courseName, cancellationToken));
+    }
+
     [HttpPost]
     public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseRequest createCourseRequest, CancellationToken cancellationToken)
     {
@@ -47,7 +53,7 @@ public class CourseController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteCourse(DeleteCourseRequest deleteCourseRequest, CancellationToken cancellationToken)
     {
-        await this.courseService.DeleteCourseByNameAsync(deleteCourseRequest, cancellationToken);
+        await this.courseService.DeleteCourseByIdAsync(deleteCourseRequest, cancellationToken);
         return NoContent();
     }
 }
