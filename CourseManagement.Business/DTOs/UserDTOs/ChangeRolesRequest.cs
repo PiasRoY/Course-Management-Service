@@ -6,7 +6,7 @@ namespace CourseManagement.Business.DTOs.UserDTOs;
 public class ChangeRolesRequest
 {
     [Required]
-    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email must include a valid domain extension.")]
+    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email address is invalid.")]
     public required string UserEmail { get; set; }
     public IEnumerable<UserRoles> Roles { get; set; } = [];
 }

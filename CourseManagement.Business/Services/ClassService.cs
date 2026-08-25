@@ -23,9 +23,9 @@ public class ClassService : IClassService
     public async Task<ClassDto> GetClassByNameAsync(string className, CancellationToken cancellationToken)
     {
         var @class = await this.dbContext
-                                .Classes.AsNoTracking()
-                                .Include(cl => cl.Instructor)
-                                .FirstOrDefaultAsync(cl => cl.Name == className, cancellationToken);
+                               .Classes.AsNoTracking()
+                               .Include(cl => cl.Instructor)
+                               .SingleOrDefaultAsync(cl => cl.Name == className, cancellationToken);
 
         if (@class == null)
         {
@@ -40,8 +40,7 @@ public class ClassService : IClassService
         await this.GetInstructor(email, cancellationToken);
 
         return await this.dbContext
-                         .Classes.AsNoTracking()
-                         .Include(cl => cl.Instructor)
+                         .Classes
                          .Where(cl => cl.Instructor.EmailAddress == email)
                          .Select(cl => ClassMapper.MapsToClassDto(cl, cl.Instructor))
                          .ToListAsync(cancellationToken);
@@ -50,8 +49,8 @@ public class ClassService : IClassService
     public async Task<ClassDto> CreateClassAsync(CreateClassRequest createClassRequest, CancellationToken cancellationToken)
     {
         var isClassExists = await this.dbContext
-                                        .Classes.AsNoTracking()
-                                        .AnyAsync(cl => cl.Name == createClassRequest.Name, cancellationToken);
+                                      .Classes
+                                      .AnyAsync(cl => cl.Name == createClassRequest.Name, cancellationToken);
 
         if (isClassExists)
         {
@@ -81,9 +80,9 @@ public class ClassService : IClassService
     public async Task<ClassDto> UpdateClassByNameAsync(string className, UpdateClassRequest updateClassRequest, CancellationToken cancellationToken)
     {
         var @class = await this.dbContext
-                                .Classes
-                                .Include(cl => cl.Instructor)
-                                .FirstOrDefaultAsync(cl => cl.Name == className, cancellationToken);
+                               .Classes
+                               .Include(cl => cl.Instructor)
+                               .SingleOrDefaultAsync(cl => cl.Name == className, cancellationToken);
 
         if (@class == null)
         {
@@ -109,9 +108,9 @@ public class ClassService : IClassService
     public async Task DeleteClassByNameAsync(DeleteClassRequest deleteClassRequest, CancellationToken cancellationToken)
     {
         await this.dbContext
-                    .Classes
-                    .Where(cl => cl.Name == deleteClassRequest.Name)
-                    .ExecuteDeleteAsync(cancellationToken);
+                  .Classes
+                  .Where(cl => cl.Name == deleteClassRequest.Name)
+                  .ExecuteDeleteAsync(cancellationToken);
 
         this.logger.LogInformation("Class named {Name} has been deleted.", deleteClassRequest.Name);
     }
@@ -120,8 +119,7 @@ public class ClassService : IClassService
     {
         var instructor = await this.dbContext
                                     .Users.AsNoTracking()
-                                    .Where(u => u.EmailAddress == InstructorEmail)
-                                    .FirstOrDefaultAsync(cancellationToken);
+                                    .SingleOrDefaultAsync(u => u.EmailAddress == InstructorEmail, cancellationToken);
 
         if (instructor == null)
         {

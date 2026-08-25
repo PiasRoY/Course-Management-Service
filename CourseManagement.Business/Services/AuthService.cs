@@ -35,7 +35,7 @@ public class AuthService : IAuthService
         roles ??= [UserRoles.Student.ToString()];
 
         var userExist = await this.dbContext
-            .Users.AsNoTracking()
+            .Users
             .AnyAsync(u => u.EmailAddress == createUserRequest.EmailAddress, cancellationToken);
 
         if (userExist)
@@ -46,10 +46,10 @@ public class AuthService : IAuthService
         this.logger.LogInformation("Creating a new user with email: {Email}", createUserRequest.EmailAddress);
 
         var useruserroles = await this.dbContext
-            .UserRoles
-            .Where(ur => roles.Contains(ur.RoleName))
-            .Select(ur => new UserUserRole { UserRole = ur })
-            .ToListAsync(cancellationToken);
+                                      .UserRoles
+                                      .Where(ur => roles.Contains(ur.RoleName))
+                                      .Select(ur => new UserUserRole { UserRole = ur })
+                                      .ToListAsync(cancellationToken);
 
         var user = new User
         {
@@ -72,8 +72,8 @@ public class AuthService : IAuthService
     public async Task<TokenDto> AuthenticateUserAsync(AuthenticateUserRequest authenticateUserRequest, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
-            .Users.AsNoTracking()
-            .FirstOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email, cancellationToken);
+                             .Users.AsNoTracking()
+                             .SingleOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email, cancellationToken);
 
         if (user == null)
         {
@@ -95,8 +95,8 @@ public class AuthService : IAuthService
     public async Task ChangePasswordAsync(ChangePasswordRequest changePasswordRequest, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
-            .Users
-            .FirstOrDefaultAsync(u => u.EmailAddress == changePasswordRequest.Email, cancellationToken);
+                             .Users
+                             .SingleOrDefaultAsync(u => u.EmailAddress == changePasswordRequest.Email, cancellationToken);
 
         if (user == null)
         {
@@ -129,14 +129,14 @@ public class AuthService : IAuthService
         }
 
         var affectedRow = await this.dbContext.Users
-            .Where(u => u.UserId == id)
-            .ExecuteUpdateAsync(s => s
-                .SetProperty(u => u.FirstName, updateUserRequest.FirstName)
-                .SetProperty(u => u.LastName, updateUserRequest.LastName)
-                .SetProperty(u => u.UpdatedBy, id)
-                .SetProperty(u => u.UpdatedAt, DateTime.UtcNow),
-                cancellationToken
-            );
+                                              .Where(u => u.UserId == id)
+                                              .ExecuteUpdateAsync(s => s
+                                                  .SetProperty(u => u.FirstName, updateUserRequest.FirstName)
+                                                  .SetProperty(u => u.LastName, updateUserRequest.LastName)
+                                                  .SetProperty(u => u.UpdatedBy, id)
+                                                  .SetProperty(u => u.UpdatedAt, DateTime.UtcNow),
+                                                  cancellationToken
+                                              );
 
         this.logger.LogInformation("User with id {Id} has been updated", userId);
 
@@ -146,11 +146,11 @@ public class AuthService : IAuthService
     public async Task<int> DeleteAsync(DeleteUserRequest deleteUserRequest, CancellationToken cancellationToken)
     {
         var affectedRow = await this.dbContext.Users
-            .Where(
-                u => deleteUserRequest.UserId != null ?
-                u.UserId == deleteUserRequest.UserId :
-                u.EmailAddress == deleteUserRequest.Email)
-            .ExecuteDeleteAsync(cancellationToken);
+                                              .Where(
+                                                  u => deleteUserRequest.UserId != null ?
+                                                  u.UserId == deleteUserRequest.UserId :
+                                                  u.EmailAddress == deleteUserRequest.Email)
+                                              .ExecuteDeleteAsync(cancellationToken);
 
         this.logger.LogInformation("User with email {Email} OR id {Id} has been deleted.", deleteUserRequest.Email, deleteUserRequest.UserId);
 
@@ -160,8 +160,8 @@ public class AuthService : IAuthService
     public async Task RevokeRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
-            .Users.AsNoTracking()
-            .AnyAsync(u => u.UserId == userId, cancellationToken);
+                             .Users
+                             .AnyAsync(u => u.UserId == userId, cancellationToken);
 
         if (!user)
         {
@@ -176,7 +176,7 @@ public class AuthService : IAuthService
         var user = await this.dbContext
                              .Users
                              .Include(u => u.UserUserRoles)
-                             .FirstOrDefaultAsync(u => u.EmailAddress == changeRolesRequest.UserEmail, cancellationToken);
+                             .SingleOrDefaultAsync(u => u.EmailAddress == changeRolesRequest.UserEmail, cancellationToken);
 
         if (user == null)
         {
@@ -213,10 +213,10 @@ public class AuthService : IAuthService
         };
 
         var roles = await this.dbContext
-            .Users.AsNoTracking()
-            .Where(u => u.UserId == user.UserId)
-            .SelectMany(u => u.UserUserRoles.Select(uur => uur.UserRole))
-            .ToListAsync(cancellationToken);
+                              .Users
+                              .Where(u => u.UserId == user.UserId)
+                              .SelectMany(u => u.UserUserRoles.Select(uur => uur.UserRole))
+                              .ToListAsync(cancellationToken);
 
 
         foreach (var role in roles)

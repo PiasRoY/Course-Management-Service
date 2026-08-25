@@ -124,8 +124,8 @@ public class TokenService : ITokenService
     public async Task RevokeAllRefreshTokensByUserAsync(Guid userId, CancellationToken cancellationToken)
     {
         var tokens = await this.dbContext.TokenInfos
-                                            .Where(t => t.UserId == userId)
-                                            .ToListAsync(cancellationToken);
+                                         .Where(t => t.UserId == userId)
+                                         .ToListAsync(cancellationToken);
 
         foreach (var token in tokens)
         {
@@ -139,8 +139,8 @@ public class TokenService : ITokenService
     {
         var tokenHash = this.HashConversion(previousRefreshToken);
         var oldTokenInfo = await this.dbContext
-            .TokenInfos
-            .FirstOrDefaultAsync(t => t.TokenHash == tokenHash && t.UserId == tokenInfo.UserId, cancellationToken);
+                                     .TokenInfos
+                                     .SingleOrDefaultAsync(t => t.TokenHash == tokenHash && t.UserId == tokenInfo.UserId, cancellationToken);
 
         if (oldTokenInfo == null)
         {

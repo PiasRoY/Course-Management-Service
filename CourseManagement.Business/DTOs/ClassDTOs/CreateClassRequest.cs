@@ -18,6 +18,6 @@ public class CreateClassRequest
     public required string SectionCode { get; set; }
 
     [Required(ErrorMessage = "Instructor email is required.")]
-    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email must include a valid domain extension.")]
+    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email address is invalid.")]
     public required string InstructorEmail { get; set; }
 }

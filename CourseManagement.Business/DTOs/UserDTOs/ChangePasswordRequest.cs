@@ -5,7 +5,7 @@ namespace CourseManagement.Business.DTOs.UserDTOs
     public class ChangePasswordRequest
     {
         [Required(ErrorMessage = "Email address is required.")]
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email must include a valid domain extension.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email address is invalid.")]
         required public string Email { get; set; }
 
         [Required(ErrorMessage = "Old Password is required.")]

@@ -25,7 +25,7 @@ public class CourseService : ICourseService
                          .Courses.AsNoTracking()
                          .Include(c => c.CourseClasses)
                          .ThenInclude(cc => cc.Class)
-                         .FirstOrDefaultAsync(c => c.Name == courseName, cancellationToken);
+                         .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
 
         if (course == null)
         {
@@ -61,7 +61,7 @@ public class CourseService : ICourseService
                                .Courses
                                .Include(c => c.CourseClasses)
                                .ThenInclude(cc => cc.Class)
-                               .FirstOrDefaultAsync(c => c.Name == courseName, cancellationToken);
+                               .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
 
         if (course == null)
         {
@@ -110,7 +110,7 @@ public class CourseService : ICourseService
     private async Task<List<ClassInfo>> GetClassesAsync(IEnumerable<string> classNames, CancellationToken cancellationToken)
     {
         var classes = await this.dbContext
-                                .Classes.AsNoTracking()
+                                .Classes
                                 .Where(cl => classNames.Contains(cl.Name))
                                 .Select(cl => new ClassInfo
                                 (
