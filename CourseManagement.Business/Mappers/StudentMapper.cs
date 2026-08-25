@@ -24,26 +24,40 @@ public static class StudentMapper
 
     public static Student MapsToStudent(CreateStudentRequest createStudentRequest, Guid userId)
     {
-        return new Student
+        var student = new Student
         {
             StudentId = Guid.NewGuid(),
             UserId = userId,
             RollNumber = createStudentRequest.RollNumber,
             Status = createStudentRequest.Status,
-            AdmissionDate = createStudentRequest.AdmissionDate,
-            GraduationDate = createStudentRequest.GraduationDate ?? null,
+            AdmissionDate = DateTime.SpecifyKind(createStudentRequest.AdmissionDate, DateTimeKind.Utc),
             CurrentTerm = createStudentRequest.CurrentTerm,
             CurrentSemester = createStudentRequest.CurrentSemester
         };
+
+        if (createStudentRequest.GraduationDate != null)
+        {
+            student.GraduationDate = DateTime.SpecifyKind(createStudentRequest.GraduationDate!.Value, DateTimeKind.Utc);
+        }
+
+        return student;
     }
 
     public static void UpdateStudent(Student student, UpdateStudentRequest updateStudentRequest)
     {
         student.RollNumber = updateStudentRequest.RollNumber ?? student.RollNumber;
         student.Status = updateStudentRequest.Status ?? student.Status;
-        student.AdmissionDate = updateStudentRequest.AdmissionDate ?? student.AdmissionDate;
-        student.GraduationDate = updateStudentRequest.GraduationDate ?? student.GraduationDate;
         student.CurrentTerm = updateStudentRequest.CurrentTerm ?? student.CurrentTerm;
         student.CurrentSemester = updateStudentRequest.CurrentSemester ?? student.CurrentSemester;
+
+        if (updateStudentRequest.AdmissionDate != null)
+        {
+            student.AdmissionDate = DateTime.SpecifyKind(updateStudentRequest.AdmissionDate!.Value, DateTimeKind.Utc);
+        }
+
+        if (updateStudentRequest.GraduationDate != null)
+        {
+            student.GraduationDate = DateTime.SpecifyKind(updateStudentRequest.GraduationDate!.Value, DateTimeKind.Utc);
+        }
     }
 }

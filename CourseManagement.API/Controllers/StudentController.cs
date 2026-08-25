@@ -24,7 +24,7 @@ public class StudentController : ControllerBase
         throw new NotImplementedException(); // TODO: Pagination
     }
 
-    [HttpGet("{number}")]
+    [HttpGet("{rollNumber}")]
     public async Task<ActionResult<StudentDto>> GetStudentByRollNumberAsync(string rollNumber, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.GetStudentByRollNoAsync(rollNumber, cancellationToken));
@@ -37,7 +37,7 @@ public class StudentController : ControllerBase
                                await this.studentService.CreateStudentByRollNoAsync(createStudentRequest, cancellationToken));
     }
 
-    [HttpPatch("{number}")]
+    [HttpPatch("{rollNumber}")]
     public async Task<ActionResult<StudentDto>> UpdateStudent(string rollNumber, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.UpdateStudentByRollNoAsync(rollNumber, updateStudentRequest, cancellationToken));

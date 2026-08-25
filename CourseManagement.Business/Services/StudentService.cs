@@ -63,7 +63,7 @@ public class StudentService : IStudentService
 
         var student = StudentMapper.MapsToStudent(createStudentRequest, user.UserId);
 
-        await this.dbContext.AddAsync(user, cancellationToken);
+        await this.dbContext.AddAsync(student, cancellationToken);
         await this.dbContext.SaveChangesAsync(cancellationToken);
 
         this.logger.LogInformation("New student with roll number {Number} has been created.", createStudentRequest.RollNumber);
