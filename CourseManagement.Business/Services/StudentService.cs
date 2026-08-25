@@ -20,6 +20,20 @@ public class StudentService : IStudentService
         this.logger = logger;
     }
 
+    public async Task<StudentDto> GetStudentByIdAsync(Guid studentId, CancellationToken cancellationToken)
+    {
+        var student = await this.dbContext
+                                .Students
+                                .SingleOrDefaultAsync(s => s.StudentId == studentId, cancellationToken);
+
+        if (student == null)
+        {
+            throw new StudentNotFoundException(studentId);
+        }
+
+        return StudentMapper.MapsToStudentDto(student);
+    }
+
     public async Task<StudentDto> GetStudentByRollNoAsync(string studentRollNumber, CancellationToken cancellationToken)
     {
         var student = await this.dbContext
@@ -34,7 +48,7 @@ public class StudentService : IStudentService
         return StudentMapper.MapsToStudentDto(student);
     }
 
-    public async Task<StudentDto> CreateStudentByRollNoAsync(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
+    public async Task<StudentDto> CreateStudentAsync(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
     {
         if (await IsStudentNumberExists(createStudentRequest.RollNumber, cancellationToken))
         {
@@ -67,15 +81,15 @@ public class StudentService : IStudentService
         return StudentMapper.MapsToStudentDto(student);
     }
 
-    public async Task<StudentDto> UpdateStudentByRollNoAsync(string studentNumber, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
+    public async Task<StudentDto> UpdateStudentByIdAsync(Guid studentId, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
     {
         var student = await this.dbContext
                                 .Students
-                                .SingleOrDefaultAsync(s => s.RollNumber == studentNumber, cancellationToken);
+                                .SingleOrDefaultAsync(s => s.StudentId == studentId, cancellationToken);
 
         if (student == null)
         {
-            throw new StudentNotFoundException(studentNumber);
+            throw new StudentNotFoundException(studentId);
         }
 
         if (!string.IsNullOrEmpty(updateStudentRequest.RollNumber) && await IsStudentNumberExists(updateStudentRequest.RollNumber, cancellationToken))
@@ -96,10 +110,10 @@ public class StudentService : IStudentService
     {
         await this.dbContext
                   .Students
-                  .Where(s => s.RollNumber == deleteStudentRequest.RollNumber)
+                  .Where(s => s.StudentId == deleteStudentRequest.StudentId)
                   .ExecuteDeleteAsync(cancellationToken);
 
-        this.logger.LogInformation("Student with roll number {Num} is deleted.", deleteStudentRequest.RollNumber);
+        this.logger.LogInformation("Student with roll number {Num} is deleted.", deleteStudentRequest.StudentId);
     }
 
     private async Task<bool> IsStudentNumberExists(string studentNumber, CancellationToken cancellationToken)

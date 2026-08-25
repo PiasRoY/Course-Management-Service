@@ -2,5 +2,5 @@
 
 public class DeleteStudentRequest
 {
-    public required string RollNumber { get; set; }
+    public required Guid StudentId { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using CourseManagement.Domain.Entities;
-using CourseManagement.Domain.Enums;
+﻿using CourseManagement.Domain.Enums;
 using System.Text.Json.Serialization;
 
 namespace CourseManagement.Business.DTOs.StudentsDTOs;

@@ -24,27 +24,33 @@ public class StudentController : ControllerBase
         throw new NotImplementedException(); // TODO: Pagination
     }
 
-    [HttpGet("{rollNumber}")]
+    [HttpGet("{studentId}")]
+    public async Task<ActionResult<StudentDto>> GetStudentByIdAsync(Guid studentId, CancellationToken cancellationToken)
+    {
+        return Ok(await this.studentService.GetStudentByIdAsync(studentId, cancellationToken));
+    }
+
+    [HttpGet("roll-number/{rollNumber}")]
     public async Task<ActionResult<StudentDto>> GetStudentByRollNumberAsync(string rollNumber, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.GetStudentByRollNoAsync(rollNumber, cancellationToken));
     }
 
     [HttpPost]
-    public async Task<ActionResult<StudentDto>> CreateStudent(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<StudentDto>> CreateStudentAsync(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
     {
-        return CreatedAtAction(nameof(CreateStudent),
-                               await this.studentService.CreateStudentByRollNoAsync(createStudentRequest, cancellationToken));
+        return CreatedAtAction(nameof(CreateStudentAsync),
+                               await this.studentService.CreateStudentAsync(createStudentRequest, cancellationToken));
     }
 
-    [HttpPatch("{rollNumber}")]
-    public async Task<ActionResult<StudentDto>> UpdateStudent(string rollNumber, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
+    [HttpPatch("{studentId}")]
+    public async Task<ActionResult<StudentDto>> UpdateStudentAsync(Guid studentId, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
     {
-        return Ok(await this.studentService.UpdateStudentByRollNoAsync(rollNumber, updateStudentRequest, cancellationToken));
+        return Ok(await this.studentService.UpdateStudentByIdAsync(studentId, updateStudentRequest, cancellationToken));
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteStudent(DeleteStudentRequest deleteStudentRequest, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteStudentAsync(DeleteStudentRequest deleteStudentRequest, CancellationToken cancellationToken)
     {
         await this.studentService.DeleteStudentAsync(deleteStudentRequest, cancellationToken);
         return NoContent();
