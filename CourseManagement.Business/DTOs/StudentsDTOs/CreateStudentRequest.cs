@@ -21,8 +21,8 @@ public class CreateStudentRequest
     public DateTime? GraduationDate { get; set; }
 
     [Required(ErrorMessage = "Current term is required.")]
-    required public int CurrentTerm { get; set; }
+    public int? CurrentTerm { get; set; }
 
     [Required(ErrorMessage = "Current semester is required.")]
-    required public int CurrentSemester { get; set; }
+    public int? CurrentSemester { get; set; }
 }

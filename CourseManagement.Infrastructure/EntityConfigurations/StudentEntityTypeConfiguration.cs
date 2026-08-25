@@ -33,7 +33,7 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
             .Property(s => s.CGPA);
 
         builder
-            .Property(s => s.TotalCreditsEarned)
+            .Property(s => s.TotalCreditsTaken)
             .IsRequired();
 
         builder

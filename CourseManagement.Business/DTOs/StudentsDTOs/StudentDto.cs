@@ -17,6 +17,10 @@ public class StudentDto
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public double? CGPA { get; set; }
     public double TotalCreditsEarned { get; set; } = 0.00;
-    required public int CurrentTerm { get; set; }
-    required public int CurrentSemester { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    required public int? CurrentTerm { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    required public int? CurrentSemester { get; set; }
 }
