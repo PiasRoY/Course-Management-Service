@@ -62,11 +62,11 @@ public class AccountController : ControllerBase
     [HttpPost("change-password")]
     public async Task<ActionResult> ChangePasswordAsync(ChangePasswordRequest changePasswordRequest, CancellationToken cancellationToken)
     {
-        var tokenEmail = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.Email).Value;
+        var tokenEmail = HttpContext.User.FindFirstValue(ClaimTypes.Email);
 
         if (changePasswordRequest.Email != tokenEmail)
         {
-            return BadRequest(new { message = "Email does not match between the requested email and the token email." });
+            return Unauthorized("Email does not match between the requested email and the token email.");
         }
 
         await this.authService.ChangePasswordAsync(changePasswordRequest, cancellationToken);
@@ -77,9 +77,14 @@ public class AccountController : ControllerBase
     [HttpPatch("update-user")]
     public async Task<ActionResult> UpdateUserAsync(UpdateUserRequest updateUserRequest, CancellationToken cancellationToken)
     {
-        var userId = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        var userIdStr = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        var affectedRows = await this.authService.UpdateUserAsync(updateUserRequest, userId, cancellationToken);
+        if (!Guid.TryParse(userIdStr, out var userId))
+        {
+            return Unauthorized("Token must have valid user id.");
+        }
+
+        var affectedRows = await this.authService.UpdateUserAsync(userId, updateUserRequest, cancellationToken);
 
         if (affectedRows == 0)
         {

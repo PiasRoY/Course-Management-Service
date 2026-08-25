@@ -121,19 +121,14 @@ public class AuthService : IAuthService
         return await this.tokenService.GenerateTokensAsync(claimsPrincipal.Claims, cancellationToken, tokenRequest.CurrentRefreshToken);
     }
 
-    public async Task<int> UpdateUserAsync(UpdateUserRequest updateUserRequest, string userId, CancellationToken cancellationToken)
+    public async Task<int> UpdateUserAsync(Guid userId, UpdateUserRequest updateUserRequest, CancellationToken cancellationToken)
     {
-        if (!Guid.TryParse(userId, out var id))
-        {
-            throw new ArgumentException("UserId is not a valid GUID.", nameof(userId));
-        }
-
         var affectedRow = await this.dbContext.Users
-                                              .Where(u => u.UserId == id)
+                                              .Where(u => u.UserId == userId)
                                               .ExecuteUpdateAsync(s => s
                                                   .SetProperty(u => u.FirstName, updateUserRequest.FirstName)
                                                   .SetProperty(u => u.LastName, updateUserRequest.LastName)
-                                                  .SetProperty(u => u.UpdatedBy, id)
+                                                  .SetProperty(u => u.UpdatedBy, userId)
                                                   .SetProperty(u => u.UpdatedAt, DateTime.UtcNow),
                                                   cancellationToken
                                               );
@@ -176,11 +171,11 @@ public class AuthService : IAuthService
         var user = await this.dbContext
                              .Users
                              .Include(u => u.UserUserRoles)
-                             .SingleOrDefaultAsync(u => u.EmailAddress == changeRolesRequest.UserEmail, cancellationToken);
+                             .SingleOrDefaultAsync(u => u.UserId == changeRolesRequest.UserId, cancellationToken);
 
         if (user == null)
         {
-            throw new UserNotFoundException(changeRolesRequest.UserEmail);
+            throw new UserNotFoundException(changeRolesRequest.UserId);
         }
 
         user.UserUserRoles.Clear();
@@ -201,7 +196,7 @@ public class AuthService : IAuthService
 
         await this.dbContext.SaveChangesAsync(cancellationToken);
 
-        this.logger.LogInformation("Roles for {UserEmail} are changed to {Roles}", changeRolesRequest.UserEmail, changeRolesRequest.Roles);
+        this.logger.LogInformation("Roles for {UserEmail} are changed to {Roles}", changeRolesRequest.UserId, changeRolesRequest.Roles);
     }
 
     private async Task<List<Claim>> CreateClaimsFromUserAsync(User user, CancellationToken cancellationToken)

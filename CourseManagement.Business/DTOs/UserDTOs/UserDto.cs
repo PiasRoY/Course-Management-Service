@@ -1,7 +1,4 @@
-﻿using CourseManagement.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace CourseManagement.Business.DTOs.UserDTOs;
+﻿namespace CourseManagement.Business.DTOs.UserDTOs;
 
 public class UserDto
 {
