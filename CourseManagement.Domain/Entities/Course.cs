@@ -10,4 +10,5 @@ public class Course : BaseAuditEntity
     required public int Credits { get; set; } = 3;
 
     public ICollection<CourseClass> CourseClasses { get; set; } = [];
+    public ICollection<Enrollment> Enrollments { get; set; } = [];
 }

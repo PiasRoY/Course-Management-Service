@@ -7,10 +7,8 @@ public class Enrollment : BaseAuditEntity
     public Guid EnrollmentId { get; set; }
     public Guid StudentId { get; set; }
     public Guid ClassId { get; set; }
-    public Guid EnrolledById { get; set; }
-    public DateTime EnrolledAt { get; set; } = DateTime.UtcNow;
-
-    required public Student Student { get; set; }
-    required public User EnrolledBy { get; set; }
-    required public Class Class { get; set; }
+    public Guid? CourseId { get; set; }
+    public Student Student { get; set; } = null!;
+    public Class Class { get; set; } = null!;
+    public Course? Course { get; set; } = null;
 }

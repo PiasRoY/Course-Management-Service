@@ -1,4 +1,6 @@
-﻿using CourseManagement.Business.Enums;
+﻿using CourseManagement.Business.DTOs.EnrollmentDTOs;
+using CourseManagement.Business.Enums;
+using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,33 +11,42 @@ namespace CourseManagement.API.Controllers;
 [Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
 public class EnrollmentController : ControllerBase
 {
+    private readonly IEnrollmentService enrollmentService;
+
+    public EnrollmentController(IEnrollmentService enrollmentService)
+    {
+        this.enrollmentService = enrollmentService;
+    }
+
     [HttpGet]
     public IActionResult GetEnrollments()
     {
-        return Ok(new { message = "List of enrollments" });
+        throw new NotImplementedException(); // Pagination.
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetEnrollmentById(int id)
+    public IActionResult GetEnrollmentById(Guid id, CancellationToken cancellationToken)
     {
-        return Ok(new { message = $"Details of enrollment with ID: {id}" });
+        return Ok(this.enrollmentService.GetEnrollmentByIdAsync(id, cancellationToken));
     }
 
     [HttpPost]
-    public IActionResult CreateEnrollment()
+    public async Task<ActionResult<EnrollmentDto>> CreateEnrollment(CreateEnrollmentRequest createEnrollmentRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Enrollment created successfully" });
+        return CreatedAtAction(nameof(CreateEnrollment),
+                               await this.enrollmentService.CreateEnrollmentAsync(createEnrollmentRequest, cancellationToken));
     }
 
     [HttpPatch("{id}")]
-    public IActionResult UpdateEnrollment(int id)
+    public async Task<IActionResult> UpdateEnrollment(Guid id, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Enrollment updated successfully" });
+        return Ok(await this.enrollmentService.UpdateEnrollmentAsync(id, updateEnrollmentRequest, cancellationToken));
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteEnrollment(int id)
+    [HttpDelete]
+    public IActionResult DeleteEnrollment(DeleteEnrollmentRequest deleteEnrollmentRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Enrollment deleted successfully" });
+        this.enrollmentService.DeleteEnrollmentAsync(deleteEnrollmentRequest, cancellationToken);
+        return NoContent();
     }
 }

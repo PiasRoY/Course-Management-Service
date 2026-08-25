@@ -2,7 +2,10 @@
 
 public class EnrollmentDto
 {
-    required public Guid EnrollmentId { get; set; }
-    public string StudentId { get; set; }
-    
+    public required Guid EnrollmentId { get; set; }
+    public required Guid StudentId { get; set; }
+    public required Guid ClassId { get; set; }
+    public Guid? CourseId { get; set; }
+    public required Guid EnrolledBy { get; set; }
+    public required DateTime EnrolledAt { get; set; }
 }
