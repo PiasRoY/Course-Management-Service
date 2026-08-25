@@ -1,6 +1,7 @@
 ﻿using CourseManagement.Business.CustomExceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog.Context;
 using System.Security.Claims;
@@ -30,6 +31,7 @@ public class GlobalExceptionHandler : IExceptionHandler
             ArgumentException => (StatusCodes.Status400BadRequest, "Bad Request."),
             NotFoundException => (StatusCodes.Status404NotFound, "Not found."),
             InvalidOperationException => (StatusCodes.Status409Conflict, "An invalid operation occured."),
+            DbUpdateException => (StatusCodes.Status409Conflict, "Invalid db write query happened."),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occured.")
         };
 
