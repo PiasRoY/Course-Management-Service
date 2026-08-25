@@ -9,6 +9,7 @@ public static class UserMapping
     {
         return new UserDto
         {
+            UserId = user.UserId,
             EmailAddress = user.EmailAddress,
             FullName = $"{user.FirstName} {user.LastName}"
         };

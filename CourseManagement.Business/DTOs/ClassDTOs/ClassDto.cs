@@ -4,6 +4,7 @@ namespace CourseManagement.Business.DTOs.ClassDTOs;
 
 public class ClassDto
 {
+    public required Guid ClassId { get; set; }
     public required string Name { get; set; }
     public required Semester Semester { get; set; }
     public required string Calendar { get; set; }

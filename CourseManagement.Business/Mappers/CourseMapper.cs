@@ -27,6 +27,7 @@ public static class CourseMapper
     {
         return new CourseDto
         {
+            CourseId = course.CourseId,
             Name = course.Name,
             Title = course.Title,
             Credits = course.Credits,

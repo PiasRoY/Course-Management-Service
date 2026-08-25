@@ -10,6 +10,7 @@ public static class ClassMapper
     {
         return new ClassDto
         {
+            ClassId = @class.ClassId,
             Name = @class.Name,
             Semester = @class.Semester,
             Calendar = @class.Calendar,
