@@ -1,13 +1,12 @@
-﻿using CourseManagement.Domain.Common;
+﻿using CourseManagement.Domain.Entities;
 using CourseManagement.Domain.Enums;
 
-namespace CourseManagement.Domain.Entities;
+namespace CourseManagement.Business.DTOs.StudentsDTOs;
 
-public class Student : BaseAuditEntity
+public class StudentDto
 {
     required public Guid StudentId { get; set; }
-    required public Guid UserId { get; set; }
-    required public string RollNumber { get; set; }
+    required public string StudentNumber { get; set; }
     required public StudentStatus Status { get; set; }
     required public DateTime AdmissionDate { get; set; }
     public DateTime? GraduationDate { get; set; }
@@ -16,5 +15,4 @@ public class Student : BaseAuditEntity
     required public int CurrentTerm { get; set; }
     required public int CurrentSemester { get; set; }
     public User User { get; set; } = null!;
-    public ICollection<Enrollment> Enrollments = [];
 }

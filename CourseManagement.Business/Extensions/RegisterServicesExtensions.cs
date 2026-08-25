@@ -14,6 +14,7 @@ public static class RegisterServicesExtensions
 
         services.AddScoped<IClassService, ClassService>();
         services.AddScoped<ICourseService, CourseService>();
+        services.AddScoped<IStudentService, StudentService>();
 
         return services;
     }

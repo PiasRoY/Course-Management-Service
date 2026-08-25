@@ -1,4 +1,6 @@
-﻿using CourseManagement.Business.Enums;
+﻿using CourseManagement.Business.DTOs.StudentsDTOs;
+using CourseManagement.Business.Enums;
+using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,33 +11,42 @@ namespace CourseManagement.API.Controllers;
 [Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
 public class StudentController : ControllerBase
 {
+    private readonly IStudentService studentService;
+
+    public StudentController(IStudentService studentService)
+    {
+        this.studentService = studentService;
+    }
+
     [HttpGet]
     public IActionResult GetStudents()
     {
-        return Ok(new { message = "List of students" });
+        throw new NotImplementedException(); // TODO: Pagination
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetStudentById(int id)
+    [HttpGet("{number}")]
+    public async Task<ActionResult<StudentDto>> GetStudentByRollNumberAsync(string rollNumber, CancellationToken cancellationToken)
     {
-        return Ok(new { message = $"Details of student with ID: {id}" });
+        return Ok(await this.studentService.GetStudentByRollNoAsync(rollNumber, cancellationToken));
     }
 
     [HttpPost]
-    public IActionResult CreateStudent()
+    public async Task<ActionResult<StudentDto>> CreateStudent(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Student created successfully" });
+        return CreatedAtAction(nameof(CreateStudent),
+                               await this.studentService.CreateStudentByRollNoAsync(createStudentRequest, cancellationToken));
     }
 
-    [HttpPatch("{id}")]
-    public IActionResult UpdateStudent(int id)
+    [HttpPatch("{number}")]
+    public async Task<ActionResult<StudentDto>> UpdateStudent(string rollNumber, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Student updated successfully" });
+        return Ok(await this.studentService.UpdateStudentByRollNoAsync(rollNumber, updateStudentRequest, cancellationToken));
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteStudent(int id)
+    [HttpDelete]
+    public async Task<IActionResult> DeleteStudent(DeleteStudentRequest deleteStudentRequest, CancellationToken cancellationToken)
     {
-        return Ok(new { message = "Student deleted successfully" });
+        await this.studentService.DeleteStudentAsync(deleteStudentRequest, cancellationToken);
+        return NoContent();
     }
 }

@@ -13,7 +13,7 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
         builder.HasKey(s => s.StudentId);
 
         builder
-            .Property(s => s.StudentNumber)
+            .Property(s => s.RollNumber)
             .IsRequired()
             .HasMaxLength(50);
 
@@ -23,7 +23,7 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
             .HasConversion<string>();
 
         builder
-            .Property(s => s.EnrollmentDate)
+            .Property(s => s.AdmissionDate)
             .IsRequired();
 
         builder
@@ -51,7 +51,7 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasIndex(s => s.StudentNumber)
+            .HasIndex(s => s.RollNumber)
             .IsUnique();
     }
 }
