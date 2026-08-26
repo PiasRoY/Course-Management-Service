@@ -1,4 +1,5 @@
-﻿using CourseManagement.Business.DTOs.UserDTOs;
+﻿using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.DTOs.UserDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,27 @@ public class AccountController : ControllerBase
     public AccountController(IAuthService authService)
     {
         this.authService = authService;
+    }
+
+    [HttpGet]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
+    public async Task<ActionResult<PageResult<UserDto>>> GetUsersAsync([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
+    {
+        return Ok(await this.authService.GetUsersAsync(@params, cancellationToken));
+    }
+
+    [HttpGet("{id}")]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
+    public async Task<ActionResult<PageResult<UserDto>>> GetUserByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return Ok(await this.authService.GetUserByIdAsync(id, cancellationToken));
+    }
+
+    [HttpGet("email/{email}")]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
+    public async Task<ActionResult<PageResult<UserDto>>> GetUserByEmail(string email, CancellationToken cancellationToken)
+    {
+        return Ok(await this.authService.GetUserByEmailAsync(email, cancellationToken));
     }
 
     [HttpPost("register")]

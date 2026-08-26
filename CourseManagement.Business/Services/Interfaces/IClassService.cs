@@ -1,9 +1,11 @@
 ﻿using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.PaginationDTOs;
 
 namespace CourseManagement.Business.Services.Interfaces;
 
 public interface IClassService
 {
+    Task<PageResult<ClassDto>> GetClassesAsync(PaginationParams @params, CancellationToken cancellationToken);
     Task<ClassDto> GetClassByNameAsync(string className, CancellationToken cancellationToken);
     Task<ClassDto> GetClassByIdAsync(Guid classId, CancellationToken cancellationToken);
     Task<IEnumerable<ClassDto>> GetClassesByInstructorEmail(string email, CancellationToken cancellationToken);

@@ -1,6 +1,8 @@
 ﻿using CourseManagement.Business.CustomExceptions;
+using CourseManagement.Business.DTOs.PaginationDTOs;
 using CourseManagement.Business.DTOs.UserDTOs;
 using CourseManagement.Business.Enums;
+using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
@@ -28,6 +30,44 @@ public class AuthService : IAuthService
         this.dbContext = dbContext;
         this.passwordHasher = passwordHasher;
         this.tokenService = tokenService;
+    }
+
+    public async Task<PageResult<UserDto>> GetUsersAsync(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Users
+                         .GetItems(@params,
+                                   u => UserMapping.MapsToUserDto(u),
+                                   u => u.CreatedAt,
+                                   cancellationToken);
+    }
+
+    public async Task<UserDto> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var user = await this.dbContext
+                             .Users
+                             .SingleOrDefaultAsync(u => u.UserId == userId, cancellationToken);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException(userId);
+        }
+
+        return UserMapping.MapsToUserDto(user);
+    }
+
+    public async Task<UserDto> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var user = await this.dbContext
+                             .Users
+                             .SingleOrDefaultAsync(u => u.EmailAddress == email, cancellationToken);
+
+        if (user == null)
+        {
+            throw new UserNotFoundException(email);
+        }
+
+        return UserMapping.MapsToUserDto(user);
     }
 
     public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken, IEnumerable<string>? roles = null)

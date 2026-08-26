@@ -23,6 +23,18 @@ public static class CourseMapper
         };
     }
 
+    public static CourseDto MapsToCourseDto(Course course)
+    {
+        return new CourseDto
+        {
+            CourseId = course.CourseId,
+            Name = course.Name,
+            Title = course.Title,
+            Credits = course.Credits,
+            ClassNames = course.CourseClasses.Select(cc => cc.Class.Name)
+        };
+    }
+
     public static CourseDto MapsToCourseDto(Course course, IEnumerable<string> classNames)
     {
         return new CourseDto

@@ -4,6 +4,20 @@ namespace CourseManagement.Business.Mappers;
 
 public static class ClassMapper
 {
+    public static ClassDto MapsToClassDto(Class @class)
+    {
+        return new ClassDto
+        {
+            ClassId = @class.ClassId,
+            Name = @class.Name,
+            Semester = @class.Semester,
+            Calendar = @class.Calendar,
+            SectionCode = @class.SectionCode,
+            InstructorName = $"{@class.Instructor.FirstName} {@class.Instructor.LastName}",
+            InstructorEmail = @class.Instructor.EmailAddress
+        };
+    }
+
     public static ClassDto MapsToClassDto(Class @class, User instructor)
     {
         return new ClassDto
@@ -15,6 +29,19 @@ public static class ClassMapper
             SectionCode = @class.SectionCode,
             InstructorName = $"{instructor.FirstName} {instructor.LastName}",
             InstructorEmail = instructor.EmailAddress
+        };
+    }
+
+    public static Class MapsToClass(CreateClassRequest createClassRequest, User instructor)
+    {
+        return new Class
+        {
+            ClassId = Guid.NewGuid(),
+            Name = createClassRequest.Name,
+            Semester = createClassRequest.Semester,
+            Year = createClassRequest.Year,
+            SectionCode = createClassRequest.SectionCode,
+            InstructorId = instructor.UserId
         };
     }
 

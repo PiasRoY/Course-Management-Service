@@ -1,6 +1,8 @@
 ﻿using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.PaginationDTOs;
 using CourseManagement.Business.Enums;
+using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
@@ -21,6 +23,16 @@ public class ClassService : IClassService
         this.logger = logger;
     }
 
+    public async Task<PageResult<ClassDto>> GetClassesAsync(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Classes
+                         .GetItems(@params,
+                                   cl => ClassMapper.MapsToClassDto(cl),
+                                   cl => cl.ClassId,
+                                   cancellationToken);
+    }
+
     public async Task<ClassDto> GetClassByNameAsync(string className, CancellationToken cancellationToken)
     {
         var @class = await this.dbContext
@@ -33,7 +45,7 @@ public class ClassService : IClassService
             throw new ClassNotFoundException(className);
         }
 
-        return ClassMapper.MapsToClassDto(@class, @class.Instructor);
+        return ClassMapper.MapsToClassDto(@class);
     }
 
     public async Task<ClassDto> GetClassByIdAsync(Guid classId, CancellationToken cancellationToken)
@@ -48,7 +60,7 @@ public class ClassService : IClassService
             throw new ClassNotFoundException(classId);
         }
 
-        return ClassMapper.MapsToClassDto(@class, @class.Instructor);
+        return ClassMapper.MapsToClassDto(@class);
     }
 
     public async Task<IEnumerable<ClassDto>> GetClassesByInstructorEmail(string email, CancellationToken cancellationToken)
@@ -74,16 +86,7 @@ public class ClassService : IClassService
         }
 
         var instructor = await this.GetInstructor(createClassRequest.InstructorEmail, cancellationToken);
-
-        var @class = new Class
-        {
-            ClassId = Guid.NewGuid(),
-            Name = createClassRequest.Name,
-            Semester = createClassRequest.Semester,
-            Year = createClassRequest.Year,
-            SectionCode = createClassRequest.SectionCode,
-            InstructorId = instructor.UserId
-        };
+        var @class = ClassMapper.MapsToClass(createClassRequest, instructor);
 
         await this.dbContext.Classes.AddAsync(@class, cancellationToken);
         await this.dbContext.SaveChangesAsync(cancellationToken);

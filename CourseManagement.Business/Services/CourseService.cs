@@ -1,5 +1,7 @@
 ﻿using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.CourseDTOs;
+using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Infrastructure.ApplicationData;
@@ -19,6 +21,16 @@ public class CourseService : ICourseService
         this.logger = logger;
     }
 
+    public async Task<PageResult<CourseDto>> GetCoursesAsync(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Courses
+                         .GetItems(@params,
+                                   c => CourseMapper.MapsToCourseDto(c),
+                                   c => c.CourseId,
+                                   cancellationToken);
+    }
+
     public async Task<CourseDto> GetCourseByIdAsync(Guid courseId, CancellationToken cancellationToken)
     {
         var course = await this.dbContext
@@ -32,9 +44,7 @@ public class CourseService : ICourseService
             throw new CourseNotFoundException(courseId);
         }
 
-        var classNames = course.CourseClasses.Select(cc => cc.Class.Name);
-
-        return CourseMapper.MapsToCourseDto(course, classNames);
+        return CourseMapper.MapsToCourseDto(course);
     }
 
     public async Task<CourseDto> GetCourseByNameAsync(string courseName, CancellationToken cancellationToken)
@@ -50,9 +60,7 @@ public class CourseService : ICourseService
             throw new CourseNotFoundException(courseName);
         }
 
-        var classNames = course.CourseClasses.Select(cc => cc.Class.Name);
-
-        return CourseMapper.MapsToCourseDto(course, classNames);
+        return CourseMapper.MapsToCourseDto(course);
     }
 
     public async Task<CourseDto> CreateCourseAsync(CreateCourseRequest createCourseRequest, CancellationToken cancellationToken)
@@ -70,7 +78,7 @@ public class CourseService : ICourseService
 
         this.logger.LogInformation("New course named {Name} is created.", course.Name);
 
-        return CourseMapper.MapsToCourseDto(course, classInfos.Select(cl => cl.Name));
+        return CourseMapper.MapsToCourseDto(course);
     }
 
     public async Task<CourseDto> UpdateCourseByIdAsync(Guid courseId, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken)

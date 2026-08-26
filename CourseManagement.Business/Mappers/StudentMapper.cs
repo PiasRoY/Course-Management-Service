@@ -16,7 +16,7 @@ public static class StudentMapper
             AdmissionDate = student.AdmissionDate,
             GraduationDate = student.GraduationDate,
             CGPA = student.CGPA,
-            TotalCreditsEarned = student.TotalCreditsTaken,
+            TotalCreditsTaken = student.TotalCreditsTaken,
             CurrentTerm = student.CurrentTerm,
             CurrentSemester = student.CurrentSemester
         };

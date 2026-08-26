@@ -1,6 +1,8 @@
 ﻿using CourseManagement.Business.CustomExceptions;
+using CourseManagement.Business.DTOs.PaginationDTOs;
 using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Business.Enums;
+using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Infrastructure.ApplicationData;
@@ -18,6 +20,17 @@ public class StudentService : IStudentService
     {
         this.dbContext = dbContext;
         this.logger = logger;
+    }
+
+    public async Task<PageResult<StudentDto>> GetStudentsAsync(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Students
+                         .AsNoTracking()
+                         .GetItems(@params,
+                                   s => StudentMapper.MapsToStudentDto(s), 
+                                   s => s.StudentId, 
+                                   cancellationToken);
     }
 
     public async Task<StudentDto> GetStudentByIdAsync(Guid studentId, CancellationToken cancellationToken)

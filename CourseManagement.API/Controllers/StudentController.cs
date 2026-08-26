@@ -1,4 +1,5 @@
-﻿using CourseManagement.Business.DTOs.StudentsDTOs;
+﻿using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,9 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetStudents()
+    public async Task<ActionResult<StudentDto>> GetStudents([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException(); // TODO: Pagination
+        return Ok(this.studentService.GetStudentsAsync(@params, cancellationToken));
     }
 
     [HttpGet("{studentId}")]

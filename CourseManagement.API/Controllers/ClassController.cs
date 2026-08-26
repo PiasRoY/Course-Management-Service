@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.PaginationDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,9 @@ public class ClassController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAllClasses()
+    public async Task<ActionResult<PageResult<ClassDto>>> GetAllClasses([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException(); // TODO: Pagination.
+        return Ok(await this.classService.GetClassesAsync(@params, cancellationToken));
     }
 
     [HttpGet("instructor-email/{email}")]

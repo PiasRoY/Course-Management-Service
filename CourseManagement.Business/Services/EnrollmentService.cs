@@ -1,5 +1,7 @@
 ﻿using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.EnrollmentDTOs;
+using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
@@ -18,6 +20,16 @@ public class EnrollmentService : IEnrollmentService
     {
         this.dbContext = dbContext;
         this.logger = logger;
+    }
+
+    public async Task<PageResult<EnrollmentDto>> GetEnrollmentsAsync(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Enrollments
+                         .GetItems(@params,
+                                   e => EnrollmentMapper.MapsToEnrollmentDto(e),
+                                   e => e.EnrollmentId,
+                                   cancellationToken);
     }
 
     public async Task<EnrollmentDto> GetEnrollmentByIdAsync(Guid enrollmentId, CancellationToken cancellationToken)
