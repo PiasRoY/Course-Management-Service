@@ -70,12 +70,12 @@ public class EnrollmentService : IEnrollmentService
             throw new EnrollmentNotFoundException(enrollmentId);
         }
 
-        EnrollmentMapper.UpdateEnrollment(enrollment, updateEnrollmentRequest);
-
-        if (!await this.IsEnrollmentExists(enrollment.EnrollmentId, enrollment.ClassId, enrollment.CourseId, cancellationToken))
+        if (!await this.IsEnrollmentExists(enrollment.StudentId, enrollment.ClassId, enrollment.CourseId, cancellationToken))
         {
             throw new InvalidOperationException("Student is already enrolled to this class, course combination.");
         }
+
+        EnrollmentMapper.UpdateEnrollment(enrollment, updateEnrollmentRequest);
 
         await this.dbContext.SaveChangesAsync(cancellationToken);
 

@@ -38,12 +38,12 @@ public static class EnrollmentMapper
 
         if (updateEnrollmentRequest.ClassId != null)
         {
-            enrollment.StudentId = updateEnrollmentRequest.ClassId.Value;
+            enrollment.ClassId = updateEnrollmentRequest.ClassId.Value;
         }
 
         if (updateEnrollmentRequest.CourseId != null)
         {
-            enrollment.StudentId = updateEnrollmentRequest.CourseId.Value;
+            enrollment.CourseId = updateEnrollmentRequest.CourseId.Value;
         }
     }
 }

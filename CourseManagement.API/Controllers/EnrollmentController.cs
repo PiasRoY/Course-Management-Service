@@ -21,34 +21,37 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PageResult<StudentDto>>> GetEnrollments([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<EnrollmentDto>>> GetEnrollmentsAsync([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.enrollmentService.GetEnrollmentsAsync(@params, cancellationToken));
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetEnrollmentById(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<EnrollmentDto>> GetEnrollmentById(Guid id, CancellationToken cancellationToken)
     {
-        return Ok(this.enrollmentService.GetEnrollmentByIdAsync(id, cancellationToken));
+        return Ok(await this.enrollmentService.GetEnrollmentByIdAsync(id, cancellationToken));
     }
 
     [HttpPost]
-    public async Task<ActionResult<EnrollmentDto>> CreateEnrollment(CreateEnrollmentRequest createEnrollmentRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentAsync(CreateEnrollmentRequest createEnrollmentRequest, CancellationToken cancellationToken)
     {
-        return CreatedAtAction(nameof(CreateEnrollment),
-                               await this.enrollmentService.CreateEnrollmentAsync(createEnrollmentRequest, cancellationToken));
+        var enrollmentDto = await this.enrollmentService.CreateEnrollmentAsync(createEnrollmentRequest, cancellationToken);
+        return CreatedAtAction(
+            nameof(GetEnrollmentById),
+            new { id = enrollmentDto.EnrollmentId },
+            enrollmentDto);
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateEnrollment(Guid id, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<EnrollmentDto>> UpdateEnrollmentAsync(Guid id, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken)
     {
         return Ok(await this.enrollmentService.UpdateEnrollmentAsync(id, updateEnrollmentRequest, cancellationToken));
     }
 
     [HttpDelete]
-    public IActionResult DeleteEnrollment(DeleteEnrollmentRequest deleteEnrollmentRequest, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteEnrollmentAsync(DeleteEnrollmentRequest deleteEnrollmentRequest, CancellationToken cancellationToken)
     {
-        this.enrollmentService.DeleteEnrollmentAsync(deleteEnrollmentRequest, cancellationToken);
+        await this.enrollmentService.DeleteEnrollmentAsync(deleteEnrollmentRequest, cancellationToken);
         return NoContent();
     }
 }
