@@ -27,6 +27,7 @@ public class ClassService : IClassService
     {
         return await this.dbContext
                          .Classes
+                         .Include(c => c.Instructor)
                          .GetItems(@params,
                                    cl => ClassMapper.MapsToClassDto(cl),
                                    cl => cl.ClassId,

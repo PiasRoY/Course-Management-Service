@@ -1,6 +1,4 @@
-﻿using CourseManagement.Domain.Common;
-
-namespace CourseManagement.Business.DTOs.PaginationDTOs;
+﻿namespace CourseManagement.Business.DTOs.PaginationDTOs;
 
 public class PageResult<T>
 {

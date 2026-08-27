@@ -1,6 +1,6 @@
 ﻿using CourseManagement.Domain.Entities;
 
-namespace CourseManagement.Business.Services
+namespace CourseManagement.Business.Services.Interfaces
 {
     public interface ITaskService
     {

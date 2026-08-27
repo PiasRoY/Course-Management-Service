@@ -1,6 +1,5 @@
 ﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
 using CourseManagement.Business.Enums;
-using CourseManagement.Business.Services;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Enums;
 using Hangfire.States;

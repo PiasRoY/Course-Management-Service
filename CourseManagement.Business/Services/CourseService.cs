@@ -25,6 +25,8 @@ public class CourseService : ICourseService
     {
         return await this.dbContext
                          .Courses
+                         .Include(c => c.CourseClasses)
+                         .ThenInclude(cc => cc.Class)
                          .GetItems(@params,
                                    c => CourseMapper.MapsToCourseDto(c),
                                    c => c.CourseId,
@@ -78,7 +80,7 @@ public class CourseService : ICourseService
 
         this.logger.LogInformation("New course named {Name} is created.", course.Name);
 
-        return CourseMapper.MapsToCourseDto(course);
+        return CourseMapper.MapsToCourseDto(course, classInfos.Select(cl => cl.Name));
     }
 
     public async Task<CourseDto> UpdateCourseByIdAsync(Guid courseId, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken)

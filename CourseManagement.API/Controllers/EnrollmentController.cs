@@ -10,7 +10,7 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
+[Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
 public class EnrollmentController : ControllerBase
 {
     private readonly IEnrollmentService enrollmentService;
@@ -21,7 +21,7 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PageResult<StudentDto>>> GetEnrollments([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<StudentDto>>> GetEnrollments([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.enrollmentService.GetEnrollmentsAsync(@params, cancellationToken));
     }

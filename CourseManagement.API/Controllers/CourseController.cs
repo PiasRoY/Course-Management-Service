@@ -9,7 +9,7 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
+[Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
 public class CourseController : ControllerBase
 {
     private readonly ICourseService courseService;
@@ -20,13 +20,13 @@ public class CourseController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<CourseDto>> GetCourses([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<CourseDto>>> GetCourses([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.courseService.GetCoursesAsync(@params, cancellationToken));
     }
 
     [HttpGet("{courseId}")]
-    public async Task<ActionResult<CourseDto>> GetCourseByIdAsync(Guid courseId, CancellationToken cancellationToken)
+    public async Task<ActionResult<CourseDto>> GetCourseById(Guid courseId, CancellationToken cancellationToken)
     {
         return Ok(await this.courseService.GetCourseByIdAsync(courseId, cancellationToken));
     }
@@ -40,9 +40,11 @@ public class CourseController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseRequest createCourseRequest, CancellationToken cancellationToken)
     {
+        var courseDto = await this.courseService.CreateCourseAsync(createCourseRequest, cancellationToken);
         return CreatedAtAction(
-                nameof(CreateCourse), 
-                await this.courseService.CreateCourseAsync(createCourseRequest, cancellationToken));
+                nameof(GetCourseById), 
+                new { courseId = courseDto.CourseId },
+                courseDto);
     }
 
     [HttpPatch("{courseId}")]

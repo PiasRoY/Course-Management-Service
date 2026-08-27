@@ -9,7 +9,7 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
+[Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
 public class StudentController : ControllerBase
 {
     private readonly IStudentService studentService;
@@ -20,13 +20,13 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<StudentDto>> GetStudents([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<StudentDto>>> GetStudents([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
-        return Ok(this.studentService.GetStudentsAsync(@params, cancellationToken));
+        return Ok(await this.studentService.GetStudentsAsync(@params, cancellationToken));
     }
 
     [HttpGet("{studentId}")]
-    public async Task<ActionResult<StudentDto>> GetStudentByIdAsync(Guid studentId, CancellationToken cancellationToken)
+    public async Task<ActionResult<StudentDto>> GetStudentById(Guid studentId, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.GetStudentByIdAsync(studentId, cancellationToken));
     }
@@ -40,8 +40,11 @@ public class StudentController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<StudentDto>> CreateStudentAsync(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
     {
-        return CreatedAtAction(nameof(CreateStudentAsync),
-                               await this.studentService.CreateStudentAsync(createStudentRequest, cancellationToken));
+        var studentDto = await this.studentService.CreateStudentAsync(createStudentRequest, cancellationToken);
+        return CreatedAtAction(
+            nameof(GetStudentById),
+            new { studentDto.StudentId },
+            studentDto);
     }
 
     [HttpPatch("{studentId}")]

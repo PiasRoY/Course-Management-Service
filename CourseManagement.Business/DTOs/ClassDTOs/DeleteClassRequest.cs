@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CourseManagement.Business.DTOs.ClassDTOs;
+﻿namespace CourseManagement.Business.DTOs.ClassDTOs;
 
 public class DeleteClassRequest
 {

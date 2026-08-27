@@ -9,7 +9,7 @@ namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
+[Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
 public class ClassController : ControllerBase
 {
     private readonly IClassService classService;
@@ -20,7 +20,7 @@ public class ClassController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PageResult<ClassDto>>> GetAllClasses([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<ClassDto>>> GetAllClasses([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.classService.GetClassesAsync(@params, cancellationToken));
     }
@@ -32,13 +32,13 @@ public class ClassController : ControllerBase
     }
 
     [HttpGet("{classId}")]
-    public async Task<ActionResult<ClassDto>> GetClassByIdAsync(Guid classId, CancellationToken cancellationToken)
+    public async Task<ActionResult<ClassDto>> GetClassById(Guid classId, CancellationToken cancellationToken)
     {
         return Ok(await this.classService.GetClassByIdAsync(classId, cancellationToken));
     }
 
     [HttpGet("class-name/{className}")]
-    public async Task<ActionResult<ClassDto>> GetClassByIdAsync(string className, CancellationToken cancellationToken)
+    public async Task<ActionResult<ClassDto>> GetClassByNameAsync(string className, CancellationToken cancellationToken)
     {
         return Ok(await this.classService.GetClassByNameAsync(className, cancellationToken));
     }
@@ -46,9 +46,11 @@ public class ClassController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ClassDto>> CreateClass(CreateClassRequest createClassRequest, CancellationToken cancellationToken)
     {
+        var classDto = await this.classService.CreateClassAsync(createClassRequest, cancellationToken);
         return CreatedAtAction(
-            nameof(CreateClass),
-            await this.classService.CreateClassAsync(createClassRequest, cancellationToken));
+            nameof(GetClassById),
+            new { classId = classDto.ClassId },
+            classDto);
     }
 
     [HttpPatch("{classId}")]

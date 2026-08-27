@@ -22,22 +22,19 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = nameof(UserRoles.Admin))]
-    public async Task<ActionResult<PageResult<UserDto>>> GetUsersAsync([AsParameters] PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<UserDto>>> GetUsersAsync([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.authService.GetUsersAsync(@params, cancellationToken));
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = nameof(UserRoles.Admin))]
-    public async Task<ActionResult<PageResult<UserDto>>> GetUserByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<UserDto>>> GetUserById(Guid id, CancellationToken cancellationToken)
     {
         return Ok(await this.authService.GetUserByIdAsync(id, cancellationToken));
     }
 
     [HttpGet("email/{email}")]
-    [Authorize(Roles = nameof(UserRoles.Admin))]
-    public async Task<ActionResult<PageResult<UserDto>>> GetUserByEmail(string email, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<UserDto>>> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return Ok(await this.authService.GetUserByEmailAsync(email, cancellationToken));
     }
@@ -47,7 +44,10 @@ public class AccountController : ControllerBase
     public async Task<ActionResult<UserDto>> Register(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
     {
         var userDto = await this.authService.CreateUserAsync(createUserRequest, cancellationToken);
-        return CreatedAtAction(nameof(Register), userDto);
+        return CreatedAtAction(
+                    nameof(GetUserById), 
+                    new { id = userDto.UserId },
+                    userDto);
     }
 
     [HttpPost("login")]
@@ -145,7 +145,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("change-roles")]
-    [Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Staff)}")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<IActionResult> ChangeRolesAsync(ChangeRolesRequest changeRolesRequest, CancellationToken cancellationToken)
     {
         await this.authService.ChangeRolesAsync(changeRolesRequest, cancellationToken);

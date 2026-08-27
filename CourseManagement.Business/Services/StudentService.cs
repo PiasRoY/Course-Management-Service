@@ -71,7 +71,7 @@ public class StudentService : IStudentService
         var user = await this.dbContext
                              .Users
                              .Where(u => u.EmailAddress == createStudentRequest.EmailAddress)
-                             .Where(u => u.UserUserRoles.Any(uur => uur.UserRole.RoleName == UserRoles.Instructor.ToString()))
+                             .Where(u => u.UserUserRoles.Any(uur => uur.UserRole.RoleName == nameof(UserRoles.Student)))
                              .Select(u => new
                              {
                                  u.UserId,

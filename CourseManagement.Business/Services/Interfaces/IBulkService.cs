@@ -1,7 +1,7 @@
 ﻿using CourseManagement.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
-namespace CourseManagement.Business.Services
+namespace CourseManagement.Business.Services.Interfaces
 {
     public interface IBulkService
     {
