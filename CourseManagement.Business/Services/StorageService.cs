@@ -15,6 +15,11 @@ public class StorageService : IStorageService
         return new FileStream(fileName, FileMode.Open);
     }
 
+    public bool IsFileExistsLocally(string fileName)
+    {
+        return File.Exists(fileName);
+    }
+
     public async Task<string> SaveStreamToLocalFile(Stream stream, string fileName)
     {
         var filePath = $"{Bucket}/{fileName}";

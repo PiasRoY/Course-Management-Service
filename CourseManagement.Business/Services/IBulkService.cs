@@ -9,5 +9,6 @@ namespace CourseManagement.Business.Services
         Task PostProcessingAsync(JobEvent jobEvent, string hangfireJobId, CancellationToken cancellationToken);
         Task ProcessBulkImportUsersAsync(JobEvent jobEvent, CancellationToken cancellationToken);
         Task ProcessBulkImportAsync<TRequest, TDto>(JobEvent jobEvent, Func<TRequest, CancellationToken, Task<TDto>> processRowAsync, CancellationToken cancellationToken);
+        Task<FileStream> DownloadOutputCsvFileAsync(Guid jobEventId, CancellationToken cancellationToken);
     }
 }

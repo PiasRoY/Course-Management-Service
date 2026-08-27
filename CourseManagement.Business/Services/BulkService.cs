@@ -1,4 +1,5 @@
-﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
+﻿using CourseManagement.Business.CustomExceptions;
+using CourseManagement.Business.DTOs.BulkImportDTOs;
 using CourseManagement.Business.DTOs.UserDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Helpers;
@@ -7,6 +8,7 @@ using CourseManagement.Domain.Entities;
 using CourseManagement.Domain.Enums;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace CourseManagement.Business.Services;
@@ -60,6 +62,28 @@ public class BulkService : IBulkService
 
         this.dbContext.Attach(jobEvent);
         await this.dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<FileStream> DownloadOutputCsvFileAsync(Guid jobEventId, CancellationToken cancellationToken)
+    {
+        var jobEvent = await this.dbContext
+                                 .JobEvents
+                                 .AsNoTracking()
+                                 .Where(j => j.JobEventId == jobEventId)
+                                 .Select(j => new { j.OutputFilePath })
+                                 .SingleOrDefaultAsync(cancellationToken);
+
+        if (jobEvent == null)
+        {
+            throw new JobEventNotFoundException(jobEventId);
+        }
+
+        if (!this.storageService.IsFileExistsLocally(jobEvent.OutputFilePath))
+        {
+            throw new InvalidOperationException("Output file path doesn't exists.");
+        }
+
+        return this.storageService.OpenLocalFile(jobEvent.OutputFilePath);
     }
 
     public async Task ProcessBulkImportAsync<TRequest, TDto>(

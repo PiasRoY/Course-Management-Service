@@ -5,5 +5,5 @@ namespace CourseManagement.Business.DTOs.BulkImportDTOs;
 public class StatusResult
 {
     public required BulkProcessStatus Status { get; set; }
-    public FileStream? OutputFile { get; set; }
+    public string? DownloadUrl { get; set; }
 }

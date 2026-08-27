@@ -13,10 +13,10 @@ public class TaskService : ITaskService
         this.monitoringApi = monitoringApi;
     }
 
-    public string EnqueueBulkImportUsersJob(JobEvent jobEvent, CancellationToken cancellationToken)
+    public string EnqueueBulkImportUsersJob(JobEvent jobEvent)
     {
         return BackgroundJob.Enqueue<IBulkService>(
-            bulkService => bulkService.ProcessBulkImportUsersAsync(jobEvent, cancellationToken));
+            bulkService => bulkService.ProcessBulkImportUsersAsync(jobEvent, CancellationToken.None));
     }
 
     public string? JobStatus(string jobId)

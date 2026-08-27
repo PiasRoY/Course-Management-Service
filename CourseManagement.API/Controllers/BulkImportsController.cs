@@ -6,6 +6,7 @@ using CourseManagement.Domain.Enums;
 using Hangfire.States;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 namespace CourseManagement.API.Controllers
 {
@@ -38,27 +39,34 @@ namespace CourseManagement.API.Controllers
             }
 
             var jobEvent = await this.bulkService.PreprocessingAsync(file, cancellationToken);
-            var jobId = this.taskService.EnqueueBulkImportUsersJob(jobEvent, cancellationToken);
+            var jobId = this.taskService.EnqueueBulkImportUsersJob(jobEvent);
             await this.bulkService.PostProcessingAsync(jobEvent, jobId, cancellationToken);
 
-            return AcceptedAtAction(nameof(GetStatusAsync), new { jobId });
+            return AcceptedAtAction(nameof(GetStatusAsync), new { jobEventId = jobEvent.JobEventId });
         }
 
-        [HttpGet("{requestId}")]
-        public async Task<StatusResult> GetStatusAsync([FromRoute] string requestId)
+        [HttpGet("{jobEventId}")]
+        public async Task<StatusResult> GetStatusAsync([FromRoute] string jobEventId)
         {
-            var status = this.taskService.JobStatus(requestId);
+            var status = this.taskService.JobStatus(jobEventId);
 
             if (status == SucceededState.StateName || status == FailedState.StateName)
             {
                 return new StatusResult
                 {
                     Status = BulkProcessStatus.Completed,
-                    OutputFile = this.storageService.OpenLocalFile($"Output_{requestId}.csv")
+                    DownloadUrl = this.Url.Action(nameof(DownloadOutputFileAsync), new { jobEventId })
                 };
             }
 
             return new StatusResult { Status = BulkProcessStatus.Processing };
+        }
+
+        [HttpGet("download/{jobEventId}")]
+        public async Task<ActionResult> DownloadOutputFileAsync([FromRoute] Guid jobEventId, CancellationToken cancellationToken)
+        {
+            var fileStream = await this.bulkService.DownloadOutputCsvFileAsync(jobEventId, cancellationToken);
+            return File(fileStream, MediaTypeNames.Text.Csv, fileDownloadName: $"OutputFile_{jobEventId}");
         }
 
 
