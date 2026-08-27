@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Business.Services;
+using CourseManagement.Business.Services.Helpers;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,11 @@ public static class RegisterServicesExtensions
         services.AddScoped<ICourseService, CourseService>();
         services.AddScoped<IStudentService, StudentService>();
         services.AddScoped<IEnrollmentService, EnrollmentService>();
+
+        services.AddScoped<ICsvFileHelper, CsvFileHelper>();
+        services.AddScoped<IStorageService, StorageService>();
+
+        services.AddScoped<IBulkService, BulkService>();
 
         return services;
     }

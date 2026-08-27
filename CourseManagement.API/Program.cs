@@ -13,6 +13,7 @@ var configuration = builder.Configuration;
 builder.Services
     .AddCustomAuth(configuration)
     .AddEFServices(configuration)
+    .AddHangfireService(configuration)
     .AddCustomServices()
     .AddCustomMiddlewares()
     .AddCustomOptions();

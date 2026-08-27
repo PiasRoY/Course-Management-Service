@@ -19,6 +19,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Student> Students { get; set; }
     public DbSet<Enrollment> Enrollments { get; set; }
     public DbSet<TokenInfo> TokenInfos { get; set; }
+    public DbSet<JobEvent> JobEvents { get; set; }
 
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options,
