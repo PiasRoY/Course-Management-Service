@@ -28,7 +28,6 @@ public class StudentService : IStudentService
     {
         return await this.dbContext
                          .Students
-                         .AsNoTracking()
                          .OrderBy(s => s.CreatedAt)
                          .ThenBy(s => s.StudentId)
                          .Select(StudentMapper.ProjectToStudentDto)
@@ -39,7 +38,6 @@ public class StudentService : IStudentService
     {
         var studentDto = await this.dbContext
                                 .Students
-                                .AsNoTracking()
                                 .Select(StudentMapper.ProjectToStudentDto)
                                 .SingleOrDefaultAsync(s => s.StudentId == studentId, cancellationToken);
 
@@ -50,8 +48,7 @@ public class StudentService : IStudentService
     {
         var studentDto = await this.dbContext
                                 .Students
-                                .AsNoTracking()
-                                .Where(s => s.RollNumber == studentRollNumber)
+                                .Where(s => s.RollNumber.Equals(studentRollNumber, StringComparison.OrdinalIgnoreCase))
                                 .Select(StudentMapper.ProjectToStudentDto)
                                 .SingleOrDefaultAsync(cancellationToken);
 
@@ -168,6 +165,6 @@ public class StudentService : IStudentService
     {
         return await this.dbContext
                          .Students
-                         .AnyAsync(s => s.RollNumber == studentNumber, cancellationToken);
+                         .AnyAsync(s => s.RollNumber.Equals(studentNumber, StringComparison.OrdinalIgnoreCase), cancellationToken);
     }
 }

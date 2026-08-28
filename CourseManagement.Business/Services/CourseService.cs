@@ -27,7 +27,6 @@ public class CourseService : ICourseService
     {
         return await this.dbContext
                          .Courses
-                         .AsNoTracking()
                          .OrderBy(c => c.CreatedAt)
                          .ThenBy(c => c.CourseId)
                          .Select(CourseMapper.ProjectToCourseDto)
@@ -38,7 +37,6 @@ public class CourseService : ICourseService
     {
         var courseDto = await this.dbContext
                          .Courses
-                         .AsNoTracking()
                          .Select(CourseMapper.ProjectToCourseDto)
                          .SingleOrDefaultAsync(c => c.CourseId == courseId, cancellationToken);
 
@@ -49,9 +47,8 @@ public class CourseService : ICourseService
     {
         var courseDto = await this.dbContext
                          .Courses
-                         .AsNoTracking()
                          .Select(CourseMapper.ProjectToCourseDto)
-                         .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
+                         .SingleOrDefaultAsync(c => c.Name.Equals(courseName, StringComparison.OrdinalIgnoreCase), cancellationToken);
 
         return courseDto ?? throw new CourseNotFoundException(courseName);
     }
@@ -60,7 +57,6 @@ public class CourseService : ICourseService
     {
         return await this.dbContext
                          .Students
-                         .AsNoTracking()
                          .Where(s => s.Enrollments.Any(e => e.CourseId == courseId))
                          .OrderBy(s => s.CreatedAt)
                          .ThenBy(s => s.StudentId)
@@ -72,7 +68,6 @@ public class CourseService : ICourseService
     {
         return await this.dbContext
                          .Classes
-                         .AsNoTracking()
                          .Where(cl => cl.CourseClasses.Any(cc => cc.CourseId == courseId))
                          .OrderBy(cl => cl.CreatedAt)
                          .ThenBy(cl => cl.ClassId)
@@ -147,7 +142,7 @@ public class CourseService : ICourseService
     {
         return await this.dbContext
                          .Courses
-                         .AnyAsync(c => c.Name == courseName, cancellationToken);
+                         .AnyAsync(c => c.Name.Equals(courseName, StringComparison.OrdinalIgnoreCase), cancellationToken);
     }
 
     private async Task<List<ClassInfo>> GetClassesAsync(IEnumerable<string> classNames, CancellationToken cancellationToken)
