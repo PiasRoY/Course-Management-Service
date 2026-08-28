@@ -42,7 +42,7 @@ public class ClassService : IClassService
                                  .Classes
                                  .AsNoTracking()
                                  .Select(ClassMapper.ProjectToClasDto)
-                                 .SingleOrDefaultAsync(cl => cl.Name.Equals(className, StringComparison.), cancellationToken);
+                                 .SingleOrDefaultAsync(cl => cl.Name.Equals(className, StringComparison.OrdinalIgnoreCase), cancellationToken);
 
         return classDto ?? throw new ClassNotFoundException(className);
     }
