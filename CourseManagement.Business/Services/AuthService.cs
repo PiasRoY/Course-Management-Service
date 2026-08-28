@@ -1,11 +1,11 @@
 ﻿using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.PaginationDTOs;
 using CourseManagement.Business.DTOs.UserDTOs;
-using CourseManagement.Business.Enums;
 using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
+using CourseManagement.Domain.Enums;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

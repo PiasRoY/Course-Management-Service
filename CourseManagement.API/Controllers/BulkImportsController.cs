@@ -41,8 +41,14 @@ namespace CourseManagement.API.Controllers
                 return result;
             }
 
+            var userClaims = this.HttpContext.User;
+            if (userClaims == null)
+            {
+                return Unauthorized("Invalid token.");
+            }
+
             var jobEvent = await this.bulkService.PreprocessingAsync(file, cancellationToken);
-            var jobId = this.taskService.EnqueueBulkImportUsersJob(jobEvent, importType);
+            var jobId = this.taskService.EnqueueBulkImportJob(new UserContextDto(userClaims), jobEvent, importType);
             await this.bulkService.PostProcessingAsync(jobEvent, jobId, cancellationToken);
 
             return AcceptedAtAction(

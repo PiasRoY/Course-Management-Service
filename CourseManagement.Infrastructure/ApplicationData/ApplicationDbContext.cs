@@ -1,16 +1,15 @@
 ﻿using CourseManagement.Domain.Common;
 using CourseManagement.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CourseManagement.Infrastructure.ApplicationData;
 
 public class ApplicationDbContext : DbContext
 {
     public const string DefaultSchema = "course.managment";
-    private readonly IHttpContextAccessor httpContextAccessor;
+    private readonly ICurrentUserContext currentUserContext;
 
     public DbSet<User> Users { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
@@ -24,14 +23,13 @@ public class ApplicationDbContext : DbContext
 
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options,
-        IHttpContextAccessor httpContextAccessor) : base(options) 
+        ICurrentUserContext currentUserContext) : base(options) 
     {
-        this.httpContextAccessor = httpContextAccessor;
+        this.currentUserContext = currentUserContext;
     }
 
     private string CurrentUser => 
-        this.httpContextAccessor.HttpContext?.User?.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value
-        ?? "11111111-1111-1111-1111-111111111111"; // SYSTEM ID
+        this.currentUserContext.UserId ?? "11111111-1111-1111-1111-111111111111"; // SYSTEM ID
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

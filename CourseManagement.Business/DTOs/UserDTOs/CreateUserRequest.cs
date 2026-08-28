@@ -1,4 +1,4 @@
-﻿using CourseManagement.Business.Enums;
+﻿using CourseManagement.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace CourseManagement.Business.DTOs.UserDTOs;

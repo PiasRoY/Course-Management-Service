@@ -49,6 +49,8 @@ app.UseExceptionHandler();
 
 app.UseAuthentication();
 
+app.UseMiddleware<CurrentUserContextMiddleware>();
+
 app.UseMiddleware<SerilogLogContextMiddleware>();
 
 app.UseAuthorization();

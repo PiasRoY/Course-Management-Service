@@ -1,13 +1,17 @@
-﻿using CourseManagement.Business.DTOs.ClassDTOs;
+﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
+using CourseManagement.Business.DTOs.ClassDTOs;
 using CourseManagement.Business.DTOs.CourseDTOs;
 using CourseManagement.Business.DTOs.EnrollmentDTOs;
 using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Business.DTOs.UserDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
+using CourseManagement.Domain.Common;
 using CourseManagement.Domain.Entities;
+using CourseManagement.Domain.Enums;
 using Hangfire;
 using Hangfire.Storage;
+using System.Security.Claims;
 
 namespace CourseManagement.Business.Services;
 
@@ -20,6 +24,7 @@ public class TaskManager : ITaskManager
     private readonly ICourseService courseService;
     private readonly IStudentService studentService;
     private readonly IEnrollmentService enrollmentService;
+    private readonly ICurrentUserContext currentUserContext;
 
     public TaskManager(
         JobStorage jobStorage,
@@ -28,7 +33,8 @@ public class TaskManager : ITaskManager
         IClassService classService,
         ICourseService courseService,
         IStudentService studentService,
-        IEnrollmentService enrollmentService)
+        IEnrollmentService enrollmentService,
+        ICurrentUserContext currentUserContext)
     {
         this.monitoringApi = jobStorage.GetMonitoringApi();
         this.bulkService = bulkService;
@@ -37,6 +43,7 @@ public class TaskManager : ITaskManager
         this.courseService = courseService;
         this.studentService = studentService;
         this.enrollmentService = enrollmentService;
+        this.currentUserContext = currentUserContext;
     }
 
     public string? JobStatus(string jobId)
@@ -44,13 +51,15 @@ public class TaskManager : ITaskManager
         return monitoringApi.JobDetails(jobId).History.FirstOrDefault()?.StateName;
     }
 
-    public string EnqueueBulkImportUsersJob(JobEvent jobEvent, ImportTypes importTypes)
+    public string EnqueueBulkImportJob(UserContextDto userContextDto, JobEvent jobEvent, ImportTypes importTypes)
     {
-        return BackgroundJob.Enqueue<ITaskManager>(taskService => taskService.BulkImportAsync(jobEvent, importTypes));
+        return BackgroundJob.Enqueue<ITaskManager>(taskService => taskService.BulkImportAsync(userContextDto, jobEvent, importTypes));
     }
 
-    public async Task BulkImportAsync(JobEvent jobEvent, ImportTypes importTypes)
+    public async Task BulkImportAsync(UserContextDto userContextDto, JobEvent jobEvent, ImportTypes importTypes)
     {
+        this.currentUserContext.SetUserContext(userContextDto.UserId, userContextDto.UserEmail, userContextDto.Roles);
+
         switch (importTypes)
         {
             case ImportTypes.Users:

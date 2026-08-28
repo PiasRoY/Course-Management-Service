@@ -1,12 +1,14 @@
-﻿using CourseManagement.Business.Enums;
+﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
+using CourseManagement.Business.Enums;
 using CourseManagement.Domain.Entities;
+using System.Security.Claims;
 
 namespace CourseManagement.Business.Services.Interfaces
 {
     public interface ITaskManager
     {
         string? JobStatus(string jobId);
-        Task BulkImportAsync(JobEvent jobEvent, ImportTypes importTypes);
-        string EnqueueBulkImportUsersJob(JobEvent jobEvent, ImportTypes importTypes);
+        Task BulkImportAsync(UserContextDto userContextDto, JobEvent jobEvent, ImportTypes importTypes);
+        string EnqueueBulkImportJob(UserContextDto userContextDto, JobEvent jobEvent, ImportTypes importTypes);
     }
 }

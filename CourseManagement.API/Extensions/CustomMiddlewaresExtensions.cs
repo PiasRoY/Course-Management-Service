@@ -6,7 +6,9 @@ public static class CustomMiddlewaresExtensions
 {
     public static IServiceCollection AddCustomMiddlewares(this IServiceCollection services)
     {
-        services.AddScoped<SerilogLogContextMiddleware>();
+        services
+            .AddScoped<SerilogLogContextMiddleware>()
+            .AddScoped<CurrentUserContextMiddleware>();
 
         services
             .AddExceptionHandler<GlobalExceptionHandler>()

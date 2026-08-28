@@ -1,7 +1,7 @@
 ﻿using CourseManagement.Business.DTOs.UserDTOs;
-using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
+using CourseManagement.Domain.Enums;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -49,7 +49,7 @@ public class DbSeeder
             roles.Add(new UserRole
             {
                 RoleId = Guid.NewGuid(),
-                RoleName = role.ToString(),
+                RoleName = role.RoleName.ToString(),
             }); 
         }
 

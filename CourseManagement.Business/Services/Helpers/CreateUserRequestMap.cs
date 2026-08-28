@@ -1,5 +1,5 @@
 ﻿using CourseManagement.Business.DTOs.UserDTOs;
-using CourseManagement.Business.Enums;
+using CourseManagement.Domain.Enums;
 using CsvHelper.Configuration;
 
 namespace CourseManagement.Business.Services.Helpers;

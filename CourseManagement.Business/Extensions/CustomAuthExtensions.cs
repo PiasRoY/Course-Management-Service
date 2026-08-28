@@ -1,6 +1,7 @@
 ﻿using CourseManagement.Business.Enums;
 using CourseManagement.Business.Factories;
 using CourseManagement.Business.Options;
+using CourseManagement.Domain.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;

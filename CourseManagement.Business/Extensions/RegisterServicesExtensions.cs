@@ -1,6 +1,8 @@
 ﻿using CourseManagement.Business.Services;
 using CourseManagement.Business.Services.Helpers;
 using CourseManagement.Business.Services.Interfaces;
+using CourseManagement.Domain.Common;
+using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CourseManagement.Business.Extensions;
@@ -24,6 +26,8 @@ public static class RegisterServicesExtensions
         services.AddScoped<IBulkService, BulkService>();
         services.AddScoped<ITaskManager, TaskManager>();
         services.AddScoped<IJobEventService, JobEventService>();
+
+        services.AddScoped<ICurrentUserContext, CurrentUserContext>();
 
         return services;
     }

@@ -1,4 +1,4 @@
-﻿namespace CourseManagement.Business.Enums;
+﻿namespace CourseManagement.Domain.Enums;
 
 public enum UserRoles
 {

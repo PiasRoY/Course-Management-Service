@@ -2,6 +2,7 @@
 using CourseManagement.Business.DTOs.UserDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
+using CourseManagement.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
