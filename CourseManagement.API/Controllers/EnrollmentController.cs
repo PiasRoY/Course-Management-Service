@@ -26,13 +26,19 @@ public class EnrollmentController : ControllerBase
         return Ok(await this.enrollmentService.GetEnrollmentsAsync(@params, cancellationToken));
     }
 
+    [HttpGet("student-enrollment/{studentId}")]
+    public async Task<ActionResult<IEnumerable<EnrollmentDto>>> GetEnrollmentsByStudentIdAsync(Guid studentId, CancellationToken cancellationToken)
+    {
+        return Ok(await this.enrollmentService.GetEnrollmentsByStudentIdAsync(studentId, cancellationToken));
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<EnrollmentDto>> GetEnrollmentById(Guid id, CancellationToken cancellationToken)
     {
         return Ok(await this.enrollmentService.GetEnrollmentByIdAsync(id, cancellationToken));
     }
 
-    [HttpPost]
+    [HttpPost("class")]
     public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
     {
         var enrollmentDto = await this.enrollmentService.CreateEnrollmentByClassAsync(request, cancellationToken);
@@ -42,7 +48,7 @@ public class EnrollmentController : ControllerBase
             enrollmentDto);
     }
 
-    [HttpPost]
+    [HttpPost("course")]
     public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken)
     {
         var enrollmentDto = await this.enrollmentService.CreateEnrollmentByCourseAsync(request, cancellationToken);

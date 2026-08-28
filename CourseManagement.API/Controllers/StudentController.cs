@@ -71,7 +71,7 @@ public class StudentController : ControllerBase
 
     [HttpGet("classmates")]
     [Authorize(Roles = nameof(UserRoles.Student))]
-    public async Task<ActionResult<PageResult<StudentDto>>> GetClassMatesByStudent(PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<StudentDto>>> GetClassMatesByStudent([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
         if (userId == null)
@@ -84,7 +84,7 @@ public class StudentController : ControllerBase
 
     [HttpGet("coursemates")]
     [Authorize(Roles = nameof(UserRoles.Student))]
-    public async Task<ActionResult<PageResult<StudentDto>>> GetCourseMatesByStudent(PaginationParams @params, CancellationToken cancellationToken)
+    public async Task<ActionResult<PageResult<StudentDto>>> GetCourseMatesByStudent([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
         if (userId == null)
@@ -123,7 +123,7 @@ public class StudentController : ControllerBase
 
     private Guid? GetUserId()
     {
-        var userIdStr = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+        var userIdStr = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!Guid.TryParse(userIdStr, out var userId))
         {

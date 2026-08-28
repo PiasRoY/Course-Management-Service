@@ -43,6 +43,15 @@ public class EnrollmentService : IEnrollmentService
         return enrollment ?? throw new EnrollmentNotFoundException(enrollmentId);
     }
 
+    public async Task<IEnumerable<EnrollmentDto>> GetEnrollmentsByStudentIdAsync(Guid studentId, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Enrollments
+                         .Where(e => e.StudentId == studentId)
+                         .Select(EnrollmentMapper.ProjectToEnrollmentDto)
+                         .ToListAsync();
+    }
+
     public async Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
     {
         if (await this.IsEnrollmentExists(request.StudentId, request.ClassId, null, cancellationToken))
@@ -133,7 +142,7 @@ public class EnrollmentService : IEnrollmentService
             throw new EnrollmentNotFoundException(enrollmentId);
         }
 
-        if (!await this.IsEnrollmentExists(enrollment.StudentId, enrollment.ClassId, enrollment.CourseId, cancellationToken))
+        if (await this.IsEnrollmentExists(enrollment.StudentId, enrollment.ClassId, enrollment.CourseId, cancellationToken))
         {
             throw new InvalidOperationException("Student is already enrolled to this class, course combination.");
         }

@@ -7,6 +7,7 @@ namespace CourseManagement.Business.Services.Interfaces
     public interface IEnrollmentService
     {
         Task<PageResult<EnrollmentDto>> GetEnrollmentsAsync(PaginationParams @params, CancellationToken cancellationToken);
+        Task<IEnumerable<EnrollmentDto>> GetEnrollmentsByStudentIdAsync(Guid studentId, CancellationToken cancellationToken);
         Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken);
         Task<EnrollmentCourseDto> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken);
         Task DeleteEnrollmentAsync(DeleteEnrollmentRequest deleteEnrollmentRequest, CancellationToken cancellationToken);
