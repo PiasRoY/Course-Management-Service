@@ -47,10 +47,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler();
 
-app.UseHttpsRedirection();
-
-app.UseHsts();
-
 app.UseAuthentication();
 
 app.UseMiddleware<SerilogLogContextMiddleware>();
