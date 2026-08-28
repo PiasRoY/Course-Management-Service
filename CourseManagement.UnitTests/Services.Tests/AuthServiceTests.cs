@@ -4,7 +4,6 @@ using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
 using CourseManagement.Domain.Enums;
 using CourseManagement.Infrastructure.ApplicationData;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
