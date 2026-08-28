@@ -1,11 +1,12 @@
 ﻿using CsvHelper;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace CourseManagement.Business.Services.Helpers;
 
 public class CsvFileHelper : ICsvFileHelper
 {
-    public async IAsyncEnumerable<T> ReadRecordsAsync<T>(Stream file, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<T> ReadRecordsAsync<T>(Stream file, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         using var streamReader = new StreamReader(file);
         using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);

@@ -1,4 +1,6 @@
-﻿namespace CourseManagement.Business.Services.Helpers
+﻿using System.Runtime.CompilerServices;
+
+namespace CourseManagement.Business.Services.Helpers
 {
     public interface ICsvFileHelper
     {
