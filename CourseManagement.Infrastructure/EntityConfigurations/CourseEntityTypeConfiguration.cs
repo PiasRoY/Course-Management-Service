@@ -15,12 +15,12 @@ public class CourseEntityTypeConfiguration : IEntityTypeConfiguration<Course>
         builder
             .Property(c => c.Name)
             .IsRequired()
-            .HasMaxLength(10);
+            .HasMaxLength(100);
 
         builder
             .Property(c => c.Title)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(100);
 
         builder
             .Property(c => c.Credits)

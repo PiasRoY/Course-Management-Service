@@ -37,12 +37,10 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
             .IsRequired();
 
         builder
-            .Property(s => s.CurrentTerm)
-            .IsRequired();
+            .Property(s => s.CurrentTerm);
 
         builder
-            .Property(s => s.CurrentSemester)
-            .IsRequired();
+            .Property(s => s.CurrentSemester);
 
         builder
             .HasOne(s => s.User)

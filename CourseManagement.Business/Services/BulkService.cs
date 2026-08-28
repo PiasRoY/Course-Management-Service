@@ -52,9 +52,11 @@ public class BulkService : IBulkService
 
     public async Task PostProcessingAsync(JobEvent jobEvent, string hangfireJobId, CancellationToken cancellationToken)
     {
+        this.dbContext.Attach(jobEvent);
+        this.dbContext.Entry(jobEvent).Property(j => j.HangfireJobId).IsModified = true;
+
         jobEvent.HangfireJobId = hangfireJobId;
 
-        this.dbContext.Attach(jobEvent);
         await this.dbContext.SaveChangesAsync(cancellationToken);
     }
 

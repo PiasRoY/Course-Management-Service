@@ -14,7 +14,7 @@ public class CreateCourseRequestMap : ClassMap<CreateCourseRequest>
         Map(m => m.ClassNames)
             .Convert(csv =>
             {
-                var rolesField = csv.Row.GetField("Roles");
+                var rolesField = csv.Row.GetField("ClassNames");
 
                 if (string.IsNullOrWhiteSpace(rolesField))
                 {

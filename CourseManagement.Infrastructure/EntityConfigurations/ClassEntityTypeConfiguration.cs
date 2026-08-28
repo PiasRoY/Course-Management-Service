@@ -15,7 +15,7 @@ public class ClassEntityTypeConfiguration : IEntityTypeConfiguration<Class>
         builder
             .Property(cl => cl.Name)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(100);
 
         builder
             .Property(cl => cl.Semester)
@@ -29,7 +29,7 @@ public class ClassEntityTypeConfiguration : IEntityTypeConfiguration<Class>
         builder
             .Property(cl => cl.SectionCode)
             .IsRequired()
-            .HasMaxLength(10);
+            .HasMaxLength(50);
 
         builder
             .HasOne(cl => cl.Instructor)
