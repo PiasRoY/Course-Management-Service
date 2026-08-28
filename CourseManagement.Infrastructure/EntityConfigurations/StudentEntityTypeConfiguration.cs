@@ -30,13 +30,6 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
             .Property(s => s.GraduationDate);
 
         builder
-            .Property(s => s.CGPA);
-
-        builder
-            .Property(s => s.TotalCreditsTaken)
-            .IsRequired();
-
-        builder
             .Property(s => s.CurrentTerm);
 
         builder

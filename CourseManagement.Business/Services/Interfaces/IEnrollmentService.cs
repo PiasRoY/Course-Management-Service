@@ -12,5 +12,6 @@ namespace CourseManagement.Business.Services.Interfaces
         Task DeleteEnrollmentAsync(DeleteEnrollmentRequest deleteEnrollmentRequest, CancellationToken cancellationToken);
         Task<EnrollmentDto> GetEnrollmentByIdAsync(Guid enrollmentId, CancellationToken cancellationToken);
         Task<EnrollmentDto> UpdateEnrollmentAsync(Guid enrollmentId, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken);
+        Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, CancellationToken cancellationToken);
     }
 }

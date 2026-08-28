@@ -90,6 +90,38 @@ public class EnrollmentService : IEnrollmentService
         return EnrollmentMapper.MapsToEnrollmentCourseDto(enrollments.First());
     }
 
+    public async Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, CancellationToken cancellationToken)
+    {
+        var studentId = await this.dbContext.Students.AsNoTracking().Where(s => s.RollNumber.Equals(request.StudentRollNumber, StringComparison.OrdinalIgnoreCase)).Select(s => s.StudentId).SingleOrDefaultAsync(cancellationToken);
+        var classId = await this.dbContext.Classes.AsNoTracking().Where(cl => cl.Name.Equals(request.ClassName, StringComparison.OrdinalIgnoreCase)).Select(cl => cl.ClassId).SingleOrDefaultAsync(cancellationToken);
+
+        Guid? courseId = null;
+        if (string.IsNullOrWhiteSpace(request.CourseName))
+        {
+            courseId = await this.dbContext.Courses.AsNoTracking().Where(c => c.Name.Equals(request.CourseName, StringComparison.OrdinalIgnoreCase)).Select(c => c.CourseId).SingleOrDefaultAsync(cancellationToken);
+        }
+
+        if (await this.IsEnrollmentExists(studentId, classId, courseId, cancellationToken))
+        {
+            throw new InvalidOperationException("Student is already enrolled to this class, course combination.");
+        }
+
+        var enrollment = new Enrollment
+        {
+            EnrollmentId = Guid.NewGuid(),
+            StudentId = studentId,
+            CourseId = courseId,
+            ClassId = classId
+        };
+
+        await this.dbContext.AddAsync(enrollment, cancellationToken);
+        await this.dbContext.SaveChangesAsync(cancellationToken);
+
+        this.logger.LogInformation("New enrollment {Student}, {Course}, {Class} is created.", enrollment.StudentId, enrollment.CourseId, enrollment.ClassId);
+
+        return EnrollmentMapper.MapsToEnrollmentDto(enrollment);
+    }
+
     public async Task<EnrollmentDto> UpdateEnrollmentAsync(Guid enrollmentId, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken)
     {
         var enrollment = await this.dbContext
