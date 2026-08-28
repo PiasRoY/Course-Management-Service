@@ -11,8 +11,12 @@ public static class EnrollmentMapper
         {
             EnrollmentId = enrollment.EnrollmentId,
             StudentId = enrollment.StudentId,
+            StudentEmail = enrollment.Student != null ?
+                           (enrollment.Student.User == null ? null : enrollment.Student.User.EmailAddress) : null,
             ClassId = enrollment.ClassId,
+            ClassName = enrollment.Class != null ? enrollment.Class.Name : null,
             CourseId = enrollment.CourseId,
+            CourseName = enrollment.Course != null ? enrollment.Course.Name : null,
             EnrolledAt = enrollment.CreatedAt,
             EnrolledBy = enrollment.CreatedBy
         };

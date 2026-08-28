@@ -6,14 +6,12 @@ using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
 namespace CourseManagement.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
 public class StudentController : ControllerBase
 {
     private readonly IStudentService studentService;
@@ -24,24 +22,28 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<PageResult<StudentDto>>> GetStudents([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.GetStudentsAsync(@params, cancellationToken));
     }
 
     [HttpGet("{studentId}")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<StudentDto>> GetStudentById(Guid studentId, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.GetStudentByIdAsync(studentId, cancellationToken));
     }
 
     [HttpGet("roll-number/{rollNumber}")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<StudentDto>> GetStudentByRollNumberAsync(string rollNumber, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.GetStudentByRollNoAsync(rollNumber, cancellationToken));
     }
 
     [HttpGet("classes")]
+    [Authorize(Roles = nameof(UserRoles.Student))]
     public async Task<ActionResult<IEnumerable<ClassDto>>> GetClassesByStudent(CancellationToken cancellationToken)
     {
         var userId = GetUserId();
@@ -54,6 +56,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("courses")]
+    [Authorize(Roles = nameof(UserRoles.Student))]
     public async Task<ActionResult<IEnumerable<CourseDto>>> GetCoursesByStudent(CancellationToken cancellationToken)
     {
         var userId = GetUserId();
@@ -66,6 +69,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("classmates")]
+    [Authorize(Roles = nameof(UserRoles.Student))]
     public async Task<ActionResult<PageResult<StudentDto>>> GetClassMatesByStudent(PaginationParams @params, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
@@ -78,6 +82,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("coursemates")]
+    [Authorize(Roles = nameof(UserRoles.Student))]
     public async Task<ActionResult<PageResult<StudentDto>>> GetCourseMatesByStudent(PaginationParams @params, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
@@ -90,6 +95,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<StudentDto>> CreateStudentAsync(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
     {
         var studentDto = await this.studentService.CreateStudentAsync(createStudentRequest, cancellationToken);
@@ -100,12 +106,14 @@ public class StudentController : ControllerBase
     }
 
     [HttpPatch("{studentId}")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<StudentDto>> UpdateStudentAsync(Guid studentId, UpdateStudentRequest updateStudentRequest, CancellationToken cancellationToken)
     {
         return Ok(await this.studentService.UpdateStudentByIdAsync(studentId, updateStudentRequest, cancellationToken));
     }
 
     [HttpDelete]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<IActionResult> DeleteStudentAsync(DeleteStudentRequest deleteStudentRequest, CancellationToken cancellationToken)
     {
         await this.studentService.DeleteStudentAsync(deleteStudentRequest, cancellationToken);

@@ -3,16 +3,15 @@ using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Enums;
-using Hangfire.States;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
 namespace CourseManagement.API.Controllers
 {
-    [Authorize(Roles = $"{nameof(UserRoles.Admin)}, {nameof(UserRoles.Staff)}")]
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public class BulkImportsController : ControllerBase
     {
         private readonly IJobEventService jobEventService;

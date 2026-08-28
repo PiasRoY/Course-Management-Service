@@ -22,18 +22,21 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<PageResult<UserDto>>> GetUsersAsync([FromQuery] PaginationParams @params, CancellationToken cancellationToken)
     {
         return Ok(await this.authService.GetUsersAsync(@params, cancellationToken));
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<PageResult<UserDto>>> GetUserById(Guid id, CancellationToken cancellationToken)
     {
         return Ok(await this.authService.GetUserByIdAsync(id, cancellationToken));
     }
 
     [HttpGet("email/{email}")]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<PageResult<UserDto>>> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return Ok(await this.authService.GetUserByEmailAsync(email, cancellationToken));
