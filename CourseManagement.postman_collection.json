@@ -1,0 +1,4136 @@
+{
+  "info": {
+    "_postman_id": "35752f77-6a48-4755-bdf0-9943ac0684bf",
+    "name": "CourseManagement",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "17808852"
+  },
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "CreateUser",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"emailAddress\": \"pias@gmail.com\",\r\n    \"password\": \"pias1234\",\r\n    \"firstName\": \"Pias\",\r\n    \"lastName\": \"Roy\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/register",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "CreateUser",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"emailAddress\": \"pias@gmail.com\",\r\n    \"password\": \"pias1234\",\r\n    \"firstName\": \"Pias\",\r\n    \"lastName\": \"Roy\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/register",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:43:04 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/Account/74ac5ae8-5dfb-40dc-8007-7eab86b2d303"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"userId\": \"74ac5ae8-5dfb-40dc-8007-7eab86b2d303\",\n    \"emailAddress\": \"pias@gmail.com\",\n    \"fullName\": \"Pias Roy\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login-Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"pias.roy@admin.com\",\r\n    \"password\": \"password12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/login",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login-Admin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"pias.roy@admin.com\",\r\n    \"password\": \"password12345678\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/login",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:08:26 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "RefreshToken=orxCh3N5Yxc4eJSkez78Sv%2FFuA0fDM%2BN16Kds5G6i5Eq1W5bc2JZCOhmUjF3tIzIEFP6xPQjgXjz0QM1G%2F8%2Fm9QiW3UKkV9vJ9WKXZdZlTDg4MlLlbMyfBQhNBtlRt3hwFb10tMrG6wm%2F8i6UjL%2FXfMWDwZwGaKmCGinycYY1OBBV9%2FpAoBp6y61uCldAEqzCOsOvq3KaRTUMDWS4CLsFHxUfZhMtFKucaBoFjyBjxPrYj2i87qOw9a1Ccl%2BRvC%2BBQJ11%2BA3W%2FyANU3KLX8necpJaohDB94Bz1jF8R5AECKTqdXwFrk2bHYZuXqUS9pYqKHeDojAAGPKTyhn8XsOgg%3D%3D; expires=Fri, 11 Sep 2026 20:08:26 GMT; path=/api/v1/Account/refresh-token; secure; samesite=lax; httponly"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDb3Vyc2VNYW5hZ2VtZW50LkFQSSIsImlzcyI6IkNvdXJzZU1hbmFnZW1lbnQuQVVUSCIsImV4cCI6MTc4Nzg2MjIwNiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJmM2U2NDlhYy05ODNkLTRhMDctODc0Ny04YzlmYzVjYzhkNWYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwaWFzLnJveUBhZG1pbi5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImlhdCI6MTc4Nzg2MTMwNiwibmJmIjoxNzg3ODYxMzA2fQ.NyUIHMpHOUKAAEsCgNdo8cZtSO8UJhCgmqEdDqUdU64\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"pias@gmail.com\",\r\n    \"password\": \"pias1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/login",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"pias@gmail.com\",\r\n    \"password\": \"pias1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/login",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:26:50 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "RefreshToken=LB9QbgfE2l3esVqBjiRXlGc3Qvb1bQtf7aDGYB1rLLbHzZOR9msWYaQaXa5wltvu3VpttJBvJ2uWVX3MAkWT6%2BvalgdjdYrC%2FtMeg9eONMhOuzdM8IPqvIv6grC19Pwy2v%2BdLr145xR%2FGU%2FQzVY7C4wD1P0%2BTse4gsCL%2B5CgodTnbm0WbhZqdpfjbEU3BWjlxuPlXCQTAd%2Fn671gBvz8xBAGvbRidcvqkQ423gXXxWEy6jd%2FPKLhIvXH2ODtEIsWprNFnuQYew8%2FVK1DqKFHnZiMQMAA6qoN%2BlS%2B9CzOMmymgi1N7kb7l8erxvAKtsqypMrMx5ljTqzogmq1Qejfxg%3D%3D; expires=Fri, 11 Sep 2026 20:26:50 GMT; path=/api/v1/Account/refresh-token; secure; samesite=lax; httponly"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDb3Vyc2VNYW5hZ2VtZW50LkFQSSIsImlzcyI6IkNvdXJzZU1hbmFnZW1lbnQuQVVUSCIsImV4cCI6MTc4Nzg2MzMxMCwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2YmMzMjEzNy0wOWQ3LTQ4MzEtYTI0Zi04MzkyMDAyOGJjYWYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwaWFzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN0dWRlbnQiLCJpYXQiOjE3ODc4NjI0MTAsIm5iZiI6MTc4Nzg2MjQxMH0.L7UCvmtOnsRBSEsFFyVPkThj7nHVOysTzKahieOFE1M\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/refresh-token",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Refresh Token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/refresh-token",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "refresh-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:27:28 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "RefreshToken=eD9JvAeTItoLDfvzX%2BK%2Fae8F5elqJBpCtrIG7qqep3RpbW45eahtq3iiizPdvltmZFcjyNl%2FHvGQrRGC1oDtTvjG8JRKfcfUQPekgeROYPQORaj1vLt3c%2B8%2BwOyW2%2ByXQ3vJ%2BjTnqhD6b8ZRu%2F%2Bm4bcuSkCLygP14BRaCP6IDOEDlN%2FXEQHOrDzkAGVUJJGB2%2Fj09l5ZNa79qJJ9877xNzIJqNkBXVQeOxfWpYfl0MOjghjrkeLz%2BELHHW5VNB6ljexJGyI5GT0qzKTqFDEULbzsG4Z5317WtkhKZF0WRJ2JnYS2un%2BWRQtsHEZFb2CX%2F8gRczQkfgTDGrvU8X6jOA%3D%3D; expires=Fri, 11 Sep 2026 20:27:28 GMT; path=/api/v1/Account/refresh-token; secure; samesite=lax; httponly"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDb3Vyc2VNYW5hZ2VtZW50LkFQSSIsImlzcyI6IkNvdXJzZU1hbmFnZW1lbnQuQVVUSCIsImV4cCI6MTc4Nzg2MzM0OCwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2YmMzMjEzNy0wOWQ3LTQ4MzEtYTI0Zi04MzkyMDAyOGJjYWYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwaWFzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN0dWRlbnQiLCJpYXQiOjE3ODc4NjI0MTAsIm5iZiI6MTc4Nzg2MjQxMH0.mSWw_nsiEsXUFOyhD3SueZZo2bwSIuSqgoX4is27-98\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Change-Password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"pias@gmail.com\",\r\n    \"oldPassword\": \"pias1234\",\r\n    \"newPassword\": \"pias12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/change-password",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "change-password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Change-Password",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"pias@gmail.com\",\r\n    \"oldPassword\": \"pias1234\",\r\n    \"newPassword\": \"pias12345\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/change-password",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "change-password"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:27:53 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Pias2\",\r\n    \"lastName\": \"Roy2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/update-user",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "update-user"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "UpdateUser",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "",
+                    "value": "",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"firstName\": \"Pias2\",\r\n    \"lastName\": \"Roy2\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/update-user",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "update-user"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:30:49 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "DeleteUser",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\": \"{{UserId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/delete-user",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "delete-user"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "DeleteUser",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "",
+                    "value": "",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\": \"{{UserId}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/delete-user",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "delete-user"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:32:49 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "RevokeRefreshTokens",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{{UserId}}\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/revoke-refresh-tokens",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "revoke-refresh-tokens"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "RevokeRefreshTokens",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"{{UserId}}\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/revoke-refresh-tokens",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "revoke-refresh-tokens"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:34:14 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "ChangeRoles",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userId\": \"{{UserId}}\",\r\n    \"roles\": [\"Staff\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/change-roles",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "change-roles"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ChangeRoles",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\": \"{{UserId}}\",\r\n    \"roles\": [\"Staff\"]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/change-roles",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "change-roles"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:34:29 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "GetUserById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/{{UserId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "{{UserId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetUserById",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/{{UserId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "{{UserId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:38:02 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"userId\": \"7ec9ccaa-c7fe-429d-8559-fb693c395101\",\n    \"emailAddress\": \"pias@gmail.com\",\n    \"fullName\": \"Pias Roy\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetUserByEmail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Account/email/{{UserEmail}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account",
+                "email",
+                "{{UserEmail}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetUserByEmail",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account/email/{{UserEmail}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account",
+                    "email",
+                    "{{UserEmail}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:51:30 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"userId\": \"7ec9ccaa-c7fe-429d-8559-fb693c395101\",\n    \"emailAddress\": \"pias@gmail.com\",\n    \"fullName\": \"Pias Roy\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetUsers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Account?PageNumber=1&PageSize=20",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Account"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetUsers",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:55:23 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"userId\": \"2d013bce-bcf8-4aff-854e-7f1f378571db\",\n            \"emailAddress\": \"pias.roy@admin.com\",\n            \"fullName\": \"Pias Roy\"\n        },\n        {\n            \"userId\": \"0e7a62ea-c264-49ef-b2a4-229ff7a90af6\",\n            \"emailAddress\": \"pias@instructor.com\",\n            \"fullName\": \"Pias Roy\"\n        },\n        {\n            \"userId\": \"7ec9ccaa-c7fe-429d-8559-fb693c395101\",\n            \"emailAddress\": \"pias@gmail.com\",\n            \"fullName\": \"Pias Roy\"\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 3\n}"
+            },
+            {
+              "name": "GetUsers",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Account?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Account"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:00:05 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"userId\": \"b045d5e7-89b6-47ec-8fb5-c30ff65f5fa5\",\n            \"emailAddress\": \"sarah.moore76@academy.org\",\n            \"fullName\": \"Sarah Moore\"\n        },\n        {\n            \"userId\": \"fe94f4fc-a7aa-468e-bed4-af76d2609782\",\n            \"emailAddress\": \"charles.jackson45@academy.org\",\n            \"fullName\": \"Charles Jackson\"\n        },\n        {\n            \"userId\": \"9da3a7e9-7597-48bc-abd5-a56bb355595a\",\n            \"emailAddress\": \"karen.martin10@school.edu\",\n            \"fullName\": \"Karen Martin\"\n        },\n        {\n            \"userId\": \"1c63a3ba-3e53-414b-82ec-cbba263f2d3d\",\n            \"emailAddress\": \"christopher.lee62@school.edu\",\n            \"fullName\": \"Christopher Lee\"\n        },\n        {\n            \"userId\": \"0e72fa30-4ccb-48b2-b9d8-b2f4cc96bce6\",\n            \"emailAddress\": \"nancy.perez11@academy.org\",\n            \"fullName\": \"Nancy Perez\"\n        },\n        {\n            \"userId\": \"c60f673b-5910-4b66-96e0-3a86115e23a6\",\n            \"emailAddress\": \"daniel.thompson76@techcorp.io\",\n            \"fullName\": \"Daniel Thompson\"\n        },\n        {\n            \"userId\": \"9c9a75b4-b0ac-4d0a-b024-61250bfd7ef2\",\n            \"emailAddress\": \"lisa.white92@school.edu\",\n            \"fullName\": \"Lisa White\"\n        },\n        {\n            \"userId\": \"b4b954d2-2b9e-44de-a720-ac40a26b799f\",\n            \"emailAddress\": \"matthew.harris18@school.edu\",\n            \"fullName\": \"Matthew Harris\"\n        },\n        {\n            \"userId\": \"2f3704f7-3382-441c-9328-549f175ab2a4\",\n            \"emailAddress\": \"betty.sanchez76@school.edu\",\n            \"fullName\": \"Betty Sanchez\"\n        },\n        {\n            \"userId\": \"d9dad0e2-fdf3-4dd2-91d9-5a281e9e6316\",\n            \"emailAddress\": \"anthony.clark74@techcorp.io\",\n            \"fullName\": \"Anthony Clark\"\n        },\n        {\n            \"userId\": \"6f62d1c3-b767-47b7-a81f-f32a8bf30bba\",\n            \"emailAddress\": \"margaret.ramirez82@example.com\",\n            \"fullName\": \"Margaret Ramirez\"\n        },\n        {\n            \"userId\": \"0c489196-1ac6-4466-a457-6c124a521776\",\n            \"emailAddress\": \"donald.lewis17@school.edu\",\n            \"fullName\": \"Donald Lewis\"\n        },\n        {\n            \"userId\": \"738e1999-bb0c-455a-8e59-551ffb4caf69\",\n            \"emailAddress\": \"sandra.robinson79@academy.org\",\n            \"fullName\": \"Sandra Robinson\"\n        },\n        {\n            \"userId\": \"85a72246-3453-48d3-91af-73b05d17728f\",\n            \"emailAddress\": \"mark.walker14@school.edu\",\n            \"fullName\": \"Mark Walker\"\n        },\n        {\n            \"userId\": \"42cc6524-2da6-48d4-9320-0f93834ad2d2\",\n            \"emailAddress\": \"ashley.young31@techcorp.io\",\n            \"fullName\": \"Ashley Young\"\n        },\n        {\n            \"userId\": \"1fe98086-9802-4cc1-9361-50b21ac684c0\",\n            \"emailAddress\": \"paul.allen67@techcorp.io\",\n            \"fullName\": \"Paul Allen\"\n        },\n        {\n            \"userId\": \"f88bf05f-a4e6-4f6f-aa20-f1add983844b\",\n            \"emailAddress\": \"kimberly.king79@school.edu\",\n            \"fullName\": \"Kimberly King\"\n        },\n        {\n            \"userId\": \"9d1a6453-bf65-4107-a07d-59145c2bf4c7\",\n            \"emailAddress\": \"steven.wright90@academy.org\",\n            \"fullName\": \"Steven Wright\"\n        },\n        {\n            \"userId\": \"2e22e579-d283-4e50-8a70-e0f086b0c537\",\n            \"emailAddress\": \"emily.scott27@school.edu\",\n            \"fullName\": \"Emily Scott\"\n        },\n        {\n            \"userId\": \"b996a8a3-87b5-4d3f-8249-5894f3aa1900\",\n            \"emailAddress\": \"andrew.torres14@academy.org\",\n            \"fullName\": \"Andrew Torres\"\n        }\n    ],\n    \"currentPageNumber\": 2,\n    \"totalPages\": 3,\n    \"totalCount\": 53\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Class",
+      "item": [
+        {
+          "name": "CreateClass",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Math-101\",\r\n    \"semester\": \"Spring\",\r\n    \"year\": \"2027\",\r\n    \"sectionCode\": \"SEC-001\",\r\n    \"instructorEmail\": \"pias@instructor.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Class",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "CreateClass",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"MATH-101\",\r\n    \"semester\": \"Spring\",\r\n    \"year\": \"2027\",\r\n    \"sectionCode\": \"SEC-001\",\r\n    \"instructorEmail\": \"pias@instructor.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:45:13 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/Class/87e79e31-0ff7-4a19-b581-f769f1a033c3"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"classId\": \"87e79e31-0ff7-4a19-b581-f769f1a033c3\",\n    \"name\": \"MATH-101\",\n    \"semester\": \"Spring\",\n    \"calendar\": \"Spring 2027\",\n    \"sectionCode\": \"SEC-001\",\n    \"instructorName\": \"Pias Roy\",\n    \"instructorEmail\": \"pias@instructor.com\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "UpdateClass",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"semester\": \"Fall\",\r\n    \"year\": \"2025\",\r\n    \"sectionCode\": \"SEC-002\",\r\n    \"instructorEmail\": \"pias@instructor.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Class/{{ClassId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class",
+                "{{ClassId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "UpdateClass",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"semester\": \"Fall\",\r\n    \"year\": \"2025\",\r\n    \"sectionCode\": \"SEC-002\",\r\n    \"instructorEmail\": \"pias@instructor.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class/eaf91b3a-c7a5-46b7-bfa8-6dec926d1f66",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class",
+                    "eaf91b3a-c7a5-46b7-bfa8-6dec926d1f66"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 19:11:33 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"classId\": \"eaf91b3a-c7a5-46b7-bfa8-6dec926d1f66\",\n    \"name\": \"MATH-101\",\n    \"semester\": \"Fall\",\n    \"calendar\": \"Fall 2025\",\n    \"sectionCode\": \"SEC-002\",\n    \"instructorName\": \"Pias Roy\",\n    \"instructorEmail\": \"pias@instructor.com\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "DeleteClass",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"ClassId\": \"{{ClassId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Class",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "DeleteClass",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"ClassId\": \"eaf91b3a-c7a5-46b7-bfa8-6dec926d1f66\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:56:01 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "GetClassesByInstructorEmail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Class/instructor-email/pias@instructor.com",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class",
+                "instructor-email",
+                "pias@instructor.com"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClassesByInstructorEmail",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class/instructor-email/pias@instructor.com",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class",
+                    "instructor-email",
+                    "pias@instructor.com"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:23:45 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"classId\": \"db32fc3c-b512-46d7-b4d8-5b2937579be6\",\n        \"name\": \"MATH-101\",\n        \"semester\": \"Spring\",\n        \"calendar\": \"Spring 2027\",\n        \"sectionCode\": \"SEC-001\",\n        \"instructorName\": \"Pias Roy\",\n        \"instructorEmail\": \"pias@instructor.com\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "GetClassByName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Class/class-name/{{ClassName}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class",
+                "class-name",
+                "{{ClassName}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClassByName",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class/class-name/MATH-101",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class",
+                    "class-name",
+                    "MATH-101"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:09:06 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"classId\": \"db32fc3c-b512-46d7-b4d8-5b2937579be6\",\n    \"name\": \"MATH-101\",\n    \"semester\": \"Spring\",\n    \"calendar\": \"Spring 2027\",\n    \"sectionCode\": \"SEC-001\",\n    \"instructorName\": \"Pias Roy\",\n    \"instructorEmail\": \"pias@instructor.com\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetClassById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Class/{{ClassId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class",
+                "{{ClassId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClassById",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class/{{ClassId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class",
+                    "{{ClassId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:09:15 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"classId\": \"db32fc3c-b512-46d7-b4d8-5b2937579be6\",\n    \"name\": \"MATH-101\",\n    \"semester\": \"Spring\",\n    \"calendar\": \"Spring 2027\",\n    \"sectionCode\": \"SEC-001\",\n    \"instructorName\": \"Pias Roy\",\n    \"instructorEmail\": \"pias@instructor.com\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetClasses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Class?PageNumber=1&PageSize=20",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "20",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClasses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 20:22:58 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"classId\": \"db32fc3c-b512-46d7-b4d8-5b2937579be6\",\n            \"name\": \"MATH-101\",\n            \"semester\": \"Spring\",\n            \"calendar\": \"Spring 2027\",\n            \"sectionCode\": \"SEC-001\",\n            \"instructorName\": \"Pias Roy\",\n            \"instructorEmail\": \"pias@instructor.com\"\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetStudents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Class/{{ClassId}}/students?PageNumber=1&PageSize=10",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class",
+                "{{ClassId}}",
+                "students"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetStudents",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class/{{ClassId}}/students?PageNumber=1&PageSize=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class",
+                    "{{ClassId}}",
+                    "students"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:17:11 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"86a227c0-642f-4b8c-bfd6-d52f0591181b\",\n            \"email\": \"charles.jackson45@academy.org\",\n            \"fullName\": \"Charles Jackson\",\n            \"studentNumber\": \"2023-CS-109\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2021-08-28T00:00:00Z\",\n            \"graduationDate\": \"2027-12-03T00:00:00Z\",\n            \"currentTerm\": 2,\n            \"currentSemester\": 4\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetCourses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Class/{{ClassId}}/courses?PageNumber=1&PageSize=10",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Class",
+                "{{ClassId}}",
+                "courses"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetCourses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Class/{{ClassId}}/courses?PageNumber=1&PageSize=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Class",
+                    "{{ClassId}}",
+                    "courses"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:17:48 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"courseId\": \"29a65d8e-cde5-449e-a886-18cc5399b43b\",\n            \"name\": \"Economics B.A.\",\n            \"title\": \"Bachelor of Arts in Economics\",\n            \"credits\": 120,\n            \"classNames\": [\n                \"International Relations\",\n                \"Computer Networks\",\n                \"Introduction to Psychology\",\n                \"Operating Systems\",\n                \"Intro to Computer Science\",\n                \"Bioinformatics\"\n            ]\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Course",
+      "item": [
+        {
+          "name": "CreateCourse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"CS-102\",\r\n    \"title\": \"CS-102\",\r\n    \"credits\": 3,\r\n    \"classNames\": [\"MATH-101\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Course",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "CreateCourse",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"CS-101\",\r\n    \"title\": \"CS-101\",\r\n    \"credits\": 3,\r\n    \"classNames\": [\"MATH-101\"]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:45:53 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/Course/ec4d08c3-20c9-438f-9b37-07c5e3b1816b"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"courseId\": \"ec4d08c3-20c9-438f-9b37-07c5e3b1816b\",\n    \"name\": \"CS-101\",\n    \"title\": \"CS-101\",\n    \"credits\": 3,\n    \"classNames\": [\n        \"MATH-101\"\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "UpdateCourse",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"CS-1001\",\r\n    \"title\": \"CS-1001\",\r\n    \"credits\": 5,\r\n    \"classNames\": [\"MATH-101\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Course/{{CourseId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course",
+                "{{CourseId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "UpdateCourse",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"CS-1001\",\r\n    \"title\": \"CS-1001\",\r\n    \"credits\": 5,\r\n    \"classNames\": [\"MATH-101\"]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course/{{CourseId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course",
+                    "{{CourseId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:03:53 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"courseId\": \"065a0045-2c56-480c-87b7-3ddd4cc06a34\",\n    \"name\": \"CS-1001\",\n    \"title\": \"CS-1001\",\n    \"credits\": 5,\n    \"classNames\": [\n        \"MATH-101\"\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "DeleteCourse",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"CourseId\": \"{{CourseId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Course",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "DeleteCourse",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"CourseId\": \"{{CourseId}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:04:21 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "GetCourseByName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Course/course-name/{{CourseName}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course",
+                "course-name",
+                "{{CourseName}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetCourseByName",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"CS-1001\",\r\n    \"title\": \"CS-1001\",\r\n    \"credits\": 5,\r\n    \"classNames\": [\"MATH-101\"]\r\n}"
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course/course-name/CS-101",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course",
+                    "course-name",
+                    "CS-101"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:05:20 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"courseId\": \"3684b7ef-322a-43dd-bd70-1eb39cf36599\",\n    \"name\": \"CS-101\",\n    \"title\": \"CS-101\",\n    \"credits\": 3,\n    \"classNames\": [\n        \"MATH-101\"\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetCourseById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Course/{{CourseId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course",
+                "{{CourseId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetCourseById",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"CS-1001\",\r\n    \"title\": \"CS-1001\",\r\n    \"credits\": 5,\r\n    \"classNames\": [\"MATH-101\"]\r\n}"
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course/{{CourseId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course",
+                    "{{CourseId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:06:09 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"courseId\": \"3684b7ef-322a-43dd-bd70-1eb39cf36599\",\n    \"name\": \"CS-101\",\n    \"title\": \"CS-101\",\n    \"credits\": 3,\n    \"classNames\": [\n        \"MATH-101\"\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetCourses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Course?PageNumber=1&PageSize=20",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "20",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetUsers",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:11:35 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"courseId\": \"3684b7ef-322a-43dd-bd70-1eb39cf36599\",\n            \"name\": \"CS-101\",\n            \"title\": \"CS-101\",\n            \"credits\": 3,\n            \"classNames\": [\n                \"MATH-101\"\n            ]\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetClasses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Course/{{CourseId}}/classes?PageNumber=1&PageSize=20",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course",
+                "{{CourseId}}",
+                "classes"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClasses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course/{{CourseId}}/classes?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course",
+                    "{{CourseId}}",
+                    "classes"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:24:15 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"classId\": \"c5cf0ad4-b83e-4449-af00-cf1a8d427c48\",\n            \"name\": \"Calculus I\",\n            \"semester\": \"Winter\",\n            \"calendar\": \"Winter 2025\",\n            \"sectionCode\": \"CI105-01\",\n            \"instructorName\": \"Matthew Harris\",\n            \"instructorEmail\": \"matthew.harris18@school.edu\"\n        },\n        {\n            \"classId\": \"38d73827-e778-4a32-894b-a1dde198294e\",\n            \"name\": \"Digital Marketing\",\n            \"semester\": \"Spring\",\n            \"calendar\": \"Spring 2026\",\n            \"sectionCode\": \"DM120-01\",\n            \"instructorName\": \"Daniel Thompson\",\n            \"instructorEmail\": \"daniel.thompson76@techcorp.io\"\n        },\n        {\n            \"classId\": \"be726f0a-b1c8-47c0-bf16-a32d17ec6484\",\n            \"name\": \"Cloud Computing\",\n            \"semester\": \"Fall\",\n            \"calendar\": \"Fall 2026\",\n            \"sectionCode\": \"CC129-01\",\n            \"instructorName\": \"Carol Adams\",\n            \"instructorEmail\": \"carol.adams44@example.com\"\n        },\n        {\n            \"classId\": \"88528057-e011-401e-b231-d734c5ac153c\",\n            \"name\": \"Technical Writing\",\n            \"semester\": \"Winter\",\n            \"calendar\": \"Winter 2024\",\n            \"sectionCode\": \"TW142-01\",\n            \"instructorName\": \"Kevin Nelson\",\n            \"instructorEmail\": \"kevin.nelson46@techcorp.io\"\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 4\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetStudents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Course/{{CourseId}}/students?PageNumber=1&PageSize=20",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Course",
+                "{{CourseId}}",
+                "students"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetStudents",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course/{{CourseId}}/students?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course",
+                    "{{CourseId}}",
+                    "students"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:25:43 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"e7b21729-0c98-4a25-81a2-0bff3d5a9a92\",\n            \"email\": \"william.rodriguez13@example.com\",\n            \"fullName\": \"William Rodriguez\",\n            \"studentNumber\": \"2020-MATH-105\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2020-01-19T00:00:00Z\",\n            \"currentTerm\": 3,\n            \"currentSemester\": 5\n        },\n        {\n            \"studentId\": \"5280b2f9-2ab1-471d-a8bc-e493509864e9\",\n            \"email\": \"paul.allen67@techcorp.io\",\n            \"fullName\": \"Paul Allen\",\n            \"studentNumber\": \"2021-ENG-113\",\n            \"status\": \"Withdrawn\",\n            \"admissionDate\": \"2025-01-28T00:00:00Z\",\n            \"graduationDate\": \"2028-01-09T00:00:00Z\",\n            \"currentTerm\": 1,\n            \"currentSemester\": 8\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 2\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Student",
+      "item": [
+        {
+          "name": "CreateStudent",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"emailAddress\": \"pias@gmail.com\",\r\n    \"rollNumber\": \"CS-110020071\",\r\n    \"status\": \"Active\",\r\n    \"admissionDate\": \"2026-08-15\",\r\n    \"graduationDate\": \"2030-12-01\",\r\n    \"currentTerm\": 1,\r\n    \"currentSemester\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "CreateStudent",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"emailAddress\": \"pias@gmail.com\",\r\n    \"rollNumber\": \"CS-110020071\",\r\n    \"status\": \"Active\",\r\n    \"admissionDate\": \"2026-08-15\",\r\n    \"graduationDate\": \"2030-12-01\",\r\n    \"currentTerm\": 1,\r\n    \"currentSemester\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:46:25 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/Student/004ff5a2-6872-4e2f-9746-1dc1569aec49"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"studentId\": \"004ff5a2-6872-4e2f-9746-1dc1569aec49\",\n    \"studentNumber\": \"CS-110020071\",\n    \"status\": \"Active\",\n    \"admissionDate\": \"2026-08-15T00:00:00Z\",\n    \"graduationDate\": \"2030-12-01T00:00:00Z\",\n    \"totalCreditsTaken\": 0,\n    \"currentTerm\": 1,\n    \"currentSemester\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetStudentById",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/{{StudentId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "{{StudentId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetStudentById",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/{{StudentId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "{{StudentId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:47:51 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"studentId\": \"004ff5a2-6872-4e2f-9746-1dc1569aec49\",\n    \"studentNumber\": \"CS-110020071\",\n    \"status\": \"Active\",\n    \"admissionDate\": \"2026-08-15T00:00:00Z\",\n    \"graduationDate\": \"2030-12-01T00:00:00Z\",\n    \"totalCreditsTaken\": 0,\n    \"currentTerm\": 1,\n    \"currentSemester\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "UpdateStudent",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rollNumber\": \"CS-11002071\",\r\n    \"status\": \"Suspended\",\r\n    \"admissionDate\": \"2026-08-15\",\r\n    \"graduationDate\": \"2030-12-01\",\r\n    \"currentTerm\": 2,\r\n    \"currentSemester\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/{{StudentId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "{{StudentId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "UpdateStudent",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"rollNumber\": \"CS-11002071\",\r\n    \"status\": \"Suspended\",\r\n    \"admissionDate\": \"2026-08-15\",\r\n    \"graduationDate\": \"2030-12-01\",\r\n    \"currentTerm\": 2,\r\n    \"currentSemester\": 4\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/{{StudentId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "{{StudentId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:48:22 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"studentId\": \"004ff5a2-6872-4e2f-9746-1dc1569aec49\",\n    \"studentNumber\": \"CS-11002071\",\n    \"status\": \"Suspended\",\n    \"admissionDate\": \"2026-08-15T00:00:00Z\",\n    \"graduationDate\": \"2030-12-01T00:00:00Z\",\n    \"totalCreditsTaken\": 0,\n    \"currentTerm\": 2,\n    \"currentSemester\": 4\n}"
+            }
+          ]
+        },
+        {
+          "name": "DeleteStudent",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"studentId\": \"{{StudentId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "DeleteStudent",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"studentId\": \"{{StudentId}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:48:52 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "GetStudentByRollNumber",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/roll-number/{{StudentRollNumber}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "roll-number",
+                "{{StudentRollNumber}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetStudentByRollNumber",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/roll-number/{{StudentRollNumber}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "roll-number",
+                    "{{StudentRollNumber}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:50:33 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"studentId\": \"084086ed-d4d6-4caf-ae72-1a1bd5867aed\",\n    \"studentNumber\": \"CS-110020071\",\n    \"status\": \"Active\",\n    \"admissionDate\": \"2026-08-15T00:00:00Z\",\n    \"graduationDate\": \"2030-12-01T00:00:00Z\",\n    \"totalCreditsTaken\": 0,\n    \"currentTerm\": 1,\n    \"currentSemester\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetStudents",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student?PageNumber=1&PageSize=10",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetStudents",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student?PageNumber=1&PageSize=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 21:54:15 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"084086ed-d4d6-4caf-ae72-1a1bd5867aed\",\n            \"studentNumber\": \"CS-110020071\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2026-08-15T00:00:00Z\",\n            \"graduationDate\": \"2030-12-01T00:00:00Z\",\n            \"totalCreditsTaken\": 0,\n            \"currentTerm\": 1,\n            \"currentSemester\": 1\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetClasses",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/classes",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "classes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClasses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/classes",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "classes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:36:28 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"classId\": \"54944a41-9a49-4b48-bd1f-fdcdf8000f28\",\n        \"name\": \"Computer Networks\",\n        \"semester\": \"Winter\",\n        \"calendar\": \"Winter 2026\",\n        \"sectionCode\": \"CN127-01\",\n        \"instructorName\": \"Barbara Lopez\",\n        \"instructorEmail\": \"barbara.lopez32@school.edu\"\n    },\n    {\n        \"classId\": \"9eeb1ab5-ee05-40b0-8b00-dd7ba380d96c\",\n        \"name\": \"Intro to Computer Science\",\n        \"semester\": \"Fall\",\n        \"calendar\": \"Fall 2024\",\n        \"sectionCode\": \"ICS101-01\",\n        \"instructorName\": \"Brian Hall\",\n        \"instructorEmail\": \"brian.hall97@school.edu\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "GetCourses",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/courses",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "courses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetCourses",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/courses",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "courses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:37:56 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"courseId\": \"29a65d8e-cde5-449e-a886-18cc5399b43b\",\n        \"name\": \"CS-1001\",\n        \"title\": \"CS-1001\",\n        \"credits\": 5,\n        \"classNames\": [\n            \"MATH-101\"\n        ]\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "GetCourseMates",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/coursemates?PageNumber=1&PageSize=10",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "coursemates"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetCourseMates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/coursemates?PageNumber=1&PageSize=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "coursemates"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:41:42 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"bd355ae8-cc7e-4ea9-aadc-8a0bd3c79a22\",\n            \"email\": \"donna.nguyen50@techcorp.io\",\n            \"fullName\": \"Donna Nguyen\",\n            \"studentNumber\": \"2025-PHY-116\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2023-08-12T00:00:00Z\",\n            \"currentTerm\": 4,\n            \"currentSemester\": 7\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetClassMates",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Student/classmates?PageNumber=1&PageSize=10",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Student",
+                "classmates"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetClassMates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Student/classmates?PageNumber=1&PageSize=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Student",
+                    "classmates"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 20:42:15 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"e953f184-61cc-4f63-aa26-d777114c27de\",\n            \"email\": \"andrew.torres14@academy.org\",\n            \"fullName\": \"Andrew Torres\",\n            \"studentNumber\": \"2024-CE-115\",\n            \"status\": \"Graduated\",\n            \"admissionDate\": \"2023-08-06T00:00:00Z\",\n            \"graduationDate\": \"2026-07-06T00:00:00Z\"\n        },\n        {\n            \"studentId\": \"bd355ae8-cc7e-4ea9-aadc-8a0bd3c79a22\",\n            \"email\": \"donna.nguyen50@techcorp.io\",\n            \"fullName\": \"Donna Nguyen\",\n            \"studentNumber\": \"2025-PHY-116\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2023-08-12T00:00:00Z\",\n            \"currentTerm\": 4,\n            \"currentSemester\": 7\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 2\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Enrollment",
+      "item": [
+        {
+          "name": "CreateEnrollmentByClass",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"classId\": \"{{ClassId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment/class",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment",
+                "class"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "CreateEnrollment",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"classId\": \"{{ClassId}}\",\r\n    \"courseId\": \"{{CourseId}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Enrollment",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Enrollment"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 22:12:15 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/Enrollment/a8e48898-ad02-49fe-a914-d2dfab4d4433"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"enrollmentId\": \"a8e48898-ad02-49fe-a914-d2dfab4d4433\",\n    \"studentId\": \"084086ed-d4d6-4caf-ae72-1a1bd5867aed\",\n    \"classId\": \"87e79e31-0ff7-4a19-b581-f769f1a033c3\",\n    \"courseId\": \"ec4d08c3-20c9-438f-9b37-07c5e3b1816b\",\n    \"enrolledBy\": \"608823e6-ddfa-4555-8e46-c56fd3f421e9\",\n    \"enrolledAt\": \"2026-08-27T22:12:15.5706035Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "CreateEnrollmentByCourse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"courseId\": \"{{CourseId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment/course",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment",
+                "course"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetEnrollment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment/{{EnrollmentId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment",
+                "{{EnrollmentId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetEnrollment",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"classId\": \"{{ClassId}}\",\r\n    \"courseId\": \"{{CourseId}}\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Enrollment/{{EnrollmentId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Enrollment",
+                    "{{EnrollmentId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 22:16:01 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"enrollmentId\": \"a8e48898-ad02-49fe-a914-d2dfab4d4433\",\n    \"studentId\": \"084086ed-d4d6-4caf-ae72-1a1bd5867aed\",\n    \"classId\": \"87e79e31-0ff7-4a19-b581-f769f1a033c3\",\n    \"courseId\": \"ec4d08c3-20c9-438f-9b37-07c5e3b1816b\",\n    \"enrolledBy\": \"608823e6-ddfa-4555-8e46-c56fd3f421e9\",\n    \"enrolledAt\": \"2026-08-27T22:12:15.570603Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetEnrollments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment?PageNumber=1&PageSize=10",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment"
+              ],
+              "query": [
+                {
+                  "key": "PageNumber",
+                  "value": "1"
+                },
+                {
+                  "key": "PageSize",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GetEnrollments",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Enrollment?PageNumber=1&PageSize=10",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Enrollment"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 22:17:17 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"enrollmentId\": \"a8e48898-ad02-49fe-a914-d2dfab4d4433\",\n            \"studentId\": \"084086ed-d4d6-4caf-ae72-1a1bd5867aed\",\n            \"classId\": \"87e79e31-0ff7-4a19-b581-f769f1a033c3\",\n            \"courseId\": \"ec4d08c3-20c9-438f-9b37-07c5e3b1816b\",\n            \"enrolledBy\": \"608823e6-ddfa-4555-8e46-c56fd3f421e9\",\n            \"enrolledAt\": \"2026-08-27T22:12:15.570603Z\"\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "GetEnrollmentsByStudentId",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"courseId\": \"{{CourseId}}\"\r\n}"
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment/student-enrollment/{{StudentId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment",
+                "student-enrollment",
+                "{{StudentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateEnrollment",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"classId\": \"{{ClassId}}\",\r\n    \"courseId\": \"{{CourseId2}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment/{{EnrollmentId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment",
+                "{{EnrollmentId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "UpdateEnrollment",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"studentId\": \"{{StudentId}}\",\r\n    \"classId\": \"{{ClassId}}\",\r\n    \"courseId\": \"{{CourseId2}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/Enrollment/{{EnrollmentId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Enrollment",
+                    "{{EnrollmentId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 22:30:54 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"enrollmentId\": \"a8e48898-ad02-49fe-a914-d2dfab4d4433\",\n    \"studentId\": \"084086ed-d4d6-4caf-ae72-1a1bd5867aed\",\n    \"classId\": \"87e79e31-0ff7-4a19-b581-f769f1a033c3\",\n    \"courseId\": \"5c0e8929-37b7-4eed-848c-5ea672790842\",\n    \"enrolledBy\": \"608823e6-ddfa-4555-8e46-c56fd3f421e9\",\n    \"enrolledAt\": \"2026-08-27T22:12:15.570603Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "DeleteEnrollment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"enrollmentId\": \"{{EnrollmentId}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/Enrollment",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "Enrollment"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "BulkImports",
+      "item": [
+        {
+          "name": "Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/status/{{JobEventId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "status",
+                "{{JobEventId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Status",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/BulkImports/status/{{JobEventId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "BulkImports",
+                    "status",
+                    "{{JobEventId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 00:53:09 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"Failed\",\n    \"downloadUrl\": \"/api/v1/BulkImports/download/5aef52d1-6a90-4bdd-b7c3-50316586630d\"\n}"
+            },
+            {
+              "name": "Status",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/BulkImports/status/{{JobEventId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "BulkImports",
+                    "status",
+                    "{{JobEventId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 01:53:34 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"Completed\",\n    \"downloadUrl\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "DownloadOutputFile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/download/{{JobEventId}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "download",
+                "{{JobEventId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "DownloadOutputFile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/BulkImports/download/{{JobEventId}}",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "BulkImports",
+                    "download",
+                    "{{JobEventId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "134"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 00:49:51 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Content-Disposition",
+                  "value": "attachment; filename=OutputFile_e4a40455-1166-4dd3-bd08-741d4da9598a; filename*=UTF-8''OutputFile_e4a40455-1166-4dd3-bd08-741d4da9598a"
+                }
+              ],
+              "cookie": [],
+              "body": "EmailAddress,Password,FirstName,LastName,ErrorMessage\r\npias@gmail.com,pias1234,Pias,Roy,A user with `pias@gmail.com` already exists.\r\n"
+            }
+          ]
+        },
+        {
+          "name": "ImportUsers",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "36765ab9-ecd4-4be5-9830-b468934d3972",
+                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Users.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/users",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ImportUsers",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "742b380d-5f62-4ec0-ade6-beeeec614cad",
+                      "src": "/C:/Users/RoY/Downloads/CourseManagement_Users.csv"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/BulkImports/users",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "BulkImports",
+                    "users"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 27 Aug 2026 22:51:53 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/BulkImports/status/be2140fc-832a-4438-a881-513f6f7732ee"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"jobEvetId\": \"be2140fc-832a-4438-a881-513f6f7732ee\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "ImportClasses",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "53d93505-6978-4004-b520-54675982d877",
+                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Classes.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/classes",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "classes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ImportClasses",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "53d93505-6978-4004-b520-54675982d877",
+                      "src": "/C:/Users/RoY/Downloads/CourseManagement - Classes2.csv"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/BulkImports/classes",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "BulkImports",
+                    "classes"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 28 Aug 2026 03:12:13 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:8080/api/v1/BulkImports/status/3067c89a-a2e4-4762-9a40-6be018dfe2a8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"jobEventId\": \"3067c89a-a2e4-4762-9a40-6be018dfe2a8\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "ImportCourses",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "53d93505-6978-4004-b520-54675982d877",
+                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Courses.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/courses",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "courses"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ImportStudents",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "0ff415f5-15ed-4e9b-9bff-8e253c253507",
+                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Students.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/students",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ImportEnrollments",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "0ff415f5-15ed-4e9b-9bff-8e253c253507",
+                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Enrollments.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/BulkImports/Enrollments",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "BulkImports",
+                "Enrollments"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{AdminToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "URL",
+      "value": ""
+    },
+    {
+      "key": "AdminToken",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "Token",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "UserId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "UserEmail",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "CourseId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "StudentId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "StudentRollNumber",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "ClassId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "EnrollmentId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "CourseId2",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "JobEventId",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "ClassName",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "CourseName",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
