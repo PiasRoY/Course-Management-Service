@@ -36,38 +36,30 @@ public class AuthService : IAuthService
     {
         return await this.dbContext
                          .Users
-                         .GetItems(@params,
-                                   u => UserMapping.MapsToUserDto(u),
-                                   u => u.CreatedAt,
-                                   cancellationToken);
+                         .OrderBy(u => u.CreatedAt)
+                         .ThenBy(u => u.UserId)
+                         .Select(UserMapping.ProjectToUserDto)
+                         .GetItemsAsync(@params, cancellationToken);
     }
 
     public async Task<UserDto> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var user = await this.dbContext
+        var userDto = await this.dbContext
                              .Users
+                             .Select(UserMapping.ProjectToUserDto)
                              .SingleOrDefaultAsync(u => u.UserId == userId, cancellationToken);
 
-        if (user == null)
-        {
-            throw new UserNotFoundException(userId);
-        }
-
-        return UserMapping.MapsToUserDto(user);
+        return userDto ?? throw new UserNotFoundException(userId);
     }
 
     public async Task<UserDto> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
                              .Users
+                             .Select(UserMapping.ProjectToUserDto)
                              .SingleOrDefaultAsync(u => u.EmailAddress == email, cancellationToken);
 
-        if (user == null)
-        {
-            throw new UserNotFoundException(email);
-        }
-
-        return UserMapping.MapsToUserDto(user);
+        return user ?? throw new UserNotFoundException(email);
     }
 
     public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
@@ -117,7 +109,8 @@ public class AuthService : IAuthService
     public async Task<TokenDto> AuthenticateUserAsync(AuthenticateUserRequest authenticateUserRequest, CancellationToken cancellationToken)
     {
         var user = await this.dbContext
-                             .Users.AsNoTracking()
+                             .Users
+                             .AsNoTracking()
                              .SingleOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email, cancellationToken);
 
         if (user == null)

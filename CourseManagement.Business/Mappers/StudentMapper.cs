@@ -1,16 +1,35 @@
 ﻿using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Domain.Entities;
 using CourseManagement.Domain.Enums;
+using System.Linq.Expressions;
 
 namespace CourseManagement.Business.Mappers;
 
 public static class StudentMapper
 {
-    public static StudentDto MapsToStudentDto(Student student)
+    public static Expression<Func<Student, StudentDto>> ProjectToStudentDto = student =>
+        new StudentDto
+        {
+            StudentId = student.StudentId,
+            Email = student.User.EmailAddress,
+            FullName = $"{student.User.FirstName} {student.User.LastName}",
+            StudentNumber = student.RollNumber,
+            Status = student.Status,
+            AdmissionDate = student.AdmissionDate,
+            GraduationDate = student.GraduationDate,
+            CGPA = student.CGPA,
+            TotalCreditsTaken = student.TotalCreditsTaken,
+            CurrentTerm = student.CurrentTerm,
+            CurrentSemester = student.CurrentSemester
+        };
+
+    public static StudentDto MapsToStudentDto(Student student, User user)
     {
         return new StudentDto
         {
             StudentId = student.StudentId,
+            Email = user.EmailAddress,
+            FullName = $"{user.FirstName} {user.LastName}",
             StudentNumber = student.RollNumber,
             Status = student.Status,
             AdmissionDate = student.AdmissionDate,

@@ -1,13 +1,13 @@
 ﻿using CourseManagement.Business.DTOs.EnrollmentDTOs;
 using CourseManagement.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace CourseManagement.Business.Mappers;
 
 public static class EnrollmentMapper
 {
-    public static EnrollmentDto MapsToEnrollmentDto(Enrollment enrollment)
-    {
-        return new EnrollmentDto
+    public static readonly Expression<Func<Enrollment, EnrollmentDto>> ProjectToEnrollmentDto = enrollment =>
+        new EnrollmentDto
         {
             EnrollmentId = enrollment.EnrollmentId,
             StudentId = enrollment.StudentId,
@@ -16,19 +16,8 @@ public static class EnrollmentMapper
             EnrolledAt = enrollment.CreatedAt,
             EnrolledBy = enrollment.CreatedBy
         };
-    }
 
-    public static List<EnrollmentDto> MapsToEnrollmentDtoList(List<Enrollment> enrollments)
-    {
-        var enrollmentDtos = new List<EnrollmentDto>();
-
-        foreach (var enrollment in enrollments)
-        {
-            enrollmentDtos.Add(MapsToEnrollmentDto(enrollment));
-        }
-
-        return enrollmentDtos;
-    }
+    public static EnrollmentDto MapsToEnrollmentDto(Enrollment enrollment) => ProjectToEnrollmentDto.Compile()(enrollment);
 
     public static EnrollmentCourseDto MapsToEnrollmentCourseDto(Enrollment enrollment)
     {

@@ -1,9 +1,13 @@
-﻿using CourseManagement.Business.DTOs.PaginationDTOs;
+﻿using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.CourseDTOs;
+using CourseManagement.Business.DTOs.PaginationDTOs;
 using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace CourseManagement.API.Controllers;
 
@@ -37,6 +41,54 @@ public class StudentController : ControllerBase
         return Ok(await this.studentService.GetStudentByRollNoAsync(rollNumber, cancellationToken));
     }
 
+    [HttpGet("classes")]
+    public async Task<ActionResult<IEnumerable<ClassDto>>> GetClassesByStudent(CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized("Token is not valid.");
+        }
+
+        return Ok(await this.studentService.GetClassesByStudent(userId.Value, cancellationToken));
+    }
+
+    [HttpGet("courses")]
+    public async Task<ActionResult<IEnumerable<CourseDto>>> GetCoursesByStudent(CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized("Token is not valid.");
+        }
+
+        return Ok(await this.studentService.GetCoursesByStudent(userId.Value, cancellationToken));
+    }
+
+    [HttpGet("classmates")]
+    public async Task<ActionResult<PageResult<StudentDto>>> GetClassMatesByStudent(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized("Token is not valid");
+        }
+
+        return Ok(await this.studentService.GetClassMatesByStudent(userId.Value, @params, cancellationToken));
+    }
+
+    [HttpGet("coursemates")]
+    public async Task<ActionResult<PageResult<StudentDto>>> GetCourseMatesByStudent(PaginationParams @params, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId == null)
+        {
+            return Unauthorized("Token is not valid");
+        }
+
+        return Ok(await this.studentService.GetCourseMatesByStudent(userId.Value, @params, cancellationToken));
+    }
+
     [HttpPost]
     public async Task<ActionResult<StudentDto>> CreateStudentAsync(CreateStudentRequest createStudentRequest, CancellationToken cancellationToken)
     {
@@ -58,5 +110,17 @@ public class StudentController : ControllerBase
     {
         await this.studentService.DeleteStudentAsync(deleteStudentRequest, cancellationToken);
         return NoContent();
+    }
+
+    private Guid? GetUserId()
+    {
+        var userIdStr = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+
+        if (!Guid.TryParse(userIdStr, out var userId))
+        {
+            return null;
+        }
+
+        return userId;
     }
 }

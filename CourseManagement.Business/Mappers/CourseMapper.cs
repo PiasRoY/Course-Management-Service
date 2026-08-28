@@ -1,10 +1,21 @@
 ﻿using CourseManagement.Business.DTOs.CourseDTOs;
 using CourseManagement.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace CourseManagement.Business.Mappers;
 
 public static class CourseMapper
 {
+    public static readonly Expression<Func<Course, CourseDto>> ProjectToCourseDto = course =>
+        new CourseDto
+        {
+            CourseId = course.CourseId,
+            Name = course.Name,
+            Title = course.Title,
+            Credits = course.Credits,
+            ClassNames = course.CourseClasses.Select(cc => cc.Class.Name)
+        };
+
     public static Course MapsToCourse(CreateCourseRequest createCourseRequest, IEnumerable<Guid> classIds)
     {
         var courseId = Guid.NewGuid();
@@ -20,18 +31,6 @@ public static class CourseMapper
                 CourseId = courseId,
                 ClassId = classId
             }).ToList()
-        };
-    }
-
-    public static CourseDto MapsToCourseDto(Course course)
-    {
-        return new CourseDto
-        {
-            CourseId = course.CourseId,
-            Name = course.Name,
-            Title = course.Title,
-            Credits = course.Credits,
-            ClassNames = course.CourseClasses.Select(cc => cc.Class.Name)
         };
     }
 

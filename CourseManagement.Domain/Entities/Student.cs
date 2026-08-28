@@ -16,5 +16,5 @@ public class Student : BaseAuditEntity
     required public int? CurrentTerm { get; set; }
     required public int? CurrentSemester { get; set; }
     public User User { get; set; } = null!;
-    public ICollection<Enrollment> Enrollments = [];
+    public ICollection<Enrollment> Enrollments { get; set; }  = [];
 }

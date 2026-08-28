@@ -1,6 +1,8 @@
 ﻿using CourseManagement.Business.CustomExceptions;
 using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.CourseDTOs;
 using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Extensions;
 using CourseManagement.Business.Mappers;
@@ -27,52 +29,77 @@ public class ClassService : IClassService
     {
         return await this.dbContext
                          .Classes
-                         .Include(c => c.Instructor)
-                         .GetItems(@params,
-                                   cl => ClassMapper.MapsToClassDto(cl),
-                                   cl => cl.ClassId,
-                                   cancellationToken);
+                         .AsNoTracking()
+                         .OrderBy(cl => cl.CreatedAt)
+                         .ThenBy(cl => cl.ClassId)
+                         .Select(ClassMapper.ProjectToClasDto)
+                         .GetItemsAsync(@params, cancellationToken);
     }
 
     public async Task<ClassDto> GetClassByNameAsync(string className, CancellationToken cancellationToken)
     {
-        var @class = await this.dbContext
-                               .Classes.AsNoTracking()
-                               .Include(cl => cl.Instructor)
-                               .SingleOrDefaultAsync(cl => cl.Name == className, cancellationToken);
+        var classDto = await this.dbContext
+                                 .Classes
+                                 .AsNoTracking()
+                                 .Select(ClassMapper.ProjectToClasDto)
+                                 .SingleOrDefaultAsync(cl => cl.Name == className, cancellationToken);
 
-        if (@class == null)
-        {
-            throw new ClassNotFoundException(className);
-        }
-
-        return ClassMapper.MapsToClassDto(@class);
+        return classDto ?? throw new ClassNotFoundException(className);
     }
 
     public async Task<ClassDto> GetClassByIdAsync(Guid classId, CancellationToken cancellationToken)
     {
-        var @class = await this.dbContext
-                               .Classes.AsNoTracking()
-                               .Include(cl => cl.Instructor)
+        var classDto = await this.dbContext
+                               .Classes
+                               .AsNoTracking()
+                               .Select(ClassMapper.ProjectToClasDto)
                                .SingleOrDefaultAsync(cl => cl.ClassId == classId, cancellationToken);
 
-        if (@class == null)
-        {
-            throw new ClassNotFoundException(classId);
-        }
-
-        return ClassMapper.MapsToClassDto(@class);
+        return classDto ?? throw new ClassNotFoundException(classId);
     }
 
-    public async Task<IEnumerable<ClassDto>> GetClassesByInstructorEmail(string email, CancellationToken cancellationToken)
+    public async Task<IEnumerable<ClassDto>> GetClassesByInstructorEmailAsync(string email, CancellationToken cancellationToken)
     {
-        var instructor = await this.GetInstructor(email, cancellationToken);
+        var isExists = await this.dbContext
+                                 .Users
+                                 .AsNoTracking()
+                                 .AnyAsync(u => u.EmailAddress == email, cancellationToken);
+
+        if (!isExists)
+        {
+            throw new InstructorNotFoundException(email);
+        }
 
         return await this.dbContext
                          .Classes
+                         .AsNoTracking()
                          .Where(cl => cl.Instructor.EmailAddress == email)
-                         .Select(cl => ClassMapper.MapsToClassDto(cl, instructor))
+                         .Select(ClassMapper.ProjectToClasDto)
                          .ToListAsync(cancellationToken);
+    }
+
+    public async Task<PageResult<StudentDto>> GetStudentsByClassId(PaginationParams @params, Guid classId, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Students
+                         .AsNoTracking()
+                         .Where(s => s.Enrollments.Any(e => e.ClassId == classId))
+                         .OrderBy(s => s.CreatedAt)
+                         .ThenBy(s => s.StudentId)
+                         .Select(StudentMapper.ProjectToStudentDto)
+                         .GetItemsAsync(@params, cancellationToken);
+    }
+
+    public async Task<PageResult<CourseDto>> GetCoursesByClassIdAsync(PaginationParams @params, Guid classId, CancellationToken cancellationToken)
+    {
+        return await this.dbContext
+                         .Courses
+                         .AsNoTracking()
+                         .Where(c => c.CourseClasses.Any(cc => cc.ClassId == classId))
+                         .OrderBy(c => c.CreatedAt)
+                         .ThenBy(c => c.CourseId)
+                         .Select(CourseMapper.ProjectToCourseDto)
+                         .GetItemsAsync(@params, cancellationToken);
     }
 
     public async Task<ClassDto> CreateClassAsync(CreateClassRequest createClassRequest, CancellationToken cancellationToken)

@@ -1,5 +1,7 @@
-﻿using CourseManagement.Business.DTOs.CourseDTOs;
+﻿using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.CourseDTOs;
 using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.DTOs.StudentsDTOs;
 
 namespace CourseManagement.Business.Services.Interfaces
 {
@@ -11,5 +13,7 @@ namespace CourseManagement.Business.Services.Interfaces
         Task<CourseDto> CreateCourseAsync(CreateCourseRequest createCourseRequest, CancellationToken cancellationToken);
         Task DeleteCourseByIdAsync(DeleteCourseRequest deleteCourseRequest, CancellationToken cancellationToken);
         Task<CourseDto> UpdateCourseByIdAsync(Guid courseId, UpdateCourseRequest updateCourseRequest, CancellationToken cancellationToken);
+        Task<PageResult<StudentDto>> GetStudentsByCourseAsync(PaginationParams @params, Guid courseId, CancellationToken cancellationToken);
+        Task<PageResult<ClassDto>> GetClassesByCourseAsync(PaginationParams @params, Guid courseId, CancellationToken cancellationToken);
     }
 }

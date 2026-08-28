@@ -1,5 +1,7 @@
 ﻿using CourseManagement.Business.DTOs.ClassDTOs;
+using CourseManagement.Business.DTOs.CourseDTOs;
 using CourseManagement.Business.DTOs.PaginationDTOs;
+using CourseManagement.Business.DTOs.StudentsDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +30,7 @@ public class ClassController : ControllerBase
     [HttpGet("instructor-email/{email}")]
     public async Task<ActionResult<IEnumerable<ClassDto>>> GetClassesByInstructorEmailAsync(string email, CancellationToken cancellationToken)
     {
-        return Ok(await this.classService.GetClassesByInstructorEmail(email, cancellationToken));
+        return Ok(await this.classService.GetClassesByInstructorEmailAsync(email, cancellationToken));
     }
 
     [HttpGet("{classId}")]
@@ -41,6 +43,18 @@ public class ClassController : ControllerBase
     public async Task<ActionResult<ClassDto>> GetClassByNameAsync(string className, CancellationToken cancellationToken)
     {
         return Ok(await this.classService.GetClassByNameAsync(className, cancellationToken));
+    }
+
+    [HttpGet("{classId}/students")]
+    public async Task<ActionResult<PageResult<StudentDto>>> GetStudentsByClass([FromQuery] PaginationParams @params, [FromRoute] Guid classId, CancellationToken cancellationToken)
+    {
+        return Ok(await this.classService.GetStudentsByClassId(@params, classId, cancellationToken));
+    }
+
+    [HttpGet("{classId}/courses")]
+    public async Task<ActionResult<PageResult<CourseDto>>> GetCoursesByClass([FromQuery] PaginationParams @params, Guid classId, CancellationToken cancellationToken)
+    {
+        return Ok(await this.classService.GetCoursesByClassIdAsync(@params, classId, cancellationToken));
     }
 
     [HttpPost]

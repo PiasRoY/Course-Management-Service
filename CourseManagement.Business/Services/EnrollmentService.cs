@@ -26,22 +26,21 @@ public class EnrollmentService : IEnrollmentService
     {
         return await this.dbContext
                          .Enrollments
-                         .GetItems(@params,
-                                   e => EnrollmentMapper.MapsToEnrollmentDto(e),
-                                   e => e.EnrollmentId,
-                                   cancellationToken);
+                         .OrderBy(e => e.CreatedAt)
+                         .ThenBy(e => e.EnrollmentId)
+                         .Select(EnrollmentMapper.ProjectToEnrollmentDto)
+                         .GetItemsAsync(@params, cancellationToken);
     }
 
     public async Task<EnrollmentDto> GetEnrollmentByIdAsync(Guid enrollmentId, CancellationToken cancellationToken)
     {
-        Enrollment? enrollment = await GetEnrollmentAsync(enrollmentId, cancellationToken);
+        var enrollment = await this.dbContext
+                                   .Enrollments
+                                   .Where(e => e.EnrollmentId == enrollmentId)
+                                   .Select(EnrollmentMapper.ProjectToEnrollmentDto)
+                                   .SingleOrDefaultAsync(cancellationToken);
 
-        if (enrollment == null)
-        {
-            throw new EnrollmentNotFoundException(enrollmentId);
-        }
-
-        return EnrollmentMapper.MapsToEnrollmentDto(enrollment);
+        return enrollment ?? throw new EnrollmentNotFoundException(enrollmentId);
     }
 
     public async Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
@@ -93,7 +92,9 @@ public class EnrollmentService : IEnrollmentService
 
     public async Task<EnrollmentDto> UpdateEnrollmentAsync(Guid enrollmentId, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken)
     {
-        var enrollment = await this.GetEnrollmentAsync(enrollmentId, cancellationToken);
+        var enrollment = await this.dbContext
+                                   .Enrollments
+                                   .FirstOrDefaultAsync(e => e.EnrollmentId == enrollmentId, cancellationToken);
 
         if (enrollment == null)
         {
@@ -132,21 +133,5 @@ public class EnrollmentService : IEnrollmentService
                          .Where(e => e.ClassId == classId)
                          .Where(e => e.CourseId == courseId)
                          .AnyAsync(cancellationToken);
-    }
-
-    private async Task<Enrollment?> GetEnrollmentAsync(Guid studentId, Guid classId, Guid? courseId, CancellationToken cancellationToken)
-    {
-        return await this.dbContext
-                         .Enrollments
-                         .Where(e => e.StudentId == studentId)
-                         .Where(e => e.ClassId == classId)
-                         .Where(e => e.CourseId == courseId)
-                         .FirstOrDefaultAsync(cancellationToken);
-    }
-    private async Task<Enrollment?> GetEnrollmentAsync(Guid enrollmentId, CancellationToken cancellationToken)
-    {
-        return await this.dbContext
-                         .Enrollments
-                         .FirstOrDefaultAsync(e => e.EnrollmentId == enrollmentId, cancellationToken);
     }
 }

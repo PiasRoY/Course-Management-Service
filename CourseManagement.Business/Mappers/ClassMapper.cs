@@ -1,12 +1,12 @@
 ﻿using CourseManagement.Business.DTOs.ClassDTOs;
 using CourseManagement.Domain.Entities;
+using System.Linq.Expressions;
 namespace CourseManagement.Business.Mappers;
 
 public static class ClassMapper
 {
-    public static ClassDto MapsToClassDto(Class @class)
-    {
-        return new ClassDto
+    public static readonly Expression<Func<Class, ClassDto>> ProjectToClasDto = @class =>
+        new ClassDto
         {
             ClassId = @class.ClassId,
             Name = @class.Name,
@@ -16,7 +16,6 @@ public static class ClassMapper
             InstructorName = $"{@class.Instructor.FirstName} {@class.Instructor.LastName}",
             InstructorEmail = @class.Instructor.EmailAddress
         };
-    }
 
     public static ClassDto MapsToClassDto(Class @class, User instructor)
     {

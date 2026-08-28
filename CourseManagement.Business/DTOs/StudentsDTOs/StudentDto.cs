@@ -6,6 +6,8 @@ namespace CourseManagement.Business.DTOs.StudentsDTOs;
 public class StudentDto
 {
     required public Guid StudentId { get; set; }
+    required public string Email { get; set; }
+    required public string FullName { get; set; }
     required public string StudentNumber { get; set; }
     required public StudentStatus Status { get; set; }
     required public DateTime AdmissionDate { get; set; }
