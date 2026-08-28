@@ -33,13 +33,20 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentAsync(CreateEnrollmentRequest createEnrollmentRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
     {
-        var enrollmentDto = await this.enrollmentService.CreateEnrollmentAsync(createEnrollmentRequest, cancellationToken);
+        var enrollmentDto = await this.enrollmentService.CreateEnrollmentByClassAsync(request, cancellationToken);
         return CreatedAtAction(
             nameof(GetEnrollmentById),
             new { id = enrollmentDto.EnrollmentId },
             enrollmentDto);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken)
+    {
+        var enrollmentDto = await this.enrollmentService.CreateEnrollmentByCourseAsync(request, cancellationToken);
+        return StatusCode(StatusCodes.Status201Created, enrollmentDto);
     }
 
     [HttpPatch("{id}")]

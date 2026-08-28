@@ -44,14 +44,14 @@ public class EnrollmentService : IEnrollmentService
         return EnrollmentMapper.MapsToEnrollmentDto(enrollment);
     }
 
-    public async Task<EnrollmentDto> CreateEnrollmentAsync(CreateEnrollmentRequest createEnrollmentRequest, CancellationToken cancellationToken)
+    public async Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
     {
-        if (await this.IsEnrollmentExists(createEnrollmentRequest.StudentId, createEnrollmentRequest.ClassId, createEnrollmentRequest.CourseId, cancellationToken))
+        if (await this.IsEnrollmentExists(request.StudentId, request.ClassId, null, cancellationToken))
         {
             throw new InvalidOperationException("Student is already enrolled to this class, course combination.");
         }
 
-        var enrollment = EnrollmentMapper.MapsToEnrollment(createEnrollmentRequest);
+        var enrollment = EnrollmentMapper.MapsToEnrollment(request);
 
         await this.dbContext.AddAsync(enrollment, cancellationToken);
         await this.dbContext.SaveChangesAsync(cancellationToken);
@@ -59,6 +59,36 @@ public class EnrollmentService : IEnrollmentService
         this.logger.LogInformation("New enrollment {Student}, {Course}, {Class} is created.", enrollment.StudentId, enrollment.CourseId, enrollment.ClassId);
 
         return EnrollmentMapper.MapsToEnrollmentDto(enrollment);
+    }
+
+    public async Task<EnrollmentCourseDto> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken)
+    {
+        var courseClasses = this.dbContext
+                                .CourseClasses
+                                .Where(cc => cc.CourseId == request.CourseId)
+                                .Select(cc => cc.ClassId);
+
+        var enrolledClasses = this.dbContext
+                                  .Enrollments
+                                  .Where(e => e.StudentId == request.StudentId && e.CourseId == request.CourseId)
+                                  .Select(cc => cc.ClassId);
+
+        var remainingClasses = await courseClasses.Except(enrolledClasses)
+                                                  .ToListAsync(cancellationToken);
+
+        if (remainingClasses.Count == 0)
+        {
+            throw new InvalidOperationException($"Student {request.StudentId} has already been enrolled to all the classes of the course {request.CourseId}");
+        }
+
+        var enrollments = EnrollmentMapper.MapsToEnrollmentList(request, remainingClasses);
+
+        await this.dbContext.AddRangeAsync(enrollments, cancellationToken);
+        await this.dbContext.SaveChangesAsync(cancellationToken);
+
+        this.logger.LogInformation("Student {Id} got enrolled to the course {Id}.", request.StudentId, request.CourseId);
+
+        return EnrollmentMapper.MapsToEnrollmentCourseDto(enrollments.First());
     }
 
     public async Task<EnrollmentDto> UpdateEnrollmentAsync(Guid enrollmentId, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken)
