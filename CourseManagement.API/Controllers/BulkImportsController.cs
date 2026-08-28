@@ -1,5 +1,6 @@
 ﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
 using CourseManagement.Business.Enums;
+using CourseManagement.Business.Services;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Enums;
 using Hangfire.States;
@@ -14,22 +15,22 @@ namespace CourseManagement.API.Controllers
     [Route("api/v1/[controller]")]
     public class BulkImportsController : ControllerBase
     {
-        private readonly IStorageService storageService;
+        private readonly IJobEventService jobEventService;
         private readonly IBulkService bulkService;
-        private readonly ITaskService taskService;
+        private readonly ITaskManager taskService;
 
         public BulkImportsController(
-            IStorageService storageService,
+            IJobEventService jobEventService,
             IBulkService bulkService, 
-            ITaskService taskService)
+            ITaskManager taskService)
         {
-            this.storageService = storageService;
+            this.jobEventService = jobEventService;
             this.bulkService = bulkService;
             this.taskService = taskService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> ImportUsersAsync(IFormFile file, CancellationToken cancellationToken)
+        [HttpPost("{importType}")]
+        public async Task<ActionResult> ImportUsersAsync(ImportTypes importType, IFormFile file, CancellationToken cancellationToken)
         {
             ActionResult? result = this.ValidateFile(file);
             if (result != null)
@@ -38,33 +39,37 @@ namespace CourseManagement.API.Controllers
             }
 
             var jobEvent = await this.bulkService.PreprocessingAsync(file, cancellationToken);
-            var jobId = this.taskService.EnqueueBulkImportUsersJob(jobEvent);
+            var jobId = this.taskService.EnqueueBulkImportUsersJob(jobEvent, importType);
             await this.bulkService.PostProcessingAsync(jobEvent, jobId, cancellationToken);
 
-            return AcceptedAtAction(nameof(GetStatusAsync), new { jobEventId = jobEvent.JobEventId });
+            return AcceptedAtAction(
+                nameof(GetStatus),
+                new { jobEventId = jobEvent.JobEventId }, 
+                new { jobEventId = jobEvent.JobEventId });
         }
 
-        [HttpGet("{jobEventId}")]
-        public async Task<StatusResult> GetStatusAsync([FromRoute] string jobEventId)
+        [HttpGet("status/{jobEventId}")]
+        public async Task<StatusResult> GetStatus([FromRoute] Guid jobEventId, CancellationToken cancellationToken)
         {
-            var status = this.taskService.JobStatus(jobEventId);
+            var jobEvent = await this.jobEventService.GetJobEventByAsync(jobEventId, cancellationToken);
 
-            if (status == SucceededState.StateName || status == FailedState.StateName)
+            if (jobEvent.JobEventStatus == BulkProcessStatus.Failed)
             {
                 return new StatusResult
                 {
-                    Status = BulkProcessStatus.Completed,
-                    DownloadUrl = this.Url.Action(nameof(DownloadOutputFileAsync), new { jobEventId })
+                    Status = jobEvent.JobEventStatus,
+                    DownloadUrl = this.Url.Action(nameof(DownloadOutputFile), new { jobEventId })
                 };
             }
 
-            return new StatusResult { Status = BulkProcessStatus.Processing };
+            return new StatusResult { Status = jobEvent.JobEventStatus };
         }
 
         [HttpGet("download/{jobEventId}")]
-        public async Task<ActionResult> DownloadOutputFileAsync([FromRoute] Guid jobEventId, CancellationToken cancellationToken)
+        public async Task<ActionResult> DownloadOutputFile([FromRoute] Guid jobEventId, CancellationToken cancellationToken)
         {
-            var fileStream = await this.bulkService.DownloadOutputCsvFileAsync(jobEventId, cancellationToken);
+            var jobEvent = await this.jobEventService.GetJobEventByAsync(jobEventId, cancellationToken);
+            var fileStream = await this.bulkService.DownloadOutputCsvFileAsync(jobEvent, cancellationToken);
             return File(fileStream, MediaTypeNames.Text.Csv, fileDownloadName: $"OutputFile_{jobEventId}");
         }
 

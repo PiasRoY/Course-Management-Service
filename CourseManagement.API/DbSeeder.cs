@@ -70,7 +70,8 @@ public class DbSeeder
             FirstName = "Pias",
             LastName = "Roy",
             EmailAddress = "pias.roy@admin.com",
-            Password = "password12345678"
+            Password = "password12345678",
+            Roles = [UserRoles.Admin]
         };
 
         if (await this.dbContext.Users.AnyAsync(u => u.EmailAddress == createUser.EmailAddress))
@@ -78,7 +79,7 @@ public class DbSeeder
             return;
         }
 
-        await this.authService.CreateUserAsync(createUser, CancellationToken.None, [UserRoles.Admin.ToString()]);
+        await this.authService.CreateUserAsync(createUser, CancellationToken.None);
     }
 
     private async Task SeedInstructorUsers()
@@ -88,7 +89,8 @@ public class DbSeeder
             FirstName = "Pias",
             LastName = "Roy",
             EmailAddress = "pias@instructor.com",
-            Password = "password12345678"
+            Password = "password12345678",
+            Roles = [UserRoles.Instructor]
         };
 
         if (await this.dbContext.Users.AnyAsync(u => u.EmailAddress == createUser.EmailAddress))
@@ -96,6 +98,6 @@ public class DbSeeder
             return;
         }
 
-        await this.authService.CreateUserAsync(createUser, CancellationToken.None, [UserRoles.Instructor.ToString()]);
+        await this.authService.CreateUserAsync(createUser, CancellationToken.None);
     }
 }

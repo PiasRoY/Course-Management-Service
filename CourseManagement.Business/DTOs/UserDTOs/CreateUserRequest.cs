@@ -1,4 +1,4 @@
-﻿using CourseManagement.Domain.Entities;
+﻿using CourseManagement.Business.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace CourseManagement.Business.DTOs.UserDTOs;
@@ -18,4 +18,6 @@ public class CreateUserRequest
 
     [Required(ErrorMessage = "Last name is required.")]
     required public string LastName { get; set; }
+
+    public ICollection<UserRoles> Roles { get; set; } = [];
 }

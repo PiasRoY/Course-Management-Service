@@ -70,9 +70,14 @@ public class AuthService : IAuthService
         return UserMapping.MapsToUserDto(user);
     }
 
-    public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken, IEnumerable<string>? roles = null)
+    public async Task<UserDto> CreateUserAsync(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
     {
-        roles ??= [UserRoles.Student.ToString()];
+        if (createUserRequest.Roles.Count == 0)
+        {
+            createUserRequest.Roles.Add(UserRoles.Student);
+        }
+
+        var roles = createUserRequest.Roles.Select(r => r.ToString());
 
         var userExist = await this.dbContext
             .Users

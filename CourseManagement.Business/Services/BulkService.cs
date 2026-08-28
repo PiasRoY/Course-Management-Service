@@ -1,34 +1,28 @@
-﻿using CourseManagement.Business.CustomExceptions;
-using CourseManagement.Business.DTOs.BulkImportDTOs;
+﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
 using CourseManagement.Business.DTOs.UserDTOs;
-using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Helpers;
 using CourseManagement.Business.Services.Interfaces;
 using CourseManagement.Domain.Entities;
 using CourseManagement.Domain.Enums;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace CourseManagement.Business.Services;
 
 public class BulkService : IBulkService
 {
-    private readonly IAuthService authService;
     private readonly IStorageService storageService;
     private readonly ICsvFileHelper csvHelper;
     private readonly ApplicationDbContext dbContext;
     private readonly ILogger<BulkService> logger;
 
     public BulkService(
-        IAuthService authService,
         IStorageService storageService,
         ICsvFileHelper csvHelper,
         ApplicationDbContext dbContext,
         ILogger<BulkService> logger)
     {
-        this.authService = authService;
         this.storageService = storageService;
         this.csvHelper = csvHelper;
         this.dbContext = dbContext;
@@ -37,7 +31,7 @@ public class BulkService : IBulkService
 
     public async Task<JobEvent> PreprocessingAsync(IFormFile formFile, CancellationToken cancellationToken)
     {
-        var uniqueName = Guid.CreateVersion7();
+        var uniqueName = Guid.CreateVersion7().ToString();
 
         var jobEvent = new JobEvent
         {
@@ -64,20 +58,8 @@ public class BulkService : IBulkService
         await this.dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<FileStream> DownloadOutputCsvFileAsync(Guid jobEventId, CancellationToken cancellationToken)
+    public async Task<FileStream> DownloadOutputCsvFileAsync(JobEvent jobEvent, CancellationToken cancellationToken)
     {
-        var jobEvent = await this.dbContext
-                                 .JobEvents
-                                 .AsNoTracking()
-                                 .Where(j => j.JobEventId == jobEventId)
-                                 .Select(j => new { j.OutputFilePath })
-                                 .SingleOrDefaultAsync(cancellationToken);
-
-        if (jobEvent == null)
-        {
-            throw new JobEventNotFoundException(jobEventId);
-        }
-
         if (!this.storageService.IsFileExistsLocally(jobEvent.OutputFilePath))
         {
             throw new InvalidOperationException("Output file path doesn't exists.");
@@ -91,6 +73,8 @@ public class BulkService : IBulkService
         Func<TRequest, CancellationToken, Task<TDto>> processRowAsync,
         CancellationToken cancellationToken)
     {
+        this.logger.LogInformation($"{nameof(ProcessBulkImportAsync)} has started.");
+
         using var fileStream = this.storageService.OpenLocalFile(jobEvent.InputFilePath);
 
         var errors = new List<BulkImportError<TRequest>>();
@@ -108,23 +92,27 @@ public class BulkService : IBulkService
             }
         }
 
-        using var outputFileStream = await this.csvHelper.WriteRecordsAsync(errors, cancellationToken);
-
-        await this.storageService.SaveStreamToLocalFile(outputFileStream, jobEvent.OutputFilePath);
+        this.logger.LogInformation("Row process is completed.");
 
         this.dbContext.Attach(jobEvent);
         this.dbContext.Entry(jobEvent).Property(j => j.JobEventStatus).IsModified = true;
 
-        jobEvent.JobEventStatus = BulkProcessStatus.Completed;
+        if (errors.Count == 0)
+        {
+            jobEvent.JobEventStatus = BulkProcessStatus.Completed;
+        }
+        else
+        {
+            jobEvent.JobEventStatus = BulkProcessStatus.Failed;
+
+            using var outputFileStream = await this.csvHelper.WriteRecordsAsync(errors, cancellationToken);
+            await this.storageService.SaveStreamToLocalFile(outputFileStream, jobEvent.OutputFilePath);
+
+            this.logger.LogInformation("Output file has been saved.");
+        }
 
         await this.dbContext.SaveChangesAsync(cancellationToken);
-    }
 
-    public async Task ProcessBulkImportUsersAsync(JobEvent jobEvent, CancellationToken cancellationToken)
-    {
-        await this.ProcessBulkImportAsync<CreateUserRequest, UserDto>(
-            jobEvent, 
-            (req, ct) => this.authService.CreateUserAsync(req, ct), 
-            cancellationToken);
+        this.logger.LogInformation("JobEvent has been completed.");
     }
 }

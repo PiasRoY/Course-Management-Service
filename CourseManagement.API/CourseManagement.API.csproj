@@ -29,4 +29,8 @@
     <ProjectReference Include="..\CourseManagement.Infrastructure\CourseManagement.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DummyS3Bucket\" />
+  </ItemGroup>
+
 </Project>

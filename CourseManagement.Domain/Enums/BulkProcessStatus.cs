@@ -4,5 +4,6 @@ public enum BulkProcessStatus
 {
     Idle,
     Processing,
-    Completed
+    Completed,
+    Failed
 }

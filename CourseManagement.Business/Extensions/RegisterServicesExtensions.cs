@@ -22,6 +22,8 @@ public static class RegisterServicesExtensions
         services.AddScoped<IStorageService, StorageService>();
 
         services.AddScoped<IBulkService, BulkService>();
+        services.AddScoped<ITaskManager, TaskManager>();
+        services.AddScoped<IJobEventService, JobEventService>();
 
         return services;
     }

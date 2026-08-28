@@ -8,16 +8,19 @@ public class StorageService : IStorageService
 
     public StorageService()
     {
+        Directory.CreateDirectory(Bucket);
     }
 
     public FileStream OpenLocalFile(string fileName)
     {
-        return new FileStream(fileName, FileMode.Open);
+        var filePath = $"{Bucket}/{fileName}";
+        return new FileStream(filePath, FileMode.Open);
     }
 
     public bool IsFileExistsLocally(string fileName)
     {
-        return File.Exists(fileName);
+        var filePath = $"{Bucket}/{fileName}";
+        return File.Exists(filePath);
     }
 
     public async Task<string> SaveStreamToLocalFile(Stream stream, string fileName)

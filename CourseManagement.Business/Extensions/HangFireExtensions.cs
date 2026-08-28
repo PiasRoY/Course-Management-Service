@@ -16,6 +16,8 @@ public static class HangFireExtensions
             });
         });
 
+        services.AddHangfireServer();
+
         return services;
     }
 }
