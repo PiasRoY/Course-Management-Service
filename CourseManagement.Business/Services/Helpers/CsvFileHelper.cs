@@ -9,7 +9,10 @@ public class CsvFileHelper : ICsvFileHelper
     {
         using var streamReader = new StreamReader(file);
         using var csv = new CsvReader(streamReader, CultureInfo.InvariantCulture);
-        
+
+        csv.Context.RegisterClassMap<CreateUserRequestMap>();
+        csv.Context.RegisterClassMap<CreateCourseRequestMap>();
+
         await foreach (var item in csv.GetRecordsAsync<T>(cancellationToken))
         {
             yield return item;
