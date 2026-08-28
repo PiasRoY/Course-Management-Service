@@ -1,0 +1,16 @@
+﻿[
+  {
+    "FirstName": "Pias",
+    "LastName": "Roy",
+    "EmailAddress": "pias.roy@admin.com",
+    "Password": "password12345678",
+    "Roles": [ "Admin" ]
+  },
+  {
+    "FirstName": "Pias",
+    "LastName": "Roy",
+    "EmailAddress": "pias@instructor.com",
+    "Password": "password12345678",
+    "Roles": [ "Instructor" ]
+  }
+]

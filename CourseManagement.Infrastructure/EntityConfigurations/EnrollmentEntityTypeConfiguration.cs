@@ -28,6 +28,7 @@ public class EnrollmentEntityTypeConfiguration : IEntityTypeConfiguration<Enroll
             .HasOne(e => e.Course)
             .WithMany(c => c.Enrollments)
             .HasForeignKey(e => e.CourseId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder

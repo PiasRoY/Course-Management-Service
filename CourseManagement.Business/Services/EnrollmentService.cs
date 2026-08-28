@@ -96,7 +96,7 @@ public class EnrollmentService : IEnrollmentService
         var classId = await this.dbContext.Classes.AsNoTracking().Where(cl => cl.Name == request.ClassName).Select(cl => cl.ClassId).SingleOrDefaultAsync(cancellationToken);
 
         Guid? courseId = null;
-        if (string.IsNullOrWhiteSpace(request.CourseName))
+        if (!string.IsNullOrEmpty(request.CourseName))
         {
             courseId = await this.dbContext.Courses.AsNoTracking().Where(c => c.Name == request.CourseName).Select(c => c.CourseId).SingleOrDefaultAsync(cancellationToken);
         }

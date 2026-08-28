@@ -1,0 +1,14 @@
+﻿[
+  {
+    "RoleName": "Admin"
+  },
+  {
+    "RoleName": "Staff"
+  },
+  {
+    "RoleName": "Instructor"
+  },
+  {
+    "RoleName":  "Student"
+  }
+]

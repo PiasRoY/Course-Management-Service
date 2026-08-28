@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
+using CourseManagement.Business.DTOs.EnrollmentDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services;
 using CourseManagement.Business.Services.Interfaces;
@@ -14,15 +15,18 @@ namespace CourseManagement.API.Controllers
     [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public class BulkImportsController : ControllerBase
     {
+        private readonly IEnrollmentService enrollmentService;
         private readonly IJobEventService jobEventService;
         private readonly IBulkService bulkService;
         private readonly ITaskManager taskService;
 
         public BulkImportsController(
+            IEnrollmentService enrollmentService,
             IJobEventService jobEventService,
             IBulkService bulkService, 
             ITaskManager taskService)
         {
+            this.enrollmentService = enrollmentService;
             this.jobEventService = jobEventService;
             this.bulkService = bulkService;
             this.taskService = taskService;
