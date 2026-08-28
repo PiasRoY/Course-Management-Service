@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Domain.Enums;
+using CourseManagement.Infrastructure.ApplicationData;
 using System.ComponentModel.DataAnnotations;
 
 namespace CourseManagement.Business.DTOs.ClassDTOs;
@@ -6,6 +7,7 @@ namespace CourseManagement.Business.DTOs.ClassDTOs;
 public class CreateClassRequest
 {
     [Required(ErrorMessage = "Class name is required.")]
+    [RegularExpression(DbConstants.AlphaNumericRegex, ErrorMessage = "Class name is invalid.")]
     public required string Name { get; set; }
 
     [Required(ErrorMessage = "Semester name is required.")]

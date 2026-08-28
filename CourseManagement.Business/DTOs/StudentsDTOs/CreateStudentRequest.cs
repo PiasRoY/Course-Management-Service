@@ -1,4 +1,5 @@
-﻿using CourseManagement.Domain.Enums;
+﻿using CourseManagement.Business.Constants;
+using CourseManagement.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace CourseManagement.Business.DTOs.StudentsDTOs;
@@ -6,10 +7,11 @@ namespace CourseManagement.Business.DTOs.StudentsDTOs;
 public class CreateStudentRequest
 {
     [Required(ErrorMessage = "Email address is required.")]
-    [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email address is invalid.")]
+    [RegularExpression(RegexConstants.EmailRegex, ErrorMessage = "Email address is invalid.")]
     required public string EmailAddress { get; set; }
 
     [Required(ErrorMessage = "Student roll number is required.")]
+    [RegularExpression(RegexConstants.StudentRollNumberRegex, ErrorMessage = "Roll number is invalid.")]
     required public string RollNumber { get; set; }
 
     [Required(ErrorMessage = "Student status is required.")]

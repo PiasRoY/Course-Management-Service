@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Domain.Entities;
+using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,12 @@ public class CourseEntityTypeConfiguration : IEntityTypeConfiguration<Course>
 {
     public void Configure(EntityTypeBuilder<Course> builder)
     {
-        builder.ToTable("Courses");
+        builder.ToTable("Courses", t =>
+        {
+            t.HasCheckConstraint(
+                "Check_Courses_Name_Alphanumeric",
+                $"\"Name\" ~ '{DbConstants.AlphaNumericRegex}'");
+        });
 
         builder.HasKey(c => c.CourseId);
 
