@@ -1,0 +1,51 @@
+Name,Semester,Year,SectionCode,InstructorEmail
+Intro to Computer Science,Fall,2024,ICS101-01,brian.hall97@school.edu
+Data Structures & Algorithms,Spring,2026,DSA102-01,brian.hall97@school.edu
+Database Management Systems,Spring,2024,DMS103-01,barbara.lopez32@school.edu
+Web Development Fundamentals,Spring,2026,WDF104-01,david.hernandez53@academy.org
+Calculus I,Winter,2025,CI105-01,matthew.harris18@school.edu
+Calculus II,Summer,2025,CI106-01,deborah.roberts26@techcorp.io
+Linear Algebra,Winter,2024,LA107-01,edward.carter73@academy.org
+Probability & Statistics,Fall,2024,PS108-01,daniel.thompson76@techcorp.io
+Physics I: Mechanics,Fall,2025,PIM109-01,lisa.white92@school.edu
+Physics II: Electricity & Magnetism,Fall,2024,PIEM110-01,david.hernandez53@academy.org
+General Chemistry I,Winter,2026,GCI111-01,kevin.nelson46@techcorp.io
+General Chemistry II,Summer,2025,GCI112-01,edward.carter73@academy.org
+English Composition,Spring,2024,EC113-01,daniel.thompson76@techcorp.io
+World History,Summer,2025,WH114-01,barbara.lopez32@school.edu
+Principles of Economics,Winter,2024,PE115-01,michelle.flores21@school.edu
+Introduction to Psychology,Summer,2025,IP116-01,linda.davis91@school.edu
+Software Engineering,Summer,2026,SE117-01,barbara.lopez32@school.edu
+Machine Learning,Spring,2025,ML118-01,michelle.flores21@school.edu
+Cybersecurity Fundamentals,Fall,2025,CF119-01,kevin.nelson46@techcorp.io
+Digital Marketing,Spring,2026,DM120-01,daniel.thompson76@techcorp.io
+Financial Accounting,Summer,2025,FA121-01,dorothy.rivera66@academy.org
+Microeconomics,Spring,2024,M122-01,dorothy.rivera66@academy.org
+Macroeconomics,Spring,2026,M123-01,edward.carter73@academy.org
+Organic Chemistry,Winter,2026,OC124-01,deborah.roberts26@techcorp.io
+Discrete Mathematics,Fall,2025,DM125-01,edward.carter73@academy.org
+Operating Systems,Fall,2026,OS126-01,emily.scott27@school.edu
+Computer Networks,Winter,2026,CN127-01,barbara.lopez32@school.edu
+Artificial Intelligence,Summer,2025,AI128-01,daniel.thompson76@techcorp.io
+Cloud Computing,Fall,2026,CC129-01,carol.adams44@example.com
+Mobile Application Development,Summer,2024,MAD130-01,melissa.mitchell55@school.edu
+Object-Oriented Programming,Spring,2026,OP131-01,michelle.flores21@school.edu
+Computer Architecture,Fall,2025,CA132-01,deborah.roberts26@techcorp.io
+Compiler Design,Summer,2025,CD133-01,melissa.mitchell55@school.edu
+Human-Computer Interaction,Fall,2024,HI134-01,barbara.lopez32@school.edu
+Deep Learning,Spring,2026,DL135-01,carol.adams44@example.com
+Data Mining,Summer,2025,DM136-01,dorothy.rivera66@academy.org
+Information Security,Fall,2025,IS137-01,joshua.green96@academy.org
+DevOps Practices,Summer,2024,DP138-01,david.hernandez53@academy.org
+Parallel & Distributed Computing,Summer,2024,PDC139-01,melissa.mitchell55@school.edu
+Bioinformatics,Winter,2026,B140-01,emily.scott27@school.edu
+Ethics in Technology,Fall,2024,ET141-01,daniel.thompson76@techcorp.io
+Technical Writing,Winter,2024,TW142-01,kevin.nelson46@techcorp.io
+Public Speaking,Fall,2026,PS143-01,lisa.white92@school.edu
+Managerial Accounting,Spring,2024,MA144-01,linda.davis91@school.edu
+Corporate Finance,Spring,2024,CF145-01,lisa.white92@school.edu
+Organizational Behavior,Fall,2026,OB146-01,joshua.green96@academy.org
+Business Law,Spring,2024,BL147-01,daniel.thompson76@techcorp.io
+International Relations,Summer,2026,IR148-01,joseph.anderson25@academy.org
+Sociology 101,Fall,2024,S149-01,matthew.harris18@school.edu
+Environmental Science,Fall,2024,ES150-01,melissa.mitchell55@school.edu

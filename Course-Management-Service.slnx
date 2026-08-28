@@ -2,6 +2,13 @@
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/Solution Items/Datasets/">
+    <File Path="Datasets/CourseManagement - Classes.csv" />
+    <File Path="Datasets/CourseManagement - Courses.csv" />
+    <File Path="Datasets/CourseManagement - Enrollments.csv" />
+    <File Path="Datasets/CourseManagement - Students.csv" />
+    <File Path="Datasets/CourseManagement - Users.csv" />
+  </Folder>
   <Project Path="CourseManagement.API/CourseManagement.API.csproj" />
   <Project Path="CourseManagement.Business/CourseManagement.Business.csproj" Id="890c9c16-e1b0-4553-8d03-b8f2717ad164" />
   <Project Path="CourseManagement.Domain/CourseManagement.Domain.csproj" Id="1ad1619d-3a18-4501-8585-221395857476" />

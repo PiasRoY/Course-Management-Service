@@ -1,0 +1,21 @@
+Name,Title,Credits,ClassNames
+Computer Science B.S.,Bachelor of Science in Computer Science,120,Cybersecurity Fundamentals|Computer Networks|Object-Oriented Programming
+Software Engineering B.S.,Bachelor of Science in Software Engineering,124,Technical Writing|Calculus I|Cloud Computing|Digital Marketing
+Data Science B.S.,Bachelor of Science in Data Science,120,Organic Chemistry|World History|Operating Systems|Computer Architecture
+Information Technology B.S.,Bachelor of Science in Information Technology,120,Cloud Computing|World History|Calculus II|Microeconomics|Probability & Statistics|Cybersecurity Fundamentals
+Cybersecurity B.S.,Bachelor of Science in Cybersecurity,120,Calculus II|Technical Writing|Introduction to Psychology|Microeconomics
+Mathematics B.S.,Bachelor of Science in Mathematics,120,Physics I: Mechanics|World History|Technical Writing|Bioinformatics|Deep Learning
+Applied Statistics B.S.,Bachelor of Science in Applied Statistics,120,Calculus II|Corporate Finance|Operating Systems|English Composition|World History
+Physics B.S.,Bachelor of Science in Physics,128,Calculus I|Managerial Accounting|Machine Learning|International Relations
+Chemistry B.S.,Bachelor of Science in Chemistry,128,Principles of Economics|Introduction to Psychology|Data Structures & Algorithms|Cloud Computing
+Business Administration B.A.,Bachelor of Arts in Business Administration,120,Physics II: Electricity & Magnetism|Probability & Statistics|Organic Chemistry
+Economics B.A.,Bachelor of Arts in Economics,120,International Relations|Computer Networks|Intro to Computer Science|Bioinformatics|Introduction to Psychology|Operating Systems
+English Literature B.A.,Bachelor of Arts in English Literature,120,Technical Writing|General Chemistry I|Information Security
+Psychology B.A.,Bachelor of Arts in Psychology,120,Computer Networks|Technical Writing|Public Speaking|International Relations|Physics II: Electricity & Magnetism|Database Management Systems
+Pre-Med Track,Pre-Medical Professional Track,90,Calculus I|Data Structures & Algorithms|Macroeconomics|Data Mining|Environmental Science
+General Studies Associate,Associate of Science in General Studies,60,Digital Marketing|Financial Accounting|Managerial Accounting|Database Management Systems|General Chemistry I
+Web Development Certificate,Professional Certificate in Web Development,18,Software Engineering|DevOps Practices|Web Development Fundamentals|Physics I: Mechanics|Environmental Science
+Data Analytics Certificate,Undergraduate Certificate in Data Analytics,15,Environmental Science|Data Structures & Algorithms|Deep Learning|Calculus I
+Cybersecurity Fundamentals Certificate,Certificate in Basic Cybersecurity,15,Bioinformatics|Object-Oriented Programming|Compiler Design|Macroeconomics|Data Mining
+Business Essentials Minor,Minor in Business Essentials,18,Environmental Science|Software Engineering|Microeconomics
+Computational Mathematics Minor,Minor in Computational Mathematics,21,English Composition|General Chemistry II|Data Structures & Algorithms|DevOps Practices|Technical Writing
