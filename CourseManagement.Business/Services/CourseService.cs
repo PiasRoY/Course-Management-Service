@@ -48,7 +48,7 @@ public class CourseService : ICourseService
         var courseDto = await this.dbContext
                          .Courses
                          .Select(CourseMapper.ProjectToCourseDto)
-                         .SingleOrDefaultAsync(c => c.Name.Equals(courseName, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                         .SingleOrDefaultAsync(c => c.Name == courseName, cancellationToken);
 
         return courseDto ?? throw new CourseNotFoundException(courseName);
     }
@@ -142,7 +142,7 @@ public class CourseService : ICourseService
     {
         return await this.dbContext
                          .Courses
-                         .AnyAsync(c => c.Name.Equals(courseName, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                         .AnyAsync(c => c.Name == courseName, cancellationToken);
     }
 
     private async Task<List<ClassInfo>> GetClassesAsync(IEnumerable<string> classNames, CancellationToken cancellationToken)

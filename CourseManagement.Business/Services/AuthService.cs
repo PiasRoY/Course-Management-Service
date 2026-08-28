@@ -57,7 +57,7 @@ public class AuthService : IAuthService
         var user = await this.dbContext
                              .Users
                              .Select(UserMapping.ProjectToUserDto)
-                             .SingleOrDefaultAsync(u => u.EmailAddress.Equals(email, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                             .SingleOrDefaultAsync(u => u.EmailAddress.ToLower() == email.ToLower(), cancellationToken);
 
         return user ?? throw new UserNotFoundException(email);
     }
@@ -73,7 +73,7 @@ public class AuthService : IAuthService
 
         var userExist = await this.dbContext
             .Users
-            .AnyAsync(u => u.EmailAddress.Equals(createUserRequest.EmailAddress, StringComparison.OrdinalIgnoreCase), cancellationToken);
+            .AnyAsync(u => u.EmailAddress == createUserRequest.EmailAddress, cancellationToken);
 
         if (userExist)
         {
@@ -111,7 +111,7 @@ public class AuthService : IAuthService
         var user = await this.dbContext
                              .Users
                              .AsNoTracking()
-                             .SingleOrDefaultAsync(u => u.EmailAddress.Equals(authenticateUserRequest.Email, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                             .SingleOrDefaultAsync(u => u.EmailAddress == authenticateUserRequest.Email, cancellationToken);
 
         if (user == null)
         {
@@ -134,7 +134,7 @@ public class AuthService : IAuthService
     {
         var user = await this.dbContext
                              .Users
-                             .SingleOrDefaultAsync(u => u.EmailAddress.Equals(changePasswordRequest.Email, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                             .SingleOrDefaultAsync(u => u.EmailAddress == changePasswordRequest.Email, cancellationToken);
 
         if (user == null)
         {
@@ -182,7 +182,7 @@ public class AuthService : IAuthService
                                               .Where(
                                                   u => deleteUserRequest.UserId != null ?
                                                   u.UserId == deleteUserRequest.UserId :
-                                                  u.EmailAddress.Equals(deleteUserRequest.Email, StringComparison.OrdinalIgnoreCase))
+                                                  u.EmailAddress == deleteUserRequest.Email)
                                               .ExecuteDeleteAsync(cancellationToken);
 
         this.logger.LogInformation("User with email {Email} OR id {Id} has been deleted.", deleteUserRequest.Email, deleteUserRequest.UserId);

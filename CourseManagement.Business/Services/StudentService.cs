@@ -48,7 +48,7 @@ public class StudentService : IStudentService
     {
         var studentDto = await this.dbContext
                                 .Students
-                                .Where(s => s.RollNumber.Equals(studentRollNumber, StringComparison.OrdinalIgnoreCase))
+                                .Where(s => s.RollNumber == studentRollNumber)
                                 .Select(StudentMapper.ProjectToStudentDto)
                                 .SingleOrDefaultAsync(cancellationToken);
 
@@ -165,6 +165,6 @@ public class StudentService : IStudentService
     {
         return await this.dbContext
                          .Students
-                         .AnyAsync(s => s.RollNumber.Equals(studentNumber, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                         .AnyAsync(s => s.RollNumber == studentNumber, cancellationToken);
     }
 }

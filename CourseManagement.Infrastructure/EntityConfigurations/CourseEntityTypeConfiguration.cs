@@ -15,7 +15,8 @@ public class CourseEntityTypeConfiguration : IEntityTypeConfiguration<Course>
         builder
             .Property(c => c.Name)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .HasColumnType("citext");
 
         builder
             .Property(c => c.Title)

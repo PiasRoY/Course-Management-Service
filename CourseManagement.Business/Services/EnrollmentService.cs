@@ -92,13 +92,13 @@ public class EnrollmentService : IEnrollmentService
 
     public async Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, CancellationToken cancellationToken)
     {
-        var studentId = await this.dbContext.Students.AsNoTracking().Where(s => s.RollNumber.Equals(request.StudentRollNumber, StringComparison.OrdinalIgnoreCase)).Select(s => s.StudentId).SingleOrDefaultAsync(cancellationToken);
-        var classId = await this.dbContext.Classes.AsNoTracking().Where(cl => cl.Name.Equals(request.ClassName, StringComparison.OrdinalIgnoreCase)).Select(cl => cl.ClassId).SingleOrDefaultAsync(cancellationToken);
+        var studentId = await this.dbContext.Students.AsNoTracking().Where(s => s.RollNumber == request.StudentRollNumber).Select(s => s.StudentId).SingleOrDefaultAsync(cancellationToken);
+        var classId = await this.dbContext.Classes.AsNoTracking().Where(cl => cl.Name == request.ClassName).Select(cl => cl.ClassId).SingleOrDefaultAsync(cancellationToken);
 
         Guid? courseId = null;
         if (string.IsNullOrWhiteSpace(request.CourseName))
         {
-            courseId = await this.dbContext.Courses.AsNoTracking().Where(c => c.Name.Equals(request.CourseName, StringComparison.OrdinalIgnoreCase)).Select(c => c.CourseId).SingleOrDefaultAsync(cancellationToken);
+            courseId = await this.dbContext.Courses.AsNoTracking().Where(c => c.Name == request.CourseName).Select(c => c.CourseId).SingleOrDefaultAsync(cancellationToken);
         }
 
         if (await this.IsEnrollmentExists(studentId, classId, courseId, cancellationToken))

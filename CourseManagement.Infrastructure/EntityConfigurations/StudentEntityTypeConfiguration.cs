@@ -15,7 +15,8 @@ public class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
         builder
             .Property(s => s.RollNumber)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasColumnType("citext");
 
         builder
             .Property(s => s.Status)

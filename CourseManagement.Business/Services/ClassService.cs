@@ -42,7 +42,7 @@ public class ClassService : IClassService
                                  .Classes
                                  .AsNoTracking()
                                  .Select(ClassMapper.ProjectToClasDto)
-                                 .SingleOrDefaultAsync(cl => cl.Name.Equals(className, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                                 .SingleOrDefaultAsync(cl => cl.Name == className, cancellationToken);
 
         return classDto ?? throw new ClassNotFoundException(className);
     }
@@ -63,7 +63,7 @@ public class ClassService : IClassService
         var isExists = await this.dbContext
                                  .Users
                                  .AsNoTracking()
-                                 .AnyAsync(u => u.EmailAddress.Equals(email, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                                 .AnyAsync(u => u.EmailAddress == email, cancellationToken);
 
         if (!isExists)
         {
@@ -73,7 +73,7 @@ public class ClassService : IClassService
         return await this.dbContext
                          .Classes
                          .AsNoTracking()
-                         .Where(cl => cl.Instructor.EmailAddress.Equals(email, StringComparison.OrdinalIgnoreCase))
+                         .Where(cl => cl.Instructor.EmailAddress == email)
                          .Select(ClassMapper.ProjectToClasDto)
                          .ToListAsync(cancellationToken);
     }
@@ -106,7 +106,7 @@ public class ClassService : IClassService
     {
         var isClassExists = await this.dbContext
                                       .Classes
-                                      .AnyAsync(cl => cl.Name.Equals(createClassRequest.Name, StringComparison.OrdinalIgnoreCase), cancellationToken);
+                                      .AnyAsync(cl => cl.Name == createClassRequest.Name, cancellationToken);
 
         if (isClassExists)
         {
@@ -167,7 +167,7 @@ public class ClassService : IClassService
         var instructor = await this.dbContext
                                    .Users
                                    .AsNoTracking()
-                                   .Where(u => u.EmailAddress.Equals(InstructorEmail, StringComparison.OrdinalIgnoreCase))
+                                   .Where(u => u.EmailAddress == InstructorEmail)
                                    .Where(u => u.UserUserRoles.Any(uur => uur.UserRole.RoleName == UserRoles.Instructor.ToString()))
                                    .SingleOrDefaultAsync(cancellationToken);
 
