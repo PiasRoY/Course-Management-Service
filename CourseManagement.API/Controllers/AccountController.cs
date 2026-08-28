@@ -44,7 +44,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("register")]
-    [AllowAnonymous]
+    [Authorize(Policy = nameof(UserPolicies.AdminOrStaff))]
     public async Task<ActionResult<UserDto>> Register(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
     {
         var userDto = await this.authService.CreateUserAsync(createUserRequest, cancellationToken);
