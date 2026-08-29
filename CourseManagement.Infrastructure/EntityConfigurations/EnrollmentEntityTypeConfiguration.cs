@@ -13,6 +13,10 @@ public class EnrollmentEntityTypeConfiguration : IEntityTypeConfiguration<Enroll
         builder.HasKey(e => e.EnrollmentId);
 
         builder
+            .Property(e => e.EnrolledByEmail)
+            .IsRequired();
+
+        builder
             .HasOne(e => e.Student)
             .WithMany(s => s.Enrollments)
             .HasForeignKey(e => e.StudentId)

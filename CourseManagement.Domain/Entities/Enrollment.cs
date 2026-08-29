@@ -8,6 +8,7 @@ public class Enrollment : BaseAuditEntity
     public Guid StudentId { get; set; }
     public Guid ClassId { get; set; }
     public Guid? CourseId { get; set; }
+    public required string EnrolledByEmail { get; set; }
     public Student Student { get; set; } = null!;
     public Class Class { get; set; } = null!;
     public Course? Course { get; set; } = null;

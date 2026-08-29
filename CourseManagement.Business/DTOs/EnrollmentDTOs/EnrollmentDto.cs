@@ -19,6 +19,6 @@ public class EnrollmentDto
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CourseName { get; set; }
-    public required Guid EnrolledBy { get; set; }
+    public required string EnrolledBy { get; set; }
     public required DateTime EnrolledAt { get; set; }
 }

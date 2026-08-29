@@ -16,6 +16,7 @@ public class EnrollmentServiceTests : IDisposable
     private readonly Student studentEntity;
     private readonly Class classEntity;
     private readonly Course courseEntity;
+    private readonly string enrolledBy;
 
     public EnrollmentServiceTests()
     {
@@ -23,6 +24,8 @@ public class EnrollmentServiceTests : IDisposable
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
         this.dbContext = new ApplicationDbContext(options, new CurrentUserContext());
+
+        this.enrolledBy = "pias@tester.com";
 
         var user = new User
         {
@@ -80,10 +83,11 @@ public class EnrollmentServiceTests : IDisposable
         {
             StudentId = this.studentEntity.StudentId,
             ClassId = this.classEntity.ClassId
-        }, CancellationToken.None);
+        }, enrolledBy, CancellationToken.None);
 
         Assert.Equal(this.studentEntity.StudentId, result.StudentId);
         Assert.Equal(this.classEntity.ClassId, result.ClassId);
+        Assert.Equal(enrolledBy, result.EnrolledBy);
         Assert.Single(await this.dbContext.Enrollments.ToListAsync());
     }
 
@@ -94,10 +98,11 @@ public class EnrollmentServiceTests : IDisposable
         {
             StudentId = this.studentEntity.StudentId,
             CourseId = this.courseEntity.CourseId
-        }, CancellationToken.None);
+        }, enrolledBy, CancellationToken.None);
 
         Assert.Equal(this.studentEntity.StudentId, result.StudentId);
         Assert.Equal(this.courseEntity.CourseId, result.CourseId);
+        Assert.Equal(enrolledBy, result.EnrolledBy);
         Assert.Single(await this.dbContext.Enrollments.ToListAsync());
     }
 
@@ -109,10 +114,11 @@ public class EnrollmentServiceTests : IDisposable
             StudentRollNumber = this.studentEntity.RollNumber,
             ClassName = this.classEntity.Name,
             CourseName = this.courseEntity.Name
-        }, CancellationToken.None);
+        }, enrolledBy, CancellationToken.None);
 
         Assert.Equal(this.studentEntity.StudentId, result.StudentId);
         Assert.Equal(this.classEntity.ClassId, result.ClassId);
+        Assert.Equal(enrolledBy, result.EnrolledBy);
         Assert.Equal(this.courseEntity.CourseId, result.CourseId);
     }
 
@@ -123,7 +129,8 @@ public class EnrollmentServiceTests : IDisposable
         {
             EnrollmentId = Guid.NewGuid(),
             StudentId = this.studentEntity.StudentId,
-            ClassId = this.classEntity.ClassId
+            ClassId = this.classEntity.ClassId,
+            EnrolledByEmail = enrolledBy
         };
         this.dbContext.Enrollments.Add(enrollment);
         await this.dbContext.SaveChangesAsync();
@@ -150,7 +157,8 @@ public class EnrollmentServiceTests : IDisposable
             CourseId = this.courseEntity.CourseId,
             Student = this.studentEntity,
             Class = this.classEntity,
-            Course = this.courseEntity
+            Course = this.courseEntity,
+            EnrolledByEmail = enrolledBy
         };
         this.dbContext.Enrollments.Add(enrollment);
         await this.dbContext.SaveChangesAsync();

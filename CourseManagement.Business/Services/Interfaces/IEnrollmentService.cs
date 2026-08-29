@@ -8,11 +8,11 @@ namespace CourseManagement.Business.Services.Interfaces
     {
         Task<PageResult<EnrollmentDto>> GetEnrollmentsAsync(PaginationParams @params, CancellationToken cancellationToken);
         Task<IEnumerable<EnrollmentDto>> GetEnrollmentsByStudentIdAsync(Guid studentId, CancellationToken cancellationToken);
-        Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken);
-        Task<EnrollmentCourseDto> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken);
+        Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, string enrolledBy, CancellationToken cancellationToken);
+        Task<EnrollmentCourseDto> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, string enrolledBy, CancellationToken cancellationToken);
         Task DeleteEnrollmentAsync(DeleteEnrollmentRequest deleteEnrollmentRequest, CancellationToken cancellationToken);
         Task<EnrollmentDto> GetEnrollmentByIdAsync(Guid enrollmentId, CancellationToken cancellationToken);
         Task<EnrollmentDto> UpdateEnrollmentAsync(Guid enrollmentId, UpdateEnrollmentRequest updateEnrollmentRequest, CancellationToken cancellationToken);
-        Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, CancellationToken cancellationToken);
+        Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, string enrolledByEmail, CancellationToken cancellationToken);
     }
 }

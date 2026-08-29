@@ -5,6 +5,7 @@ using CourseManagement.Business.Enums;
 using CourseManagement.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CourseManagement.API.Controllers;
 
@@ -41,7 +42,15 @@ public class EnrollmentController : ControllerBase
     [HttpPost("class")]
     public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
     {
-        var enrollmentDto = await this.enrollmentService.CreateEnrollmentByClassAsync(request, cancellationToken);
+        var enrolledByEmail = GetUserEmail();
+
+        if (enrolledByEmail == null)
+        {
+            return Unauthorized("Token without email is invalid.");
+        }
+
+        var enrollmentDto = await this.enrollmentService.CreateEnrollmentByClassAsync(request, enrolledByEmail, cancellationToken);
+
         return CreatedAtAction(
             nameof(GetEnrollmentById),
             new { id = enrollmentDto.EnrollmentId },
@@ -49,9 +58,16 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpPost("course")]
-    public async Task<ActionResult<EnrollmentDto>> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<EnrollmentCourseDto>> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken)
     {
-        var enrollmentDto = await this.enrollmentService.CreateEnrollmentByCourseAsync(request, cancellationToken);
+        var enrolledByEmail = GetUserEmail();
+
+        if (enrolledByEmail == null)
+        {
+            return Unauthorized("Token without email is invalid.");
+        }
+
+        var enrollmentDto = await this.enrollmentService.CreateEnrollmentByCourseAsync(request, enrolledByEmail, cancellationToken);
         return StatusCode(StatusCodes.Status201Created, enrollmentDto);
     }
 
@@ -66,5 +82,11 @@ public class EnrollmentController : ControllerBase
     {
         await this.enrollmentService.DeleteEnrollmentAsync(deleteEnrollmentRequest, cancellationToken);
         return NoContent();
+    }
+
+    private string? GetUserEmail()
+    {
+        var email = this.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+        return email;
     }
 }

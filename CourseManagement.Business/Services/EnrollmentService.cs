@@ -52,14 +52,14 @@ public class EnrollmentService : IEnrollmentService
                          .ToListAsync();
     }
 
-    public async Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, CancellationToken cancellationToken)
+    public async Task<EnrollmentDto> CreateEnrollmentByClassAsync(CreateEnrollmentByClassRequest request, string enrolledBy, CancellationToken cancellationToken)
     {
         if (await this.IsEnrollmentExists(request.StudentId, request.ClassId, null, cancellationToken))
         {
             throw new InvalidOperationException("Student is already enrolled to this class, course combination.");
         }
 
-        var enrollment = EnrollmentMapper.MapsToEnrollment(request);
+        var enrollment = EnrollmentMapper.MapsToEnrollment(request, enrolledBy);
 
         await this.dbContext.AddAsync(enrollment, cancellationToken);
         await this.dbContext.SaveChangesAsync(cancellationToken);
@@ -69,7 +69,7 @@ public class EnrollmentService : IEnrollmentService
         return EnrollmentMapper.MapsToEnrollmentDto(enrollment);
     }
 
-    public async Task<EnrollmentCourseDto> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, CancellationToken cancellationToken)
+    public async Task<EnrollmentCourseDto> CreateEnrollmentByCourseAsync(CreateEnrollmentByCourseRequest request, string enrolledBy, CancellationToken cancellationToken)
     {
         var courseClasses = this.dbContext
                                 .CourseClasses
@@ -89,7 +89,7 @@ public class EnrollmentService : IEnrollmentService
             throw new InvalidOperationException($"Student {request.StudentId} has already been enrolled to all the classes of the course {request.CourseId}");
         }
 
-        var enrollments = EnrollmentMapper.MapsToEnrollmentList(request, remainingClasses);
+        var enrollments = EnrollmentMapper.MapsToEnrollmentList(request, remainingClasses, enrolledBy);
 
         await this.dbContext.AddRangeAsync(enrollments, cancellationToken);
         await this.dbContext.SaveChangesAsync(cancellationToken);
@@ -99,7 +99,7 @@ public class EnrollmentService : IEnrollmentService
         return EnrollmentMapper.MapsToEnrollmentCourseDto(enrollments.First());
     }
 
-    public async Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, CancellationToken cancellationToken)
+    public async Task<EnrollmentDto> CreateEnrollmentByClassNamesAsync(CreateEnrollmentByClassNames request, string enrolledByEmail, CancellationToken cancellationToken)
     {
         var studentId = await this.dbContext.Students.AsNoTracking().Where(s => s.RollNumber == request.StudentRollNumber).Select(s => s.StudentId).SingleOrDefaultAsync(cancellationToken);
         var classId = await this.dbContext.Classes.AsNoTracking().Where(cl => cl.Name == request.ClassName).Select(cl => cl.ClassId).SingleOrDefaultAsync(cancellationToken);
@@ -120,7 +120,8 @@ public class EnrollmentService : IEnrollmentService
             EnrollmentId = Guid.NewGuid(),
             StudentId = studentId,
             CourseId = courseId,
-            ClassId = classId
+            ClassId = classId,
+            EnrolledByEmail = enrolledByEmail
         };
 
         await this.dbContext.AddAsync(enrollment, cancellationToken);

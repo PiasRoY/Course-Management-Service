@@ -18,7 +18,7 @@ public static class EnrollmentMapper
             CourseId = enrollment.CourseId,
             CourseName = enrollment.Course != null ? enrollment.Course.Name : null,
             EnrolledAt = enrollment.CreatedAt,
-            EnrolledBy = enrollment.CreatedBy
+            EnrolledBy = enrollment.EnrolledByEmail
         };
 
     public static EnrollmentDto MapsToEnrollmentDto(Enrollment enrollment) => ProjectToEnrollmentDto.Compile()(enrollment);
@@ -29,12 +29,12 @@ public static class EnrollmentMapper
         {
             CourseId = enrollment.CourseId!.Value,
             StudentId = enrollment.StudentId,
-            EnrolledBy = enrollment.CreatedBy,
+            EnrolledBy = enrollment.EnrolledByEmail,
             EnrolledAt = enrollment.CreatedAt
         };
     }
 
-    public static Enrollment MapsToEnrollment(CreateEnrollmentByClassRequest createEnrollmentRequest)
+    public static Enrollment MapsToEnrollment(CreateEnrollmentByClassRequest createEnrollmentRequest, string enrolledByEmail)
     {
         return new Enrollment
         {
@@ -42,10 +42,11 @@ public static class EnrollmentMapper
             StudentId = createEnrollmentRequest.StudentId,
             CourseId = null,
             ClassId = createEnrollmentRequest.ClassId,
+            EnrolledByEmail = enrolledByEmail
         };
     }
 
-    public static List<Enrollment> MapsToEnrollmentList(CreateEnrollmentByCourseRequest request, List<Guid> classIdList)
+    public static List<Enrollment> MapsToEnrollmentList(CreateEnrollmentByCourseRequest request, List<Guid> classIdList, string enrolledBy)
     {
         var enrollmentList = new List<Enrollment>();
 
@@ -56,7 +57,8 @@ public static class EnrollmentMapper
                 EnrollmentId = Guid.NewGuid(),
                 StudentId = request.StudentId,
                 CourseId = request.CourseId,
-                ClassId = classId
+                ClassId = classId,
+                EnrolledByEmail = enrolledBy
             });
         }
 

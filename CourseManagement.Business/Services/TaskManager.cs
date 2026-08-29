@@ -93,7 +93,7 @@ public class TaskManager : ITaskManager
             case ImportTypes.Enrollments:
                 await this.bulkService.ProcessBulkImportAsync<CreateEnrollmentByClassNames, EnrollmentDto>(
                     jobEvent,
-                    (req, ct) => this.enrollmentService.CreateEnrollmentByClassNamesAsync(req, ct),
+                    (req, ct) => this.enrollmentService.CreateEnrollmentByClassNamesAsync(req, userContextDto.UserEmail, ct),
                     CancellationToken.None);
                 break;
         }
