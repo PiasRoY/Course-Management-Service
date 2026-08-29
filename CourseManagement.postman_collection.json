@@ -1022,7 +1022,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Math-101\",\r\n    \"semester\": \"Spring\",\r\n    \"year\": \"2027\",\r\n    \"sectionCode\": \"SEC-001\",\r\n    \"instructorEmail\": \"pias@instructor.com\"\r\n}",
+              "raw": "{\r\n    \"name\": \"Math1105\",\r\n    \"semester\": \"Spring\",\r\n    \"year\": \"2027\",\r\n    \"sectionCode\": \"SEC-001\",\r\n    \"instructorEmail\": \"pias@instructor.com\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1712,7 +1712,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"CS-102\",\r\n    \"title\": \"CS-102\",\r\n    \"credits\": 3,\r\n    \"classNames\": [\"MATH-101\"]\r\n}",
+              "raw": "{\r\n    \"name\": \"CS102\",\r\n    \"title\": \"CS-102\",\r\n    \"credits\": 3,\r\n    \"classNames\": [\"MATH101\"]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1795,7 +1795,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"CS-1001\",\r\n    \"title\": \"CS-1001\",\r\n    \"credits\": 5,\r\n    \"classNames\": [\"MATH-101\"]\r\n}",
+              "raw": "{\r\n    \"name\": \"CS1001\",\r\n    \"title\": \"CS-1001\",\r\n    \"credits\": 5,\r\n    \"classNames\": [\"MATH101\"]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2326,6 +2326,59 @@
               ],
               "cookie": [],
               "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"e7b21729-0c98-4a25-81a2-0bff3d5a9a92\",\n            \"email\": \"william.rodriguez13@example.com\",\n            \"fullName\": \"William Rodriguez\",\n            \"studentNumber\": \"2020-MATH-105\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2020-01-19T00:00:00Z\",\n            \"currentTerm\": 3,\n            \"currentSemester\": 5\n        },\n        {\n            \"studentId\": \"5280b2f9-2ab1-471d-a8bc-e493509864e9\",\n            \"email\": \"paul.allen67@techcorp.io\",\n            \"fullName\": \"Paul Allen\",\n            \"studentNumber\": \"2021-ENG-113\",\n            \"status\": \"Withdrawn\",\n            \"admissionDate\": \"2025-01-28T00:00:00Z\",\n            \"graduationDate\": \"2028-01-09T00:00:00Z\",\n            \"currentTerm\": 1,\n            \"currentSemester\": 8\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 2\n}"
+            },
+            {
+              "name": "GetStudents",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/api/v1/Course/{{CourseId}}/students?PageNumber=1&PageSize=20",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "Course",
+                    "{{CourseId}}",
+                    "students"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "1"
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 29 Aug 2026 00:08:23 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": [\n        {\n            \"studentId\": \"150fa6eb-4688-45fb-9c2f-103f479125c5\",\n            \"email\": \"anthony.clark36@techcorp.io\",\n            \"fullName\": \"Anthony Clark\",\n            \"studentNumber\": \"2024CS_1012\",\n            \"status\": \"Active\",\n            \"admissionDate\": \"2022-08-05T00:00:00Z\",\n            \"graduationDate\": \"2028-06-20T00:00:00Z\",\n            \"currentTerm\": 1,\n            \"currentSemester\": 4\n        },\n        {\n            \"studentId\": \"87f44810-64f4-4d64-be26-c6460974ada2\",\n            \"email\": \"kimberly.king43@academy.org\",\n            \"fullName\": \"Kimberly King\",\n            \"studentNumber\": \"2024CS_1019\",\n            \"status\": \"Graduated\",\n            \"admissionDate\": \"2024-01-21T00:00:00Z\",\n            \"graduationDate\": \"2025-11-06T00:00:00Z\"\n        }\n    ],\n    \"currentPageNumber\": 1,\n    \"totalPages\": 1,\n    \"totalCount\": 2\n}"
             }
           ]
         }
@@ -3766,7 +3819,7 @@
                   "key": "file",
                   "type": "file",
                   "uuid": "36765ab9-ecd4-4be5-9830-b468934d3972",
-                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Users.csv"
+                  "src": "/C:/Users/RoY/Downloads/CourseManagement - Users.csv"
                 }
               ]
             },
@@ -3855,7 +3908,7 @@
                   "key": "file",
                   "type": "file",
                   "uuid": "53d93505-6978-4004-b520-54675982d877",
-                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Classes.csv"
+                  "src": "/C:/Users/RoY/Downloads/CourseManagement - Classes.csv"
                 }
               ]
             },
@@ -3944,7 +3997,7 @@
                   "key": "file",
                   "type": "file",
                   "uuid": "53d93505-6978-4004-b520-54675982d877",
-                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Courses.csv"
+                  "src": "/C:/Users/RoY/Downloads/CourseManagement - Courses.csv"
                 }
               ]
             },
@@ -3975,7 +4028,7 @@
                   "key": "file",
                   "type": "file",
                   "uuid": "0ff415f5-15ed-4e9b-9bff-8e253c253507",
-                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Students.csv"
+                  "src": "/C:/Users/RoY/Downloads/CourseManagement - Students.csv"
                 }
               ]
             },
@@ -4006,7 +4059,7 @@
                   "key": "file",
                   "type": "file",
                   "uuid": "0ff415f5-15ed-4e9b-9bff-8e253c253507",
-                  "src": "/C:/Users/RoY/Desktop/Code/Mines/Course-Management-Service/Datasets/CourseManagement - Enrollments.csv"
+                  "src": "/C:/Users/RoY/Downloads/CourseManagement - Enrollments.csv"
                 }
               ]
             },

@@ -10,6 +10,7 @@ using CourseManagement.Domain.Enums;
 using CourseManagement.Infrastructure.ApplicationData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Data;
 
 namespace CourseManagement.Business.Services;
 
@@ -112,7 +113,7 @@ public class StudentService : IStudentService
 
         if (user == null)
         {
-            throw new UserNotFoundException(createStudentRequest.EmailAddress);
+            throw new StudentNotFoundException(createStudentRequest.EmailAddress, "`Student` role");
         }
 
         var student = StudentMapper.MapsToStudent(createStudentRequest, user.UserId);
