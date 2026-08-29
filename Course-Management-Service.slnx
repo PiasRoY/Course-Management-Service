@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path="CourseManagement.postman_collection.json" />
     <File Path="Postgres_ERD.pgerd" />
+    <File Path="Postgres_ERD.png" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Solution Items/Datasets/">
