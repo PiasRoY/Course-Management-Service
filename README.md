@@ -57,14 +57,6 @@ dotnet test
 
 * Runs all the tests present under project **CourseManagement.UnitTests**
 
-## API Documentation
-
-When running the API in the Development environment, interactive API documentation is available through Scalar:
-
-- Scalar UI: `http://localhost:8080/scalar`
-- OpenAPI document: `http://localhost:8080/openapi/v1.json`
-
-The Postman collection is also included in the repository for testing authenticated requests.
 
 ## API Endpoints
 
