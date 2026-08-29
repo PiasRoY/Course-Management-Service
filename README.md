@@ -40,7 +40,7 @@ Admin and Staff can manage courses, classes, students, and enrollments. Students
 * Create class via `POST /api/v1/Class`.
 * Create course with class names via `POST /api/v1/Course`.
 * Create Student profile with user email via `POST /api/v1/Student`.
-* Create enrollment to enroll a student to a course or a individual class via `POST /api/v1/Enrollment/course`.
+* Create enrollment to enroll a student to a course or a individual class via `POST /api/v1/Enrollment/course` or `POST /api/v1/Enrollment/class`.
 
 
 ## Postman
