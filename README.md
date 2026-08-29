@@ -1,6 +1,6 @@
 # Course Management Service
 
-This project is designed in N-Layer Architecture. It contains five .NET 9 projects and the startup project is `CourseManagement.API`.
+This project follows layer architecture. It contains five .NET 9 projects and the startup project is `CourseManagement.API`.
 
 *  `Role based JWT` for authentication and authorization. 
 * `postgres` is used as primary database, and `Entity Framework` as ORM.
