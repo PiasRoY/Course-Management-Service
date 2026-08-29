@@ -1,21 +1,21 @@
 Name,Title,Credits,ClassNames
-Computer Science B.S.,Bachelor of Science in Computer Science,120,Cybersecurity Fundamentals|Computer Networks|Object-Oriented Programming
-Software Engineering B.S.,Bachelor of Science in Software Engineering,124,Technical Writing|Calculus I|Cloud Computing|Digital Marketing
-Data Science B.S.,Bachelor of Science in Data Science,120,Organic Chemistry|World History|Operating Systems|Computer Architecture
-Information Technology B.S.,Bachelor of Science in Information Technology,120,Cloud Computing|World History|Calculus II|Microeconomics|Probability & Statistics|Cybersecurity Fundamentals
-Cybersecurity B.S.,Bachelor of Science in Cybersecurity,120,Calculus II|Technical Writing|Introduction to Psychology|Microeconomics
-Mathematics B.S.,Bachelor of Science in Mathematics,120,Physics I: Mechanics|World History|Technical Writing|Bioinformatics|Deep Learning
-Applied Statistics B.S.,Bachelor of Science in Applied Statistics,120,Calculus II|Corporate Finance|Operating Systems|English Composition|World History
-Physics B.S.,Bachelor of Science in Physics,128,Calculus I|Managerial Accounting|Machine Learning|International Relations
-Chemistry B.S.,Bachelor of Science in Chemistry,128,Principles of Economics|Introduction to Psychology|Data Structures & Algorithms|Cloud Computing
-Business Administration B.A.,Bachelor of Arts in Business Administration,120,Physics II: Electricity & Magnetism|Probability & Statistics|Organic Chemistry
-Economics B.A.,Bachelor of Arts in Economics,120,International Relations|Computer Networks|Intro to Computer Science|Bioinformatics|Introduction to Psychology|Operating Systems
-English Literature B.A.,Bachelor of Arts in English Literature,120,Technical Writing|General Chemistry I|Information Security
-Psychology B.A.,Bachelor of Arts in Psychology,120,Computer Networks|Technical Writing|Public Speaking|International Relations|Physics II: Electricity & Magnetism|Database Management Systems
-Pre-Med Track,Pre-Medical Professional Track,90,Calculus I|Data Structures & Algorithms|Macroeconomics|Data Mining|Environmental Science
-General Studies Associate,Associate of Science in General Studies,60,Digital Marketing|Financial Accounting|Managerial Accounting|Database Management Systems|General Chemistry I
-Web Development Certificate,Professional Certificate in Web Development,18,Software Engineering|DevOps Practices|Web Development Fundamentals|Physics I: Mechanics|Environmental Science
-Data Analytics Certificate,Undergraduate Certificate in Data Analytics,15,Environmental Science|Data Structures & Algorithms|Deep Learning|Calculus I
-Cybersecurity Fundamentals Certificate,Certificate in Basic Cybersecurity,15,Bioinformatics|Object-Oriented Programming|Compiler Design|Macroeconomics|Data Mining
-Business Essentials Minor,Minor in Business Essentials,18,Environmental Science|Software Engineering|Microeconomics
-Computational Mathematics Minor,Minor in Computational Mathematics,21,English Composition|General Chemistry II|Data Structures & Algorithms|DevOps Practices|Technical Writing
+CSBS,CSBS Program Title,18,ENG103|CS106|MATH100|CS109|CS110
+SEBS,SEBS Program Title,15,CS121|ENG107|ENG108|CS104
+DSBS,DSBS Program Title,15,CS108|CS113|CS119|CS121|CS105
+ITBS,ITBS Program Title,120,MATH104|CS124|CS106|MATH107|CS101
+CYBS,CYBS Program Title,15,MATH102|MATH107|CS122
+MATHBS,MATHBS Program Title,124,ENG104|ENG102|MATH112
+STATBS,STATBS Program Title,15,MATH106|CS100|CS117|ENG101
+PHYSBS,PHYSBS Program Title,120,ENG101|MATH101|CS101
+CHEMBS,CHEMBS Program Title,18,CS103|MATH110|MATH112|ENG104
+BBA,BBA Program Title,60,CS103|MATH104|CS108|MATH111|CS120|MATH101
+ECONBA,ECONBA Program Title,60,CS122|CS113|MATH106|ENG100|CS103|ENG103
+ENGBA,ENGBA Program Title,18,MATH104|CS105|MATH102|ENG109|MATH114
+PSYBA,PSYBA Program Title,18,CS120|MATH106|CS121|CS123|CS114|MATH107
+PREMED,PREMED Program Title,120,MATH102|CS104|CS110|CS113
+GENSTU,GENSTU Program Title,18,MATH102|ENG107|MATH110|CS116
+WEBDEV,WEBDEV Program Title,15,CS116|CS105|MATH105|CS120|MATH110|MATH111
+DATAAN,DATAAN Program Title,124,ENG102|ENG107|CS118|CS124|ENG103
+CYBER,CYBER Program Title,60,ENG103|MATH112|ENG109|ENG107|MATH105|CS123
+BUSEST,BUSEST Program Title,15,CS100|ENG108|MATH104
+COMPMATH,COMPMATH Program Title,124,MATH110|CS101|ENG101|CS105|MATH107|MATH109

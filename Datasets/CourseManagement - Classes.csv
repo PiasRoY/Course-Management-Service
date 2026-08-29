@@ -1,51 +1,51 @@
 Name,Semester,Year,SectionCode,InstructorEmail
-Intro to Computer Science,Fall,2024,ICS101-01,brian.hall97@school.edu
-Data Structures & Algorithms,Spring,2026,DSA102-01,brian.hall97@school.edu
-Database Management Systems,Spring,2024,DMS103-01,barbara.lopez32@school.edu
-Web Development Fundamentals,Spring,2026,WDF104-01,david.hernandez53@academy.org
-Calculus I,Winter,2025,CI105-01,matthew.harris18@school.edu
-Calculus II,Summer,2025,CI106-01,deborah.roberts26@techcorp.io
-Linear Algebra,Winter,2024,LA107-01,edward.carter73@academy.org
-Probability & Statistics,Fall,2024,PS108-01,daniel.thompson76@techcorp.io
-Physics I: Mechanics,Fall,2025,PIM109-01,lisa.white92@school.edu
-Physics II: Electricity & Magnetism,Fall,2024,PIEM110-01,david.hernandez53@academy.org
-General Chemistry I,Winter,2026,GCI111-01,kevin.nelson46@techcorp.io
-General Chemistry II,Summer,2025,GCI112-01,edward.carter73@academy.org
-English Composition,Spring,2024,EC113-01,daniel.thompson76@techcorp.io
-World History,Summer,2025,WH114-01,barbara.lopez32@school.edu
-Principles of Economics,Winter,2024,PE115-01,michelle.flores21@school.edu
-Introduction to Psychology,Summer,2025,IP116-01,linda.davis91@school.edu
-Software Engineering,Summer,2026,SE117-01,barbara.lopez32@school.edu
-Machine Learning,Spring,2025,ML118-01,michelle.flores21@school.edu
-Cybersecurity Fundamentals,Fall,2025,CF119-01,kevin.nelson46@techcorp.io
-Digital Marketing,Spring,2026,DM120-01,daniel.thompson76@techcorp.io
-Financial Accounting,Summer,2025,FA121-01,dorothy.rivera66@academy.org
-Microeconomics,Spring,2024,M122-01,dorothy.rivera66@academy.org
-Macroeconomics,Spring,2026,M123-01,edward.carter73@academy.org
-Organic Chemistry,Winter,2026,OC124-01,deborah.roberts26@techcorp.io
-Discrete Mathematics,Fall,2025,DM125-01,edward.carter73@academy.org
-Operating Systems,Fall,2026,OS126-01,emily.scott27@school.edu
-Computer Networks,Winter,2026,CN127-01,barbara.lopez32@school.edu
-Artificial Intelligence,Summer,2025,AI128-01,daniel.thompson76@techcorp.io
-Cloud Computing,Fall,2026,CC129-01,carol.adams44@example.com
-Mobile Application Development,Summer,2024,MAD130-01,melissa.mitchell55@school.edu
-Object-Oriented Programming,Spring,2026,OP131-01,michelle.flores21@school.edu
-Computer Architecture,Fall,2025,CA132-01,deborah.roberts26@techcorp.io
-Compiler Design,Summer,2025,CD133-01,melissa.mitchell55@school.edu
-Human-Computer Interaction,Fall,2024,HI134-01,barbara.lopez32@school.edu
-Deep Learning,Spring,2026,DL135-01,carol.adams44@example.com
-Data Mining,Summer,2025,DM136-01,dorothy.rivera66@academy.org
-Information Security,Fall,2025,IS137-01,joshua.green96@academy.org
-DevOps Practices,Summer,2024,DP138-01,david.hernandez53@academy.org
-Parallel & Distributed Computing,Summer,2024,PDC139-01,melissa.mitchell55@school.edu
-Bioinformatics,Winter,2026,B140-01,emily.scott27@school.edu
-Ethics in Technology,Fall,2024,ET141-01,daniel.thompson76@techcorp.io
-Technical Writing,Winter,2024,TW142-01,kevin.nelson46@techcorp.io
-Public Speaking,Fall,2026,PS143-01,lisa.white92@school.edu
-Managerial Accounting,Spring,2024,MA144-01,linda.davis91@school.edu
-Corporate Finance,Spring,2024,CF145-01,lisa.white92@school.edu
-Organizational Behavior,Fall,2026,OB146-01,joshua.green96@academy.org
-Business Law,Spring,2024,BL147-01,daniel.thompson76@techcorp.io
-International Relations,Summer,2026,IR148-01,joseph.anderson25@academy.org
-Sociology 101,Fall,2024,S149-01,matthew.harris18@school.edu
-Environmental Science,Fall,2024,ES150-01,melissa.mitchell55@school.edu
+CS100,Winter,2024,SEC101,jennifer.garcia15@example.com
+CS101,Winter,2026,SEC102,mary.johnson11@school.edu
+CS102,Winter,2026,SEC103,edward.carter58@techcorp.io
+CS103,Summer,2026,SEC104,jennifer.garcia15@example.com
+CS104,Summer,2025,SEC105,richard.gonzalez22@academy.org
+CS105,Fall,2024,SEC106,mary.johnson11@school.edu
+CS106,Fall,2024,SEC107,elizabeth.martinez19@techcorp.io
+CS107,Spring,2024,SEC108,jennifer.garcia15@example.com
+CS108,Spring,2024,SEC109,jennifer.garcia15@example.com
+CS109,Fall,2026,SEC110,robert.jones14@example.com
+CS110,Spring,2026,SEC111,patricia.brown13@example.com
+CS111,Winter,2026,SEC112,jennifer.garcia15@example.com
+CS112,Summer,2026,SEC113,james.smith10@school.edu
+CS113,Winter,2024,SEC114,patricia.brown13@example.com
+CS114,Winter,2024,SEC115,barbara.lopez21@school.edu
+CS115,Spring,2024,SEC116,jennifer.garcia15@example.com
+CS116,Spring,2026,SEC117,richard.gonzalez22@academy.org
+CS117,Summer,2024,SEC118,edward.carter58@techcorp.io
+CS118,Winter,2025,SEC119,linda.davis17@example.com
+CS119,Winter,2025,SEC120,barbara.lopez21@school.edu
+CS120,Winter,2025,SEC121,richard.gonzalez22@academy.org
+CS121,Fall,2026,SEC122,william.rodriguez18@academy.org
+CS122,Fall,2024,SEC123,robert.jones14@example.com
+CS123,Spring,2026,SEC124,susan.wilson23@techcorp.io
+CS124,Winter,2025,SEC125,richard.gonzalez22@academy.org
+MATH100,Summer,2024,SEC126,george.campbell56@techcorp.io
+MATH101,Spring,2024,SEC127,john.williams12@academy.org
+MATH102,Fall,2024,SEC128,joseph.anderson24@example.com
+MATH103,Winter,2025,SEC129,joseph.anderson24@example.com
+MATH104,Summer,2026,SEC130,michael.miller16@academy.org
+MATH105,Summer,2025,SEC131,mary.johnson11@school.edu
+MATH106,Summer,2024,SEC132,edward.carter58@techcorp.io
+MATH107,Winter,2026,SEC133,deborah.roberts59@school.edu
+MATH108,Fall,2026,SEC134,richard.gonzalez22@academy.org
+MATH109,Fall,2026,SEC135,susan.wilson23@techcorp.io
+MATH110,Winter,2026,SEC136,david.hernandez20@school.edu
+MATH111,Fall,2024,SEC137,michael.miller16@academy.org
+MATH112,Fall,2026,SEC138,john.williams12@academy.org
+MATH113,Fall,2024,SEC139,barbara.lopez21@school.edu
+MATH114,Summer,2024,SEC140,mary.johnson11@school.edu
+ENG100,Spring,2026,SEC141,george.campbell56@techcorp.io
+ENG101,Spring,2026,SEC142,joseph.anderson24@example.com
+ENG102,Fall,2024,SEC143,william.rodriguez18@academy.org
+ENG103,Summer,2025,SEC144,william.rodriguez18@academy.org
+ENG104,Spring,2026,SEC145,mary.johnson11@school.edu
+ENG105,Fall,2024,SEC146,richard.gonzalez22@academy.org
+ENG106,Winter,2024,SEC147,robert.jones14@example.com
+ENG107,Winter,2024,SEC148,john.williams12@academy.org
+ENG108,Winter,2026,SEC149,deborah.roberts59@school.edu
+ENG109,Summer,2024,SEC150,elizabeth.martinez19@techcorp.io

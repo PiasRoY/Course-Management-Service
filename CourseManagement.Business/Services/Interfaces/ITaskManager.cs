@@ -1,7 +1,6 @@
 ﻿using CourseManagement.Business.DTOs.BulkImportDTOs;
 using CourseManagement.Business.Enums;
 using CourseManagement.Domain.Entities;
-using System.Security.Claims;
 
 namespace CourseManagement.Business.Services.Interfaces
 {
